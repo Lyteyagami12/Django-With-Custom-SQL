@@ -3,7 +3,7 @@ import random
 import os
 import hashlib
 from django.shortcuts import render, redirect
-# from .models import Job
+from .models import people
 from django.db import connection
 
 
