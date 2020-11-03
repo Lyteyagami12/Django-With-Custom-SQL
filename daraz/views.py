@@ -41,42 +41,47 @@ def user_login(request):
         password = request.POST.get('password')
         print(password)
         cur = connection.cursor()
-        sql = "select USERNAME, PASSWORD from PEOPLE where USERNAME = %s"
+        sql = "select USERNAME, KEY ,SALT from PEOPLE where USERNAME = %s"
         print(sql)
         print(username)
         cur.execute(sql,[username])
         result = cur.fetchall()
         dic_res = []
         # dbemail = None
-        dbPass = None
+        dbkey = None
         dbuser = None
+        dbsalt = None
 
         for r in result:
             dbuser = r[0]
-            dbPass = r[1]
-        print(dbuser)
-        print("dbpass" + dbPass)
-        if dbuser == username:
-            mypasssalt = dbPass[:32]
-            mypasssalt = bytes(mypasssalt,'utf-8')
+            dbkey = r[1]
+            dbsalt = r[2]
 
-            mypasskey = dbPass[32:]
-            mypasskey = bytes(mypasskey, 'utf-8')
-            print(mypasskey)
+        print("from database:...")
+        print("dbuser:" + dbuser)
+        if dbuser == username:
+            print("username verified")
             new_key =hashlib.pbkdf2_hmac(
             'sha256',  # The hash digest algorithm for HMAC
-            password.encode('utf-8'),  # Convert the password to bytes
-            mypasssalt,  # Provide the salt
-            100000,  # It is recommended to use at least 100,000 iterations of SHA-256
-            # dklen = 128
+            password.encode('utf-8'),
+            dbsalt ,
+            100000, # 100,000 iterations of SHA-256
+             # dklen = 128
             )
-            print("newy_key" + new_key)
-            print(mypasskey)
-            pwd = mypasssalt + new_key
-            print("pwd" + pwd)
-            if dbPass == pwd:
+
+            if new_key == dbkey:
                 print("success")
-                return redirect('')
+                return redirect('home/')
+            else:
+                print("failed man!")
+                print("dbkey: ")
+                print(dbkey)
+                print("userkey: ")
+                print(new_key)
+                return redirect('home/')
+        else:
+            print("wrong username bro!")
+            return redirect('login/')
     else:
         return render(request, 'login.html', {})
 
@@ -104,7 +109,7 @@ def signup(request):
         gender = request.POST.get('gender')
         dob = request.POST.get('birthdate')
         adress = request.POST.get('adress')
-        contact = int(request.POST.get('contact'))
+        contact = (request.POST.get('contact'))
         zone = request.POST.get('zone')
         method = request.POST.get('paymentmethod')
         salt = os.urandom(32)  # Remember this
@@ -116,10 +121,10 @@ def signup(request):
             100000,  # It is recommended to use at least 100,000 iterations of SHA-256
             # dklen=128  # Get a 128 byte key
         )
-        hashedpass = salt + key
-        sql = "INSERT INTO PEOPLE(CUSTOMER_ID, CUSTOMER_NAME, USERNAME,GENDER, BIRTHDATE, PASSWORD, ADRESS, CONTACT, ZONE, EMAIL, PAYMENT_METHOD) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        # hashedpass = salt + key
+        sql = "INSERT INTO PEOPLE(CUSTOMER_ID, CUSTOMER_NAME, USERNAME,GENDER, BIRTHDATE, KEY, ADRESS, CONTACT, ZONE, EMAIL, PAYMENT_METHOD,SALT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         cursor = connection.cursor()
-        cursor.execute(sql, [id, name, username, gender, dob, hashedpass, adress, contact, zone, email, method])
+        cursor.execute(sql, [id, name, username, gender, dob, key, adress, contact, zone, email, method,salt])
         connection.commit()
         cursor.close()
         return render(request, 'signup1.html', {'title': name})
@@ -212,3 +217,43 @@ def list_jobs(request):
     print("showing...")
     return render(request, 'list_jobs.html', {'people': dict_result})
 
+
+def selllogin(request):
+    if request.method == 'POST':
+        zone = request.POST.get('zone')
+        password = request.POST.get('password')
+        sql = "select SHOP_ID from SHOPS where SHOPPASSWORD = %s"
+        cur = connection.cursor()
+        cur.execute(sql,[password])
+        result = cur.fetchall()
+        cur.close()
+        dbid =None
+        for r in result:
+            dbid = r[0]
+        print(dbid)
+        if dbid is not None:
+            print("success")
+            return redirect('/saleLogin')
+        else:
+            print("failed bitch!")
+            return redirect('/saleLogin')
+    else:
+        return render(request,'sellingLogin.html',{})
+
+def sellsignup(request):
+    if request.method == 'POST':
+        shopid = random.randrange(start=110,step=1)
+        username = request.POST.get('username')
+        zone = request.POST.get('zone')
+        pwd = request.POST.get('password')
+        shopname = request.POST.get('name')
+        shopcat = request.POST.get('cat')
+        contact = request.POST.get('contact')
+        sql = "INSERT INTO SHOPS(SHOP_ID, SHOP_NAME, ZONE, CONTACT_INFO, SHOPPASSWORD, SHOP_CAT, SHOP_USERNAME) VALUES (%s,%s,%s,%s,%s,%s,%s);"
+        cur = connection.cursor()
+        cur.execute(sql,[shopid,shopname,zone,contact,pwd,shopcat,username])
+        connection.commit()
+        cur.close()
+        return redirect('saleLogin/')
+    else:
+        return render(request, 'sellsignup.html',{})

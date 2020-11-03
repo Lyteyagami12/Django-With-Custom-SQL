@@ -1,0 +1,337 @@
+  <!DOCTYPE html>
+  {%load static%}
+<html>
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+
+	<title>Daraz Sales - Online Shopping App In Bangladesh - Daraz.com.bd</title>
+
+
+	<link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
+	<link rel="stylesheet" href="{%static 'css/bootstrap.min.css'%}">
+	<link rel="stylesheet" href="{% static 'css/style.css'%}">
+
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/daraz.png'%}">
+
+	
+
+
+
+
+
+
+</head>
+<body>
+
+	<section class="top_bar">
+		<div class="mid">
+			<div class="mid_right">
+				<ul>
+			
+				    <li><a href="#" style=" color: #e89f2b;">SAVE MORE ON APP</a></li>
+				    <li><a href="sell.html">SELL ON DARAZ</a></li>
+				    <li><a href="#">CUSTOMER CARE</a>
+				    	<ul>
+				    		<li><a href="#"></a>Help Center</li>
+ 				    		<li><a href="#"></a>Order</li>
+				    		<li><a href="#"></a>Shipping & Delivery</li>
+				    		<li><a href="#"></a>Payment</li>
+				    		<li><a href="#"></a>Returns & Refunds</li>
+
+
+
+
+
+
+				    	</ul>
+				    	
+
+				    </li>
+				    <li><a href="#"> TRACK MY ORDER</a></li>
+				    <li><a href="#">LOGIN</a></li>
+				    <li><a href="signup">SIGNUP</a></li>
+				    <li><a href="#">ভাষা</a>
+
+				    	<ul>
+				    		<li><a href="#">Bangla</a></li>
+				    		<li><a href="#">English</a></li>
+				    	</ul>
+
+
+
+				    </li>
+			  </ul>
+			</div>
+		</div>
+	</section>
+
+
+<section class="toppbar">
+		<div class="miid">
+			<div class="midright">
+				<div class="midright_mid">
+
+				   <div class="logo">
+
+			
+				   <a href="#"><img src="{% static 'images/logo.png'%}"></a>
+			       </div>
+		
+
+
+			        <form class="example" action="">
+				         <input type="text" placeholder="Search in daraz" name="search">
+				         <button type="submit"><i class="fa fa-search"></i></button>
+				       </form>
+
+
+		        </div>
+
+		    </div>
+	
+			<div class="midleft">
+
+				<div class="midmid">
+
+				    <div class="cart">
+
+					 <a href="#"><img src="{% static 'images/cart.png'%}"></a>
+
+					
+
+				    </div>
+				    <div class="imag">
+			
+				    <a href="#"><img src="{% static 'images/img.png' %}"></a>
+
+				    </div>
+
+			    </div>
+			  
+			</div>
+		</div>
+
+</section>
+
+
+
+
+
+
+<div class="catagory">
+
+	<div class="mid">
+	   <div class="dropdown">
+
+        <button class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown">catagories</button>
+
+        <ul class="dropdown-menu">
+
+
+            <li class="dropdown-item"><a href="products.html">Electronics Health & Beauties</a></li>
+            <li class="dropdown-item"><a href="products.html">Babies & Toys </a></li>
+            <li class="dropdown-item"><a href="products.html">Groceries & Pets </a></li>
+            <li class="dropdow Lifestyle"></li></a></li>
+            <li class="dropdown-item"><a href="products.html"> Women's Fashion</a></li>
+            <li class="dropdown-item"><a href="products.html">TV & Men's Fashion </a></li>
+            <li class="dropdown-item"><a href="products.html"> Watches & Accessories</a></li>
+            <li class="dropdown-item"><a href="products.html"> Sports & Outdoor </a></li>
+            <li class="dropdown-item"><a href="products.html">Auto Motive & Motorbike </a></li>
+
+
+
+
+        </ul>
+
+    </div>
+
+    <div class="right_menu">
+
+
+         <li><a href="" > Log in to Sale</a></li>
+        <li><a href="saleLogin/sellsignup/">Didn't have an account? Sign up to Sale</a></li>
+
+
+    </div>
+
+    </div>
+	
+
+
+</div>
+
+<div class="body">
+
+	<div class ="container">
+        <div class="row">
+            <div class="col-lg-6" >
+                <h2>Welcome To Daraz! Please Login Sir.</h2>
+            </div>
+            <div class="col-lg-3">
+                <h6>New member? or </h6>
+
+
+            </div>
+{##}
+{#         <div class="col-lg-3" style="padding-top:50px ">#}
+{##}
+{#            	#}
+{#            	<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button>#}
+{##}
+{#            	<div id="id01" class="modal">#}
+{#            	  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>#}
+{#            	  <form class="modal-content" action="signup">#}
+{#                      /action_page.php#}
+{#            	    <div class="container">#}
+{#            	      <h1>Sign Up</h1>#}
+{#            	      <p>Please fill in this form to create an account.</p>#}
+{#            	      <hr>#}
+{#            	      <label for="email"><b>Email</b></label>#}
+{#            	      <input type="text" placeholder="Enter Email" name="email" required>#}
+{##}
+{#            	      <label for="psw"><b>Password</b></label>#}
+{#            	      <input type="password" placeholder="Enter Password" name="psw" required>#}
+{##}
+{#            	      <label for="psw-repeat"><b>Repeat Password</b></label>#}
+{#            	      <input type="password" placeholder="Repeat Password" name="psw-repeat" required>#}
+{#            	      #}
+{#            	      <label>#}
+{#            	        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me#}
+{#            	      </label>#}
+{##}
+{#            	      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>#}
+{##}
+{#            	      <div class="clearfix">#}
+{#            	        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>#}
+{#            	        <button type="submit" class="signupbtn">Sign Up</button>#}
+{#            	      </div>#}
+{#            	    </div>#}
+{#            	  </form>#}
+{#            	</div>#}
+{##}
+{#            	#}
+{##}
+{##}
+{##}
+{#            </div>#}
+        </div>
+         
+        <div class="form_body">
+        	
+
+        	<div class="left_form">
+
+        	    <form class="form-horizontal" action="" method="POST">
+                    {% csrf_token %}
+{#        		  <div class="form-group">#}
+{#        		    <label class="control-label col-sm-6" for="email">Phone Number or Email*</label>#}
+{#        		    <div class="col-sm-10">#}
+{#        		      <input type="text" class="form-control" id="email" name="email" placeholder="Please enter your phone number or email">#}
+{#        		    </div>#}
+{#        		  </div>#}
+                     <div class="form-group">
+        		    <label class="control-label col-sm-6" for="username">Zone*</label>
+        		    <div class="col-sm-10">
+        		      <input type="text" class="form-control" id="username" name="username" placeholder="Please enter your Shop Zone">
+        		    </div>
+        		  </div>
+        		  <div class="form-group">
+        		    <label class="control-label col-sm-6" for="password">Password*</label>
+        		    <div class="col-sm-10">
+        		      <input type="password" class="form-control" id="password" name="password" placeholder="Please enter your shop password">
+        		    </div>
+        		  </div>
+                     <div class="submit-row">
+
+        		    <div class="col-sm-10">
+                        <button style="background-color: #4CAF50" type="submit"  name="submit">Login</button>
+        		    </div>
+        		  </div>
+
+        		  <h6><a href="#"> forgotten password?</a></h6>
+
+        		 
+        		</form>
+      
+
+        		
+        	</div>
+
+
+
+
+        </div>
+
+  
+    </div> 
+
+</div>
+
+
+
+
+
+<div class="footer">
+
+	<img src="{% static 'images/footer.png' %}">
+
+
+</div>
+
+
+<div class="lastpart">
+	
+	<img src="{% static 'images/lastpart.png' %}">
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+var modal = document.getElementById('id01');
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{%  static 'js/bootstrap.min.js' %}"></script>
+	<script src="{%  static 'js/progressbar.js' %}"></script>
+
+
+		
+		
+	
+</body>
+</html>
+
+
+

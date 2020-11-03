@@ -46,8 +46,8 @@
 
 				    </li>
 				    <li><a href="#"> TRACK MY ORDER</a></li>
-				    <li><a href="login.html">LOGIN</a></li>
-				    <li><a href="signup.html">SIGNUP</a></li>
+				    <li><a href="login/">LOGIN</a></li>
+				    <li><a href="signup/">SIGNUP</a></li>
 				    <li><a href="#">ভাষা</a>
 
 				    	<ul>
@@ -850,20 +850,6 @@
 	<script src="{% static 'js/bootstrap.min.js'%}"></script>
 	<script src="{% static 'js/progressbar.js'%}"></script>
 
-</table>
-<h1>CATAGORIES</h1>
-<table width="100%"  border="1">
-    <tr style="background-color:lightgray">
-        <th>ID</th>
-        <th>NAME</th>
-    </tr>
-    {% for cat in cats %}
-       <tr>
-           <td>{{cat.catagory_id}}</td>
-           <td>{{cat.catagory_name}}</td>
-       </tr>
-    {% endfor %}
-</table>
 		
 		
 	
