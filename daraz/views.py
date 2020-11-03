@@ -5,6 +5,80 @@ import hashlib
 from django.shortcuts import render, redirect
 from .models import people
 from django.db import connection
+from django.contrib import  messages
+from  django.contrib.auth import authenticate
+
+#
+# def user_login(request):
+#     print("i m in login")
+#     if request.method == 'POST':
+#         password1 = request.POST.get('password')
+#         username1 = request.POST.get('username')
+#         print(username1)
+#         try:
+#             user = authenticate(request, username=username1, password = password1)
+#         except:
+#             print("failed")
+#         print("done checking")
+#         if user is not None:
+#             print("success")
+#             # user_login(request)
+#             return redirect('signup/')
+#         else:
+#             messages.error(request,'invalid user login credentials')
+#             print("failed")
+#             return render(request,'login.html',{})
+#
+#     else:
+#         return render(request,'login.html',{})
+
+def user_login(request):
+    print("i m log in")
+    if request.method == 'POST':
+        # email = request.POST.get('email')
+        # print(email)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(password)
+        cur = connection.cursor()
+        sql = "select USERNAME, PASSWORD from PEOPLE where USERNAME = %s"
+        print(sql)
+        print(username)
+        cur.execute(sql,[username])
+        result = cur.fetchall()
+        dic_res = []
+        # dbemail = None
+        dbPass = None
+        dbuser = None
+
+        for r in result:
+            dbuser = r[0]
+            dbPass = r[1]
+        print(dbuser)
+        print("dbpass" + dbPass)
+        if dbuser == username:
+            mypasssalt = dbPass[:32]
+            mypasssalt = bytes(mypasssalt,'utf-8')
+
+            mypasskey = dbPass[32:]
+            mypasskey = bytes(mypasskey, 'utf-8')
+            print(mypasskey)
+            new_key =hashlib.pbkdf2_hmac(
+            'sha256',  # The hash digest algorithm for HMAC
+            password.encode('utf-8'),  # Convert the password to bytes
+            mypasssalt,  # Provide the salt
+            100000,  # It is recommended to use at least 100,000 iterations of SHA-256
+            # dklen = 128
+            )
+            print("newy_key" + new_key)
+            print(mypasskey)
+            pwd = mypasssalt + new_key
+            print("pwd" + pwd)
+            if dbPass == pwd:
+                print("success")
+                return redirect('')
+    else:
+        return render(request, 'login.html', {})
 
 
 def test(request):
@@ -40,7 +114,7 @@ def signup(request):
             password.encode('utf-8'),  # Convert the password to bytes
             salt,  # Provide the salt
             100000,  # It is recommended to use at least 100,000 iterations of SHA-256
-            dklen=128  # Get a 128 byte key
+            # dklen=128  # Get a 128 byte key
         )
         hashedpass = salt + key
         sql = "INSERT INTO PEOPLE(CUSTOMER_ID, CUSTOMER_NAME, USERNAME,GENDER, BIRTHDATE, PASSWORD, ADRESS, CONTACT, ZONE, EMAIL, PAYMENT_METHOD) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -91,6 +165,8 @@ def home(request):
     return render(request, 'index.html', {})
 
 
+def sell(request):
+    return render(request, 'sell.html',{})
 # Create your views here.
 
 

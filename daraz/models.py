@@ -1,13 +1,13 @@
 from django.db import models
 class people(models.Model):
-    Id = models.IntegerField(max_length=100,primary_key= True)
+    Id = models.IntegerField(primary_key= True)
     name = models.CharField(max_length=100)
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=1000)
     email = models.CharField(max_length=100, unique=True)
     gender = models.CharField(max_length=100)
     dateOfBirth = models.DateField()
-    Adress = models.CharField(max_length=1000)
+    Address = models.CharField(max_length=1000)
     zone = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
     photo = models.CharField(max_length=1000)
