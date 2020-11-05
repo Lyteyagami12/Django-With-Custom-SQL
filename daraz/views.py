@@ -88,9 +88,10 @@ def user_login(request):
                 print("success")
                 print("sql:" + sql)
                 # request.session.__setitem__('username',dbuser)
-                # request.session['username'] = dbuser
+                request.session['username'] = dbuser
                 # request.session.__setitem__('username',username)
                 print("success2")
+                print("usernameform session: " + request.session['username'])
                 return render(request,'loggedinhome.html',{'name':name})
                 # return redirect('/home')
             else:

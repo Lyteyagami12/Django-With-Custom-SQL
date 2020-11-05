@@ -86,7 +86,9 @@ DATABASES = {
     }
 }
 
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+SESSION_COOKIE_HTTPONLY = True
 # #Password validation
 # # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 # CACHES = {
