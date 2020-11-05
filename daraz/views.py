@@ -208,7 +208,7 @@ def list_jobs(request):
     # result = cursor.fetchall()
 
     cursor = connection.cursor()
-    sql = "SELECT * FROM PEOPLE"
+    sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, ZONE, EMAIL FROM PEOPLE"
     cursor.execute(sql)
     result = cursor.fetchall()
     cursor.close()
@@ -218,19 +218,20 @@ def list_jobs(request):
     for r in result:
         customer_id = r[0]
         customer_name = r[1]
-        username = r[2]
-        customer_photo = r[3]
-        gender = r[4]
-        birthdate = r[5]
-        ##password
-        address = r[7]
-        contact = r[8];
-        zone = r[9]
-        email = r[10]
-        role = r[11]
-        payment = r[12]
-        row = {'customer_id': customer_id, 'photo': customer_photo, 'customer_name': customer_name, 'gender': gender,
-               'contact': contact, 'zone': zone, 'email': email, 'payment': payment}
+        # username = r[2]
+        # customer_photo = r[3]
+        # gender = r[4]
+        # birthdate = r[5]
+        # ##password
+        # address = r[7]
+        # contact = r[8];
+        zone = r[2]
+        email = r[3]
+        # role = r[4]
+        # payment = r[12]
+        row = {'customer_id':customer_id,'customer_name':customer_name,'zone':zone,'email':email}
+        # row = {'customer_id': customer_id, 'photo': customer_photo, 'customer_name': customer_name, 'gender': gender,
+               # 'contact': contact, 'zone': zone, 'email': email, 'payment': payment}
         dict_result.append(row)
 
     # return render(request,'list_jobs.html',{'jobs' : Job.objects.all()})
