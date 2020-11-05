@@ -11,7 +11,7 @@ urlpatterns = [
     path('home/login/', views.user_login),
     path('home/sigunp/', views.signup),
     path('home/sell/sellsignup/', views.sellsignup),
-    path('home/sell/sellsignup/saleLogin/',views.selllogin),
+    path('home/sell/sellsignup/saleLogin/', views.selllogin),
     path('home/sell/saleLogin/', views.selllogin),
     path('home/sell/saleLogin/saleLogin/sellsignup/', views.sellsignup),
     path('home/sell/sellsignup/saleLogin/saleLogin/sellsignup/',views.sellsignup),
@@ -19,5 +19,7 @@ urlpatterns = [
     path('saleLogin/',views.selllogin),
     path('saleLogin/saleLogin/sellsignup/',views.sellsignup),
     path('login/home/',views.home),
+    path('login/profile/', views.profile),
+    path('saleproduct/', views.sale),
 
 ]

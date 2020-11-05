@@ -3,8 +3,11 @@ import random
 import os
 import hashlib
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import people
 from django.db import connection
+# from django.core.cache import cache
+# cache._cache.flush_all()
 from django.contrib import  messages
 from  django.contrib.auth import authenticate
 
@@ -32,6 +35,12 @@ from  django.contrib.auth import authenticate
 #     else:
 #         return render(request,'login.html',{})
 
+
+def login(request):
+
+    return render(request,'index.html',{})
+
+
 def user_login(request):
     print("i m log in")
     if request.method == 'POST':
@@ -41,21 +50,27 @@ def user_login(request):
         password = request.POST.get('password')
         print(password)
         cur = connection.cursor()
-        sql = "select USERNAME, KEY ,SALT from PEOPLE where USERNAME = %s"
+        sql = "select  USERNAME, KEY ,SALT, CUSTOMER_NAME from PEOPLE where USERNAME = %s"
         print(sql)
         print(username)
         cur.execute(sql,[username])
-        result = cur.fetchall()
+        result = cur.fetchone()
         dic_res = []
         # dbemail = None
         dbkey = None
         dbuser = None
         dbsalt = None
+        name = None
+        dbuser = result[0]
+        dbkey = result[1]
+        dbsalt = result[2]
+        name = result[3]
 
-        for r in result:
-            dbuser = r[0]
-            dbkey = r[1]
-            dbsalt = r[2]
+        # for r in result:
+        #     dbuser = r[0]
+        #     dbkey = r[1]
+        #     dbsalt = r[2]
+        #     name = r[3]
 
         print("from database:...")
         print("dbuser:" + dbuser)
@@ -71,7 +86,13 @@ def user_login(request):
 
             if new_key == dbkey:
                 print("success")
-                return redirect('home/')
+                print("sql:" + sql)
+                # request.session.__setitem__('username',dbuser)
+                # request.session['username'] = dbuser
+                # request.session.__setitem__('username',username)
+                print("success2")
+                return render(request,'loggedinhome.html',{'name':name})
+                # return redirect('/home')
             else:
                 print("failed man!")
                 print("dbkey: ")
@@ -98,8 +119,7 @@ def signup(request):
     print("i m in signup")
     if request.method == 'POST':
         id = random.randrange(start=1700000, step=1)
-        print(id)
-        print("/n")
+        print("id:" + str(id))
         name = request.POST.get('name')
         print(name)
         username = request.POST.get('username')
@@ -109,7 +129,7 @@ def signup(request):
         gender = request.POST.get('gender')
         dob = request.POST.get('birthdate')
         adress = request.POST.get('adress')
-        contact = (request.POST.get('contact'))
+        contact = request.POST.get('contact')
         zone = request.POST.get('zone')
         method = request.POST.get('paymentmethod')
         salt = os.urandom(32)  # Remember this
@@ -233,7 +253,8 @@ def selllogin(request):
         print(dbid)
         if dbid is not None:
             print("success")
-            return redirect('/saleLogin')
+            # return render(request,'saleProducts.html',{})
+            return redirect('/saleproduct')
         else:
             print("failed bitch!")
             return redirect('/saleLogin')
@@ -254,6 +275,53 @@ def sellsignup(request):
         cur.execute(sql,[shopid,shopname,zone,contact,pwd,shopcat,username])
         connection.commit()
         cur.close()
-        return redirect('saleLogin/')
+        return render(request,'sellingLogin.html',{})
+        # return redirect('saleLogin/')
     else:
         return render(request, 'sellsignup.html',{})
+
+
+def profile(request):
+    username = request.session.__getitem__('username')
+    print("i m in profile")
+    print(username)
+    sql = "select CUSTOMER_NAME, EMAIL, CONTACT, ADRESS from PEOPLE where USERNAME = %s"
+    result = None
+    try:
+            cur = connection.cursor()
+            cur.execute(sql,[username])
+            result = cur.fetchall()
+            cur.close()
+    except:
+        print("Log in please!")
+    dict_result = None
+    for r in result:
+        name = r[0]
+        email = r[1]
+        contact = r[2]
+        adress = r[3]
+        dict_result = {'name':name,'email':email,'contact':contact,'adress':adress}
+
+    return render(request,'Profile.html',dict_result)
+
+
+def sale(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        cat = request.POST.get('cat')
+        price = request.POST.get('price')
+        quantity = request.POST.get('quantity')
+        specs = request.POST.get('specs')
+        shopname = request.POST.get('shopname')
+        cur = connection.cursor()
+        catid = random.randrange(start=200,step=1)
+        sqlforshopname = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
+        sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
+        sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID, PRODUCT_NAME, CAT_ID, PRODUCT_PHOTO, STATUS, PRICE, DISCOUNT, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        cur.execute(sql, [catid, cat, quantity])
+        cur.close()
+        # cur1 = connection.cursor()
+        # return redirect('/sold')
+        return render(request,'saleProducts.html',{'sale':'Sell More!'})
+    else:
+        return render(request,'saleProducts.html',{})
