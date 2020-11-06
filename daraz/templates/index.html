@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
 
-	<title>Daraz Mobile App - Online Shopping App In Bangladesh - Daraz.com.bd</title>
+	<title>Daraz - Online Shopping App In Bangladesh - Daraz.com.bd</title>
 
 
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
@@ -32,7 +32,7 @@
 				<ul>
 			
 				    <li><a href="#" style=" color: #e89f2b;">SAVE MORE ON APP</a></li>
-				    <li><a href="sell/">SELL ON DARAZ</a></li>
+				    <li><a style="background-color: #007bff" href="sell/">SELL ON DARAZ</a></li>
 				    <li><a href="#">CUSTOMER CARE</a>
 				    	<ul>
 				    		<li><a href="#"></a>Help Center</li>
@@ -46,14 +46,14 @@
 
 				    </li>
 				    <li><a href="#"> TRACK MY ORDER</a></li>
-				    <li><a href="login/">LOGIN</a></li>
-				    <li><a href="signup/">SIGNUP</a></li>
-				    <li><a href="#">ভাষা</a>
-
-				    	<ul>
-				    		<li><a href="#">Bangla</a></li>
-				    		<li><a href="#">English</a></li>
-				    	</ul>
+				    <li><a style="background-color: #4CAF50" href="login/">{{ login }}</a></li>
+				    <li><a style="background-color: #c69500" href="profile/">{{ name }}</a></li>
+				    <li><a href="signup/"><h6 style="color: #b21f2d">{{ logout }}</h6></a>
+{##}
+{#				    	<ul>#}
+{#				    		<li><a href="#">Bangla</a></li>#}
+{#				    		<li><a href="#">English</a></li>#}
+{#				    	</ul>#}
 
 
 
@@ -73,7 +73,7 @@
 					   <div class="logo">
 
 				
-					   <a href="#"><img src="{% static 'images/logo.png'%}"></a>
+					   <a href="/home"><img src="{% static 'images/logo.png'%}"></a>
 				       </div>
 			
 
@@ -150,7 +150,7 @@
     <div class="right_menu">
 
 
-        <li><a href="#"> Digital Sheba</a></li>
+        <li><a style="color: #007bff" href="/home/sell"><h3> Sell on Daraz</h3></a></li>
 	    <li><a href="#">dMart</a></li>
 	    <li><a href="#"> Global Collection</a></li>
         <li><a href="#"> DarazMall</a></li>
@@ -334,483 +334,487 @@
 			</a>
 				
 			</div>
-
+        {% for item in products %}
 			<div class="col-lg-2">
-				<a href="signup.html">
+				<a href="/home/cart">
 				<div class="workbox" style="background-image: url('{% static 'images/pro1.jpg' %}');">
 					<div class="blr">
 						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
+							<h4>{{ item.name }}</h4>
+							<p>{{item.price}}</p>
+                            <h3 style="background-color: #34ce57">{{ item.status }}</h3>
+                            <h6>{{ item.shop }}</h6>
+                            <h7>{{ item.desc }}</h7>
 
 							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
 
 							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
+
+
 						</div>
-						
+
 					</div>
-					
+
 				</div>
 			</a>
-				
+
 			</div>
+            {% endfor %}
 
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>WATCH</h4>
-							<p>$ 8,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro1.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
-
-							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			
-			
-		</div>
-
-
-
-		<div class="row">
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro5.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>PRODUCT</h4>
-							<p>$ 10,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button> 
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url({%static 'images/pro7.jpg'%});">
-					<div class="blr">
-						<div class="work_details">
-							<h4>PRODUCT</h4>
-							<p>$ 500</p>
-
-						   <button style="background: #b52741 ;" type="button" >ADD TO CART</button> 
-						   <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url({%static 'images/pro7.jpg'%});">
-					<div class="blr">
-						<div class="work_details">
-							<h4>WATCH</h4>
-							<p>$ 8,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url({%static 'images/pro7.jpg'%});">
-					<div class="blr">
-						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
-
-							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>WATCH</h4>
-							<p>$ 8,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
-
-							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			
-			
-		</div>
-
-
-		<div class="row">
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro5.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>PRODUCT</h4>
-							<p>$ 10,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button> 
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>PRODUCT</h4>
-							<p>$ 500</p>
-
-						   <button style="background: #b52741 ;" type="button" >ADD TO CART</button> 
-						   <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>WATCH</h4>
-							<p>$ 8,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
-
-							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>WATCH</h4>
-							<p>$ 8,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
-
-							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			
-			
-		</div>
-
-
-		<div class="row">
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>PRODUCT</h4>
-							<p>$ 10,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button> 
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>PRODUCT</h4>
-							<p>$ 500</p>
-
-						   <button style="background: #b52741 ;" type="button" >ADD TO CART</button> 
-						   <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>WATCH</h4>
-							<p>$ 8,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
-
-							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-			<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>WATCH</h4>
-							<p>$ 8,000</p>
-
-							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			<div class="col-lg-2">
-				<a href="signup.html">
-				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">
-					<div class="blr">
-						<div class="work_details">
-							<h4>phone</h4>
-							<p>$ 18,000</p>
-
-							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>
-
-							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>
-							
-							
-						</div>
-						
-					</div>
-					
-				</div>
-			</a>
-				
-			</div>
-
-			
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>WATCH</h4>#}
+{#							<p>$ 8,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro1.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>phone</h4>#}
+{#							<p>$ 18,000</p>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			#}
+{#			#}
+{#		</div>#}
+{##}
+{##}
+{##}
+{#		<div class="row">#}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro5.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>PRODUCT</h4>#}
+{#							<p>$ 10,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button> #}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url({%static 'images/pro7.jpg'%});">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>PRODUCT</h4>#}
+{#							<p>$ 500</p>#}
+{##}
+{#						   <button style="background: #b52741 ;" type="button" >ADD TO CART</button> #}
+{#						   <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url({%static 'images/pro7.jpg'%});">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>WATCH</h4>#}
+{#							<p>$ 8,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url({%static 'images/pro7.jpg'%});">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>phone</h4>#}
+{#							<p>$ 18,000</p>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>WATCH</h4>#}
+{#							<p>$ 8,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>phone</h4>#}
+{#							<p>$ 18,000</p>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			#}
+{#			#}
+{#		</div>#}
+{##}
+{##}
+{#		<div class="row">#}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro5.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>PRODUCT</h4>#}
+{#							<p>$ 10,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button> #}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>PRODUCT</h4>#}
+{#							<p>$ 500</p>#}
+{##}
+{#						   <button style="background: #b52741 ;" type="button" >ADD TO CART</button> #}
+{#						   <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>WATCH</h4>#}
+{#							<p>$ 8,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>phone</h4>#}
+{#							<p>$ 18,000</p>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>WATCH</h4>#}
+{#							<p>$ 8,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>phone</h4>#}
+{#							<p>$ 18,000</p>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			#}
+{#			#}
+{#		</div>#}
+{##}
+{##}
+{#		<div class="row">#}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>PRODUCT</h4>#}
+{#							<p>$ 10,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button> #}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>PRODUCT</h4>#}
+{#							<p>$ 500</p>#}
+{##}
+{#						   <button style="background: #b52741 ;" type="button" >ADD TO CART</button> #}
+{#						   <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>WATCH</h4>#}
+{#							<p>$ 8,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>phone</h4>#}
+{#							<p>$ 18,000</p>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#			<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>WATCH</h4>#}
+{#							<p>$ 8,000</p>#}
+{##}
+{#							 <button style="background: #b52741 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			<div class="col-lg-2">#}
+{#				<a href="signup.html">#}
+{#				<div class="workbox" style="background-image: url('{%static 'images/pro7.jpg'%}');">#}
+{#					<div class="blr">#}
+{#						<div class="work_details">#}
+{#							<h4>phone</h4>#}
+{#							<p>$ 18,000</p>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" >ADD TO CART</button>#}
+{##}
+{#							 <button style="background: #b52841 ;" type="button" > BUY NOW</button>#}
+{#							#}
+{#							#}
+{#						</div>#}
+{#						#}
+{#					</div>#}
+{#					#}
+{#				</div>#}
+{#			</a>#}
+{#				#}
+{#			</div>#}
+{##}
+{#			#}
 			
 		</div>
 		

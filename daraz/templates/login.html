@@ -32,7 +32,7 @@
 				<ul>
 			
 				    <li><a href="#" style=" color: #e89f2b;">SAVE MORE ON APP</a></li>
-				    <li><a href="sell.html">SELL ON DARAZ</a></li>
+				    <li><a href="/home/sell">SELL ON DARAZ</a></li>
 				    <li><a href="#">CUSTOMER CARE</a>
 				    	<ul>
 				    		<li><a href="#"></a>Help Center</li>
@@ -51,8 +51,8 @@
 
 				    </li>
 				    <li><a href="#"> TRACK MY ORDER</a></li>
-				    <li><a href="#">LOGIN</a></li>
-				    <li><a href="signup">SIGNUP</a></li>
+				    <li><a href="">LOGIN</a></li>
+				    <li><a href="/home/signup/">SIGNUP</a></li>
 				    <li><a href="#">ভাষা</a>
 
 				    	<ul>
@@ -77,7 +77,7 @@
 				   <div class="logo">
 
 			
-				   <a href="#"><img src="{% static 'images/logo.png'%}"></a>
+				   <a href="home/"><img src="{% static 'images/logo.png'%}"></a>
 			       </div>
 		
 
@@ -170,6 +170,7 @@
 	<div class ="container">
         <div class="row">
             <div class="col-lg-6" >
+                <h3 style="background-color: #b21f2d">{{ msg }}</h3>
                 <h2>Welcome To Daraz! Please Login.</h2>
             </div>
             <div class="col-lg-3">
@@ -246,6 +247,9 @@
         		      <input type="password" class="form-control" id="password" name="password" placeholder="Please enter your password">
         		    </div>
         		  </div>
+                    <div>
+                        <div style="color: #b21f2d"><h3>{{ msg }}</h3></div>
+                    </div>
                      <div class="submit-row">
 
         		    <div class="col-sm-10">
@@ -342,10 +346,10 @@ window.onclick = function(event) {
 
 
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/progressbar.js"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/progressbar.js' %}"></script>
 
 
 		
