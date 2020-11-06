@@ -329,6 +329,7 @@ def user_logout(request):
         user = request.session['username']
         if user is not None:
             del request.session['username']
+            del request.session['name']
             print("logged out")
             # user = request.session['username']
             return  redirect('/home/signup')
