@@ -66,10 +66,11 @@ def user_login(request):
                     print("sql:" + sql)
                     # request.session.__setitem__('username',dbuser)
                     request.session['username'] = dbuser
+                    request.session['name'] = name
                     # request.session.__setitem__('username',username)
                     print("success2")
                     print("usernameform session: " + request.session['username'])
-                    return render(request,'index.html',{'name':name})
+                    return redirect('/home')
                     # return redirect('/home')
                 else:
                     print("failed man!")
@@ -182,7 +183,7 @@ def products(request):
     message = 'LOG IN'
     logout = 'SIGN UP'
     try:
-        username = request.session['username']
+        username = request.session['name']
         message = username
         logout = 'LOG OUT'
         return render(request, 'index.html', {'products':dic_res,'login': message, 'logout': logout})
@@ -194,7 +195,7 @@ def home(request):
     message = 'LOG IN'
     logout = 'SIGN UP'
     try:
-        username = request.session['username']
+        username = request.session['name']
         message = username
         logout = 'LOG OUT'
         return render(request, 'index.html', {'login': message, 'logout': logout})
@@ -263,8 +264,8 @@ def selllogin(request):
         cur.close()
         dbid =None
         for r in result:
-            dbid = r[0]
-            shopname = r[1]
+            dbid = r[1]
+            shopname = r[0]
         print(dbid)
         if dbid is not None:
             print("success")
@@ -330,7 +331,7 @@ def user_logout(request):
             del request.session['username']
             print("logged out")
             # user = request.session['username']
-            return  redirect('/home')
+            return  redirect('/home/signup')
             # if user is None:
             #     print("log out success")
         else:
@@ -338,7 +339,30 @@ def user_logout(request):
     except:
         print("something is wrong")
         return redirect('/home/logout')
+
+
+def saleLogout(request):
+    try:
+        shopuser = request.session['shopusername']
+        if shopuser is not None:
+            del request.session['shopusername']
+            print("logged out")
+            # user = request.session['username']
+            return redirect('/home/sell/')
+            # if user is None:
+            #     print("log out success")
+        else:
+            return redirect('/home/sell')
+    except:
+        print("something is wrong")
+        return redirect('/home/logout')
+
 def sale(request):
+    shopn= None
+    try:
+        shopn = request.session['shopname']
+    except:
+        print("shop not found!")
     if request.method == 'POST':
         print("i m in sales...")
         id = random.randrange(start=100, step=1)
@@ -364,8 +388,8 @@ def sale(request):
         print("shopusername: "+ usrname)
         cur.execute("SELECT SHOP_NAME, SHOP_ID FROM SHOPS where SHOP_USERNAME = %s",[usrname])
         res = cur.fetchall()
-        shop= None
         shopid = None
+        shop =  None
         for r in res:
             shop = r[0]
             shopid = r[1]
@@ -396,5 +420,12 @@ def sale(request):
         # return redirect('/sold')
         return render(request, 'saleProducts.html',{'sale':'SELL MORE!','name':shop})
     else:
-        return render(request,'saleProducts.html',{})
+        return render(request,'saleProducts.html',{'name':shopn})
 
+
+def cart(request):
+    try:
+        user = request.session['username']
+        return render(request, 'cart.html', {'user': user})
+    except:
+        return redirect('/home/signup')
