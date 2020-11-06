@@ -3,9 +3,11 @@ import random
 import os
 import hashlib
 from django.shortcuts import render, redirect
+
 from django.http import HttpResponse
-from .models import people
+# from .models import peopl
 from django.db import connection
+from django.conf import settings
 # from django.core.cache import cache
 # cache._cache.flush_all()
 from django.contrib import  messages
@@ -215,7 +217,7 @@ def list_jobs(request):
     cursor.close()
 
     dict_result = []
-
+    # print("\\")
     for r in result:
         customer_id = r[0]
         customer_name = r[1]
@@ -242,8 +244,9 @@ def list_jobs(request):
 
 def selllogin(request):
     if request.method == 'POST':
-        zone = request.POST.get('zone')
+        username = request.POST.get('username')
         password = request.POST.get('password')
+        request.session['shopusername'] = username
         sql = "select SHOP_ID from SHOPS where SHOPPASSWORD = %s"
         cur = connection.cursor()
         cur.execute(sql,[password])
@@ -265,7 +268,7 @@ def selllogin(request):
 
 def sellsignup(request):
     if request.method == 'POST':
-        shopid = random.randrange(start=110,step=1)
+        shopid = random.randrange(start=110, step=1)
         username = request.POST.get('username')
         zone = request.POST.get('zone')
         pwd = request.POST.get('password')
@@ -274,7 +277,7 @@ def sellsignup(request):
         contact = request.POST.get('contact')
         sql = "INSERT INTO SHOPS(SHOP_ID, SHOP_NAME, ZONE, CONTACT_INFO, SHOPPASSWORD, SHOP_CAT, SHOP_USERNAME) VALUES (%s,%s,%s,%s,%s,%s,%s);"
         cur = connection.cursor()
-        cur.execute(sql,[shopid,shopname,zone,contact,pwd,shopcat,username])
+        cur.execute(sql, [shopid, shopname, zone, contact, pwd, shopcat, username])
         connection.commit()
         cur.close()
         return render(request,'sellingLogin.html',{})
@@ -309,21 +312,50 @@ def profile(request):
 
 def sale(request):
     if request.method == 'POST':
+        print("i m in sales...")
+        id = random.randrange(start=100, step=1)
+        catid = random.randrange(start=200, step=1)
         name = request.POST.get('name')
         cat = request.POST.get('cat')
         price = request.POST.get('price')
         quantity = request.POST.get('quantity')
         specs = request.POST.get('specs')
-        shopname = request.POST.get('shopname')
+
+        # photo = request.POST.get('filename')
+        # print(photo)
+        # name = str(id) + ".jpg"
+        filename = "static\images" + "\\" + str(id) + ".jpg"
+        # filelocation = "djangoProject6" + filename ;
+        # with open(filename, 'wb+') as destination:
+        #     for chunk in photo.chunks():
+        #         destination.write(chunk)
         cur = connection.cursor()
-        catid = random.randrange(start=200,step=1)
-        sqlforshopname = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
+        usrname = request.session['shopusername']
+        print("shopusername: "+ usrname)
+        cur.execute("SELECT SHOP_NAME FROM SHOPS where SHOP_USERNAME = %s",[usrname])
+        res = cur.fetchall()
+        shopname = None
+        for r in res:
+            shopname = r[0]
+        # shopname = shopname[0]
+
+        sqlforshopid = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
+        cur.execute(sqlforshopid, [shopname])
+        res = cur.fetchall()
+        shopid= None
+        for r in res:
+            shopid = r[0]
+
+        print("db_shop_id: " + str(shopid))
         sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
-        sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID, PRODUCT_NAME, CAT_ID, PRODUCT_PHOTO, STATUS, PRICE, DISCOUNT, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
+        sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PHOTO, CAT_ID,STATUS, PRICE, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         cur.execute(sql, [catid, cat, quantity])
+        cur.execute(sql1, [id, name, filename, catid, 'Available', price, quantity, specs, shopid])
+        connection.commit()
         cur.close()
         # cur1 = connection.cursor()
         # return redirect('/sold')
-        return render(request,'saleProducts.html',{'sale':'Sell More!'})
+        return render(request, 'saleProducts.html',{'sale':'SELL MORE!'})
     else:
         return render(request,'saleProducts.html',{})
