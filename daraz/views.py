@@ -101,11 +101,15 @@ def lol(request):
 
 def signup(request):
     print("i m in signup")
+    usr=None
     try:
-         usr = request.session['username']
-         return redirect('/home/logout')
+        user_logout(request)
+          # # usr = request.session['username']
+          # del request.session['username']
+          # del request.session['name']
     except:
         print("sign up please!")
+        print("couldn't make it")
     if request.method == 'POST':
         id = random.randrange(start=1700000, step=1)
         print("id:" + str(id))
@@ -121,7 +125,7 @@ def signup(request):
         contact = request.POST.get('contact')
         zone = request.POST.get('zone')
         method = request.POST.get('paymentmethod')
-        salt = os.urandom(32)  # Remember this
+        salt = os.urandom(32)
         # password = 'password123'
         key = hashlib.pbkdf2_hmac(
             'sha256',
@@ -204,8 +208,13 @@ def home(request):
 
 
 def sell(request):
+    name = None
+    try:
+        name = request.session['shopname']
+        return redirect('/home/sell/saleproduct')
+    except:
+        print('sell now!')
     return render(request, 'sell.html',{})
-# Create your views here.
 
 
 def list_jobs(request):
@@ -271,6 +280,7 @@ def selllogin(request):
             print("success")
             request.session['shopusername'] = username
             request.session['shopname'] = shopname
+            request.session['shopstatus'] = True
             # return render(request,'saleProducts.html',{})
             return redirect('/saleproduct')
         else:
@@ -301,10 +311,14 @@ def sellsignup(request):
 
 
 def profile(request):
-    username = request.session['username']
+    username = None
+    try:
+        username = request.session['username']
+    except:
+        return redirect('/home/login')
     print("i m in profile")
     print(username)
-    sql = "select CUSTOMER_NAME, EMAIL, CONTACT, ADRESS from PEOPLE where USERNAME = %s"
+    sql = "select CUSTOMER_NAME, EMAIL, CONTACT, ZONE from PEOPLE where USERNAME = %s"
     result = None
     try:
             cur = connection.cursor()
@@ -326,44 +340,51 @@ def profile(request):
 
 def user_logout(request):
     try:
-        user = request.session['username']
-        if user is not None:
-            del request.session['username']
-            del request.session['name']
+            # del request.session['username']
+            # del request.session['name']
+            request.session.delete('username')
+            request.session.delete('name')
             print("logged out")
             # user = request.session['username']
-            return  redirect('/home/signup')
+            return redirect('/home/signup')
+
             # if user is None:
             #     print("log out success")
-        else:
-            return redirect('/home')
+
     except:
         print("something is wrong")
-        return redirect('/home/logout')
+        return redirect('/home')
 
 
 def saleLogout(request):
     try:
-        shopuser = request.session['shopusername']
-        if shopuser is not None:
-            del request.session['shopusername']
+            # shopuser = request.session['shopusername']
+        # if shopuser is not None:
+            request.session.delete('shopusername')
+            request.session.delete('shopname')
+            request.session.delete('shopstatus')
+
+            # del request.session['shopusername']
             print("logged out")
             # user = request.session['username']
             return redirect('/home/sell/')
             # if user is None:
             #     print("log out success")
-        else:
+        # else:
             return redirect('/home/sell')
     except:
         print("something is wrong")
-        return redirect('/home/logout')
+        return redirect('/home/sell')
 
 def sale(request):
     shopn= None
     try:
         shopn = request.session['shopname']
+        status = request.session['shopstatus']
+
     except:
         print("shop not found!")
+        return redirect('/home/sell')
     if request.method == 'POST':
         print("i m in sales...")
         id = random.randrange(start=100, step=1)
