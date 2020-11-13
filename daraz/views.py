@@ -103,10 +103,8 @@ def signup(request):
     print("i m in signup")
     usr=None
     try:
+        usr = request.session['username']
         user_logout(request)
-          # # usr = request.session['username']
-          # del request.session['username']
-          # del request.session['name']
     except:
         print("sign up please!")
         print("couldn't make it")
@@ -447,7 +445,9 @@ def sale(request):
 
 def cart(request):
     try:
-        user = request.session['username']
-        return render(request, 'cart.html', {'user': user})
+        name = request.session['name']
+        cur = connection.cursor()
+        cur.execute("select CUSTOMER_ID from PEOPLE  ")
+        return render(request, 'cart.html', {'user': name})
     except:
         return redirect('/home/signup')
