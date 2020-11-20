@@ -33,6 +33,7 @@ urlpatterns = [
     path('home/cart/',views.cart),
     path('saleLogout/',views.saleLogout),
     path('home/pay/',views.check),
+    path('home/shipment/',views.shipment),
 
 
 ]
