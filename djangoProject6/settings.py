@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'daraz.apps.DarazConfig',
+    'orderandPayment.apps.OrderandpaymentConfig'
+    # 'orderandPayment'
 ]
 
 MIDDLEWARE = [

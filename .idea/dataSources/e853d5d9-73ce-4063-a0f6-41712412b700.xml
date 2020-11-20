@@ -25,8 +25,8 @@
     <schema id="8" parent="1" name="DARAZ">
       <ObjectId>91</ObjectId>
       <CreatedTimestamp>2020-10-17.00:42:09</CreatedTimestamp>
-      <ModifiedTimestamp>2020-11-07.03:29:12</ModifiedTimestamp>
-      <IntrospectionTimestamp>2020-11-07.03:29:13</IntrospectionTimestamp>
+      <ModifiedTimestamp>2020-11-21.04:08:57</ModifiedTimestamp>
+      <IntrospectionTimestamp>2020-11-21.04:09:17</IntrospectionTimestamp>
       <Current>1</Current>
     </schema>
     <schema id="9" parent="1" name="DBSNMP">
@@ -176,7 +176,7 @@
     <table id="48" parent="8" name="SHIPMENTS">
       <ObjectId>80067</ObjectId>
       <CreatedTimestamp>2020-10-23.05:40:06</CreatedTimestamp>
-      <ModifiedTimestamp>2020-10-23.05:40:06</ModifiedTimestamp>
+      <ModifiedTimestamp>2020-11-21.04:08:57</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="49" parent="8" name="SHOPS">
@@ -34648,7 +34648,11 @@
       <Position>4</Position>
       <DataType>VARCHAR2(20 byte)|0s</DataType>
     </column>
-    <index id="4993" parent="48" name="SHIPMENT_PK">
+    <column id="4993" parent="48" name="DELIVERYAT">
+      <Position>5</Position>
+      <DataType>VARCHAR2(500 byte)|0s</DataType>
+    </column>
+    <index id="4994" parent="48" name="SHIPMENT_PK">
       <ObjectId>80068</ObjectId>
       <CreatedTimestamp>2020-10-23.05:40:06</CreatedTimestamp>
       <ModifiedTimestamp>2020-10-23.05:40:06</ModifiedTimestamp>
@@ -34656,7 +34660,7 @@
       <ColNames>SHIPMENT_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="4994" parent="48" name="SYS_C0014191">
+    <index id="4995" parent="48" name="SYS_C0014191">
       <ObjectId>80069</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-10-23.05:40:06</CreatedTimestamp>
@@ -34665,21 +34669,21 @@
       <ColNames>ORDER_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="4995" parent="48" name="SHIPMENT_PK">
+    <key id="4996" parent="48" name="SHIPMENT_PK">
       <ModifiedTimestamp>2020-10-23.05:40:06</ModifiedTimestamp>
       <ColNames>SHIPMENT_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>SHIPMENT_PK</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="4996" parent="48" name="SYS_C0014191">
+    <key id="4997" parent="48" name="SYS_C0014191">
       <NameSurrogate>1</NameSurrogate>
       <ModifiedTimestamp>2020-10-23.05:40:06</ModifiedTimestamp>
       <ColNames>ORDER_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>SYS_C0014191</UnderlyingIndexName>
     </key>
-    <foreign-key id="4997" parent="48" name="FK_SHIP">
+    <foreign-key id="4998" parent="48" name="FK_SHIP">
       <ModifiedTimestamp>2020-10-23.05:40:06</ModifiedTimestamp>
       <ColNames>ORDER_ID</ColNames>
       <RefSchemaName>DARAZ</RefSchemaName>
@@ -34687,36 +34691,36 @@
       <RefKeyName>ORDER_PK</RefKeyName>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="4998" parent="49" name="SHOP_ID">
+    <column id="4999" parent="49" name="SHOP_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4999" parent="49" name="SHOP_NAME">
+    <column id="5000" parent="49" name="SHOP_NAME">
       <Position>2</Position>
       <DataType>VARCHAR2(40 byte)|0s</DataType>
     </column>
-    <column id="5000" parent="49" name="ZONE">
+    <column id="5001" parent="49" name="ZONE">
       <Position>3</Position>
       <DataType>VARCHAR2(30 byte)|0s</DataType>
     </column>
-    <column id="5001" parent="49" name="CONTACT_INFO">
+    <column id="5002" parent="49" name="CONTACT_INFO">
       <Position>4</Position>
       <DataType>VARCHAR2(100 byte)|0s</DataType>
     </column>
-    <column id="5002" parent="49" name="SHOPPASSWORD">
+    <column id="5003" parent="49" name="SHOPPASSWORD">
       <Position>5</Position>
       <DataType>VARCHAR2(1000 byte)|0s</DataType>
     </column>
-    <column id="5003" parent="49" name="SHOP_CAT">
+    <column id="5004" parent="49" name="SHOP_CAT">
       <Position>6</Position>
       <DataType>VARCHAR2(100 byte)|0s</DataType>
     </column>
-    <column id="5004" parent="49" name="SHOP_USERNAME">
+    <column id="5005" parent="49" name="SHOP_USERNAME">
       <Position>7</Position>
       <DataType>VARCHAR2(100 byte)|0s</DataType>
     </column>
-    <index id="5005" parent="49" name="SYS_C0014166">
+    <index id="5006" parent="49" name="SYS_C0014166">
       <ObjectId>80044</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-10-23.04:11:21</CreatedTimestamp>
@@ -34725,7 +34729,7 @@
       <ColNames>SHOP_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="5006" parent="49" name="SYS_C0014166">
+    <key id="5007" parent="49" name="SYS_C0014166">
       <NameSurrogate>1</NameSurrogate>
       <ModifiedTimestamp>2020-10-23.04:11:21</ModifiedTimestamp>
       <ColNames>SHOP_ID</ColNames>
