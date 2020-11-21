@@ -349,6 +349,61 @@ def profile(request):
 
     return render(request,'Profile.html',dict_result)
 
+
+def accountsettings(request):
+    username = None
+    try:
+        username = request.session['username']
+    except:
+        return redirect('/home/login')
+    print("i m in profile")
+    print(username)
+    if request.method == 'POST':
+        print("reached!")
+        username = request.POST.get('username')
+        #password = request.POST.get('password')
+
+        cursor = connection.cursor()
+
+        sql = "select CUSTOMER_ID  from PEOPLE where USERNAME = %s"
+        cursor.execute(sql,[username])
+        result = cursor.fetchall()
+        email = request.POST.get('email')
+        Address = request.POST.get('address')
+        contact = request.POST.get('contact')
+        # handle_uploaded_file(request.FILES['pro_pic'])
+        # f = request.FILES['pro_pic']
+        dbid = None
+
+        for r in result:
+            dbid = r[0]
+
+
+        img = request.FILES['pro_pic']
+        img_extension = os.path.splitext(img.name)[1]
+
+        user_folder = 'static/images/'
+        if not os.path.exists(user_folder):
+            os.mkdir(user_folder)
+
+        # img_save_path =user_folder+'pro_pic'+str(dbid)+img_extension
+        img_save_path = user_folder + 'pro_pic'+img_extension
+        with open(img_save_path, 'wb') as f:
+            for chunk in img.chunks():
+                f.write(chunk)
+
+
+
+
+        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s WHERE CUSTOMER_ID = %s"
+        cursor.execute(sql,[username,email,Address,contact,dbid])
+
+        return redirect('/home/profile')
+    else:
+        return render(request, 'accountsettings.html', {})
+
+
+
 def user_logout(request):
     try:
             # del request.session['username']

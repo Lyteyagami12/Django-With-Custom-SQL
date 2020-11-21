@@ -40,6 +40,7 @@
 				    </li>
 				    <li><a href="#"> TRACK MY ORDER</a></li>
 				    <li><a style="background-color: #4CAF50" href="">{{ name }}</a></li>
+                    <li><a style="background-color: #4CAF50" href="/home/profile/accountsettings">EDIT PROFILE</a></li>
                     <li><a style="color: #b52741" href="/home/logout">LOG OUT</a></li>
 
 
@@ -113,15 +114,32 @@
     </div>
 
 
+<style>
+	.profile-pic{
+		max-width: 400px;
+		max-height:400px;
+		margin: 0 auto;
+		--border-radius: 50%;
+	}
+</style>
+
 
 </div>
 
 
     <div align="center" style="background-color: #abdde5">
          <h3 style="background-color: #4CAF50">Full Name: {{ name }}</h3><br>
+        <img class="profile-pic" src = "{% static 'images/pro_pic.jpg' %}">
+{#        <img class = "profile-pic" src="{% static {{ image_save_path }}%}">#}
+{#        <img class=" profile-pic" src= "{% static {{ image_save_path }} %}" >#}
+{#        {% with 'static/images/pro_pic'|add:profil_pic|add:'.jpg' as image %}#}
+{#   <img src="{% static image %}"/>#}
+{# {% endwith %}#}
+
         <h3 style = "background-color: #4CAF50">Email Adress: {{ email }}</h3>
-        <h3>Address: {{ Address }}</h3><br>
+        <h3>Address: {{ adress }}</h3><br>
         <h3>Contact: {{ contact }}</h3><br>
+
     </div>
 
 </body>
