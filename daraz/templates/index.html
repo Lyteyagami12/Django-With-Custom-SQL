@@ -682,14 +682,15 @@
 
 		</div>
         <div class="row">
+
             {% for item in products %}
 			<div class="col-lg-2" >
-				<a href="/home/order">
+{#				<a href="/home/order">#}
 				<div class="workbox" style="background-image: url('{% static 'images/pro1.jpg' %}');">
 					<div class="blr">
 						<div class="work_details">
 							<h4>{{ item.name }}</h4>
-							<p>BDT: a{{item.price}}</p>
+							<p>BDT: {{item.price}}</p>
                             <h3 style="background-color: #34ce57">{{ item.status }}</h3>
                             <h6>{{ item.shop }}</h6>
                             <h8>ID:{{ item.id }}</h8><br>
@@ -698,12 +699,15 @@
 
                             <form action="" method="POST">
 
-                              <select name="choose" id="choose">
+                             {% csrf_token %}
+                                <input hidden type="number" name="product" value="{{ item.id }}">
+                                <button type="submit" style="background-color: #4CAF50">Add to Cart</button>
 
-                                  <option type = "submit" value="add">ADD TO CART</option>
-                                  <option type = "submit" value="buy">BUY NOW</option>
-                              </select>
-                              <br><br>
+                                <input type="submit" style="background-color: #ffc107" value="Buy Now">
+{#                                <button href="/home/order" style="background-color: #34ce57" type="submit">Add to Cart</button>#}
+{#                                <button style="background-color: #ffc107" type="submit" >Buy Now</button>#}
+
+
 
                             </form>
 {#                            <form action="" method="POST">#}
@@ -718,7 +722,7 @@
 					</div>
 
 				</div>
-			</a>
+{#			</a>#}
 
 			</div>
             {% endfor %}

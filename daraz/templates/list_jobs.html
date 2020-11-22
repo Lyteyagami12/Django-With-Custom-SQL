@@ -5,20 +5,40 @@
     <title>Customers</title>
 </head>
 <body>
+{#<h1>INFO</h1>#}
+{#<table width="100%"  border="1">#}
+{#    <tr style="background-color:lightgray">#}
+{#        <th>ID</th>#}
+{#        <th>NAME</th>#}
+{#        <th>ZONE</th>#}
+{#        <th>EMAIL</th>#}
+{#    </tr>#}
+{#    {% for p in people %}#}
+{#       <tr>#}
+{#           <td>{{p.customer_id}}</td>#}
+{#           <td>{{p.customer_name }}</td>#}
+{#           <td>{{p.zone}}</td>#}
+{#           <td>{{p.email}}</td>#}
+{#       </tr>#}
+{#    {% endfor %}#}
+{##}
+{#</table>#}
 <h1>INFO</h1>
 <table width="100%"  border="1">
     <tr style="background-color:lightgray">
         <th>ID</th>
         <th>NAME</th>
-        <th>ZONE</th>
-        <th>EMAIL</th>
+        <th>Price</th>
+        <th>Brand</th>
+        <th>Shopname</th>
     </tr>
-    {% for p in people %}
+    {% for p in catagories %}
        <tr>
-           <td>{{p.customer_id}}</td>
-           <td>{{p.customer_name }}</td>
-           <td>{{p.zone}}</td>
-           <td>{{p.email}}</td>
+           <td>{{p.id}}</td>
+           <td>{{p.name }}</td>
+           <td>{{p.price}}</td>
+           <td>{{p.brand}}</td>
+            <td>{{ p.shop }}</td>
        </tr>
     {% endfor %}
 

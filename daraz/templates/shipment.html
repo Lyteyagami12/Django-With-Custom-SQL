@@ -10,5 +10,27 @@
         <h1 style="color: #6f42c1">Your Product is being delivered!</h1>
     </p>
 
+    <h1>INFO</h1>
+<table width="100%"  border="1">
+    <tr style="background-color:lightgray">
+        <th>ID</th>
+        <th>NAME</th>
+        <th>Adress</th>
+        <th>orderid</th>
+        <th>Shipment Date</th>
+    </tr>
+    {% for p in ship %}
+       <tr>
+           <td>{{p.id}}</td>
+           <td>{{p.name }}</td>
+           <td>{{p.address}}</td>
+           <td>{{p.orderid}}</td>
+            <td>{{p.shipdate}}</td>
+
+       </tr>
+    {% endfor %}
+
+</table>
+
 </body>
 </html>
