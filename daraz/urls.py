@@ -34,6 +34,8 @@ urlpatterns = [
     path('saleLogout/',views.saleLogout),
     path('home/pay/',views.check),
     path('home/shipment/',views.shipment),
+    path('home/profile/accountsettings/',views.accountsettings),
+
 
 
 ]

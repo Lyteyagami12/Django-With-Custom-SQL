@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'daraz.apps.DarazConfig',
-    'orderandPayment.apps.OrderandpaymentConfig'
+    # 'orderandPayment.apps.OrderandpaymentConfig',
     # 'orderandPayment'
 ]
 
@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'ORCL',
-        'USER': 'Daraz',
-        'PASSWORD': 'daraz123',
+        'USER': 'DARAZ1',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '1521',
     }
@@ -136,9 +136,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/images/'
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, 'static'),
-    BASE_DIR/"static",
-
+     os.path.join(BASE_DIR, 'static'),
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
