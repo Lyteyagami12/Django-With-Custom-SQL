@@ -1,7 +1,7 @@
-     *{
-	margin: 0;
-	padding: 0;
-	font-family: Candara;
+      *{
+	margin: 0px;
+	padding: 0px;
+	font-family: candara;
 	font-size: 14px;
 }
 
@@ -59,7 +59,7 @@
 
 				    		display: block;
 				    		background-color: gray;
-				    		margin-bottom: 2px;
+				    		margin-bottom: 3px;
 				    		transition: .3s;
 
 				    		&:hover{
@@ -317,7 +317,7 @@
 			font-weight: bold;
 			text-align: center;
 			font-size: 22px;
-			padding-top: 30px;
+			padding-top: 20px  30px;
 		}
 
 		.checking{
@@ -385,7 +385,7 @@
 					h4{
 
 					font-family: bold;
-					color: #005cbf;
+					color: 363636;
 					font-size: 20px;
 					text-transform: uppercase;
 					margin: 0px; 
@@ -634,7 +634,7 @@
 
 .signupbody{
 	background-color: #bbb6b6;
-	height: 670px;
+	height: 950px;
 	width: 100%;
 	&:after{
 		content:'';
@@ -776,10 +776,10 @@
 	}
 
 	.signupform_body{
-		height: 400px;	
-		width: 70%;
+		height: 800px;	
+	
 		background-color: #fff;
-		margin:10px  130px auto;
+		
 
 		&:after{
 			content:'';
@@ -791,7 +791,8 @@
 		.signup_left{
 
 			float: left;
-			width: 60%;
+			width: 50%;
+		
 			margin-top: 30px;
 
 
@@ -804,35 +805,15 @@
 					
 				}
 
-				.date{
-
-					width: 200px;
-					margin-left: 10px;
-					
-
-					.birthday-div select{
-
-						padding: 5px;
-						font-size: 13px;
-						border: 1px solid #bdc7d8;
-						float: left;
-
-						
-						
-					}
-
-				}
-
-
-			
-
+				
 			
 		}
 
 		.signup_right{
 			float: right;
-			width: 35%;
-			margin-right: 30px;
+			width: 45%;
+			
+			
 			
 			.form-group{
 
@@ -844,13 +825,29 @@
 			}
 
 
+           .gender_div {
+	            margin: 10px 10px;
+            }
+
+           .gender_div label {
+	            font-size: 18px;
+	            color:  #1d2129;
+	            vertical-align: top;
+	            margin-right: 20px;
+            }
+
+
+
+
 			button{
 
-
-				margin: 10px 2px;
+				
+				margin: 10px 12px;
 				width: 48%;
 				padding: 10px 2px;
 				color: #fff;
+
+			
 
 							
 			}
@@ -931,7 +928,7 @@
 				h4{
 
 				font-family: bold;
-				color: #005cbf;
+				color: 363636;
 				font-size: 20px;
 				text-transform: uppercase;
 				margin: 0px; 
@@ -1092,6 +1089,288 @@
 	  background-color: #45a049;
 	}
 
+
+
+}
+
+
+
+.cart-body{
+	width: 100%;
+	height: 1000px;
+	background: #f1f1f1;
+	padding: 50px;
+
+	.left-cart{
+		width:68%;
+		padding: 30px;
+		float: left;
+
+
+		.cart-top{
+			height: 170px;
+			background: #fff;
+			padding: 30px;
+			margin-bottom:20px;
+
+			.delivery-body {
+				p{
+					line-height: 0px;
+					font-size: 15px;
+					font-weight: bolder;
+				}
+			}
+
+			.select-item{
+				border: 1px solid #000;
+				border-radius: 5px;
+				background: #f1f1f1;
+
+
+			}
+
+		}
+
+
+		.cart-middle{
+			height: 50px;
+			background:  #fff;;
+			margin-bottom:20px;
+			padding-top: 15px;
+
+			.list-header{
+				label{
+					padding-left: 10px;
+				}
+			
+			}
+
+			.delete-option{
+			
+
+				&:hover{
+					color:red;
+				}
+			}
+
+
+		}
+
+		.shop-title{
+				margin-bottom: 20px;
+				background: #fff;
+				height: 50px;
+				padding-top: 15px;
+				label{
+					padding-left: 10px;
+				
+				}
+			}
+
+		.cart-bottom{
+			height: 300px;
+			margin-bottom: 20px;
+			background: #fff;
+			width: 100%;
+			
+			.checkout-shop{
+				width: 100%;
+				display: flex;
+
+			}
+
+			.cart-item-left{
+				display: flex;
+
+				.chceckout-opt{
+					label{
+						margin-top: 40px;
+					}
+
+				}
+
+				.cart-image{
+					a{
+						img{
+							height: 80px;
+							width: 80px;
+							margin-top: 40px;
+						}
+					}
+				}
+
+				.cart-content{
+					margin-top: 35px;
+					a{
+						
+						text-decoration: none;
+						color: #000;
+						font-size: 15px;
+					}
+				}
+
+
+
+			}
+
+			.cart-item-middle{
+
+				margin-top: 30px;
+				font-size: 20px;
+
+				.original-price{
+					text-decoration:line-through;
+				}
+				
+			}
+
+
+
+		}
+
+
+
+
+	}
+
+	.right-cart{
+		width: 30%;
+		background: #fff;
+		padding: 30px;
+		float: right;
+		height: 300px;
+		margin-top: 30px;
+
+		.summary-section-heading{
+
+			p{
+			font-size: 30px;
+			font-weight: bold;
+			}
+		}
+
+
+		.summary-section-content{
+
+
+
+			.checkout-summary{
+
+				.checkout-summary-label{
+					.subtotal{
+						padding: 20px;
+					  
+					}
+				}
+
+
+							
+					
+			}
+
+			.vouture-input{
+
+				#automation-voucher-input-button {
+				    font-size: 17px;
+				    background: #25a5d8;
+				    text-transform: uppercase;
+
+                    border-color: transparent;
+				}
+
+				.automation-voucher-input {
+				    font-size: 17px;
+				    margin-bottom: 10px;
+				}
+			}
+
+
+		}
+
+
+		
+
+	
+			.checkout-button{
+				
+					text-decoration: none;
+					font-size: 20px;
+					color: #fff;
+					background: #f57224!important;
+					
+					width: 100%;
+					height: 40px;
+					border-style: solid;
+					text-transform: uppercase;
+
+                    border-color: transparent;
+				
+			}
+		
+
+
+
+
+	}
+}
+
+
+
+.profile{
+	width: 100%;
+	height: 700px;
+	background: #f1f1f1;
+	padding: 50px;
+	margin-bottom: 50px;
+
+
+	.name{
+		
+			font-size: 30px;
+	
+	}
+	.personal-info {
+		a{
+			text-decoration: none;
+			color:#000;
+			font-size: 15px;
+		}
+	}
+
+	.order-checking{
+
+		a{
+			text-decoration: none;
+			color:#000;
+			font-size: 15px;
+		}
+
+	}
+
+	.profile-right{
+		.table-striped{
+			img{
+				height: 50px;
+				width: 50px;
+			}
+		}
+
+		.personal-profile{
+			background: #fff;
+			
+		}
+
+		.address-book {
+			background: #fff;
+			
+		}
+
+
+		.billing-address {
+			background: #fff;
+			
+		}
+	}
 
 
 }

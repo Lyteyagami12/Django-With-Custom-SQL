@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<div class="container">
+   <div class="border rounded p-4 m-4">
+        <p class="display-4 pl-4 ml-4">Your Cart</p>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sno.</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for product in products %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img style="height: 80px;" class="rounded-circle" src="{% static 'uploads/products/71aQIPEiPwL._UL1500__mhPaI81.jpg' %}" alt=""></td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price|currency}}</td>
+                    <td>
+                        <form class="col-6 " method="POST">
+								{% csrf_token %}
+								<input hidden type="text" name='product' value='{{product.id}}'>
+								<input hidden type="text" name='remove' value='True'>
+								<input style="background-color: #ff5722" type="submit" value=" - " class="btn btn-block btn-light border-right">
+                        </form>
+                        {{product.quantity}}
+                        <form class="col-6 " method="POST">
+								{% csrf_token %}
+								<input hidden type="text" name='product' value='{{product.id}}'>
+
+								<input style="background-color: #2abbe8" type="submit" value=" + " class="btn btn-block btn-light border-right">
+                        </form>
+                    </td>
+                    <td>{{product.price_total|currency}}</td>
+{#                 <td>{{product.name}}</td>#}
+{#                    <td>{{product.price|currency}}</td>#}
+{#                    <td>{{product|cart_quantity:request.session.cart}}</td>#}
+{#                    <td>{{product|price_total:request.session.cart|currency}}</td>#}
+                </tr>
+
+                {% endfor %}
+               
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th colspan="4"></th>
+                    <th class="" colspan="">Total</th>
+                    <th>{{total|currency}}</th>
+{#                    <th>{{products|total_cart_price:request.session.cart|currency}}</th>#}
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="m-3 p-3">
+            <button class="btn1" style="background-color: #2abbe8"  ><a href="/home/pay/"><h4 style="color: #0b2e13">Proceed to Check out</h4></a></button>
+        </div>
+   </div>
+</div>
+
+
+<!-- modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+              Check Out Form
+          </h5>
+          <hr>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="m-2 p-3">
+            <form action="/check-out" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="">Address</label>
+                  <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId">
+
+                </div>
+                <div class="form-group">
+                    <label for="">Phone</label>
+                    <input type="text" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                  </div>
+
+                  <input style="background-color: #ff5722" type="submit" class="btn float-right btn-outline-info col-lg-6" value="Check out">
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

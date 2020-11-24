@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 urlpatterns = [
-    path('',views.products),
+    path('',views.Index.as_view(), name = 'homepage'),
     path('sell/',views.sell),
     path('sell/sellsignup/', views.sellsignup),
     path('sell/saleLogin/', views.selllogin),
@@ -30,9 +30,9 @@ urlpatterns = [
     path('home/login/home/',views.user_login),
     path('home/profile/',views.profile),
     # path('home/order/',views.order, name = 'order'),
-    path('home/cart/',views.cart),
+    path('home/cart/',views.cart,name = 'cart'),
     path('saleLogout/',views.saleLogout),
-    path('home/pay/',views.check),
+    path('home/pay/',views.check, name= 'checkout'),
     path('home/shipment/',views.shipment),
     path('home/profile/accountsettings/',views.accountsettings),
 

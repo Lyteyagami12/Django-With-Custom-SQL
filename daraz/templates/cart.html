@@ -1,13 +1,205 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Orders</title>
-</head>
-<body>
-<div align="center">
-    <h1 style="background-color: #9fcdff">You are: {{ user }} and Your</h1>
-    <h1 style="background-color: #34ce57 ">Cart is empty now</h1>
-</div>
-</body>
-</html>
+ {% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% load cart %}
+{% load custom_filter %}
+
+ <div class="cart-body">
+ 	<div class="left-cart">
+ 		<div class="container">
+ 			<div class="cart-top">
+ 				<div class="delivery-body ">
+ 					<p>Preferred delivery option</p>
+
+ 						
+ 				</div>
+ 				<div class="select-item col-md-4">
+ 					<p>please select item(s)</p>
+ 					<p style="color: #a5aaaf">Availability and promotions will be shown here.</p>
+ 						
+ 				</div>
+ 				
+ 			</div>
+ 			<div class="cart-middle">
+ 				<div class="container">
+ 					<div class="row">
+ 						<div class="list-header col-lg-10">
+ 							<label>
+ 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+ 								 <label class="form-check-label" for="defaultCheck1">
+ 								 <p>SELECT ALL (1 ITEMS)</p>
+ 								 </label>
+ 							</label>
+ 							
+ 							
+ 						</div>
+ 						<div class="delete col-lg-2">
+ 							<span class="delete-option">
+ 								
+ 								<i class="fa fa-trash" aria-hidden="true">DELETE</i>
+
+ 							</span>
+ 							
+ 						</div>
+ 					</div>
+ 					
+ 				</div>
+ 				
+ 			</div>
+
+ 			<div class="shop-title">
+ 				<div class="container">
+ 					<label>
+ 						<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+ 						 <label class="form-check-label" for="defaultCheck1">
+ 						 YA HABIBI
+ 						 </label>
+ 					</label>
+ 				</div>
+ 				
+ 			</div>
+ 			<div class="cart-bottom">
+ 			
+ 					
+ 					<div class="checkout-shop">
+ 						
+ 							<div class="cart-item-left col-lg-8">
+ 								<div class="row">
+ 									<div class="chceckout-opt col-lg-2">
+ 											<label>
+ 												<input class="form-check-input3" type="checkbox" value="" id="defaultCheck3">
+ 												 <label class="form-check-label3" for="defaultCheck3">
+ 												 </label>
+ 											</label>
+ 										</div>
+ 										<div class="cart-image col-lg-4 ">
+ 											<a href=""><img src="{% static 'images/pro1.jpg' %}"></a>
+ 											
+ 										</div>
+ 										<div class="cart-content col-lg-6">
+ 											<a id="automation-link-from-title-to-prod-item_i16a35b14d" href="" class="automation-link-from-title-to-prod title">Ladies Bag Hand Bag High Quality Leather Use Women Girls</a>
+
+
+
+ 											<a id="automation-link-from-sub-title-to-prod-item_i16a35b14d" href="http://www.daraz.com.bd//products/i154198588-s1083246079.html?urlFlag=true" class="automation-link-from-sub-title-to-prod sku">No Brand, Color Family:Black</a>
+ 											<div class="good-desc">
+ 												<p></p>
+ 												
+ 											</div>
+ 											
+ 										</div>
+ 								</div>
+ 							</div>
+
+ 							<div class="cart-item-middle col-lg-2">
+ 								<p class="dicount-price">৳ 0</p>
+ 								<p class="original-price">৳ 0</p>
+ 								<p>-75%</p>
+ 								<div class="operations">
+ 									<span></span>
+ 									<span></span>
+ 								</div>
+ 								
+ 							</div>
+
+ 							<div class="cart-item-right col-lg-2">
+
+
+
+ 								
+ 							</div>
+ 					
+ 				
+ 					
+ 				</div>
+
+ 				
+ 			</div>
+ 			
+ 		</div>
+ 		
+ 	</div>
+ 	<div class="right-cart">
+ 		<div class="container">
+ 			<div class="summary-section-heading">
+ 				<p>Order Summary</p>
+
+ 				
+ 			</div>
+ 			<div class="summary-section-content">
+ 				<div class="checkout-summary">
+ 					<div class="row">
+ 						<div class="checkout-summary-label col-lg-8">
+ 							<p style="  font-size: 20px;">Subtotal (0 items)</p>
+
+ 						</div>
+ 						<div class="checkout-summary-value col-lg-4">
+ 							<span style="font-size: 20px;" class="checkout-summary-noline-value">৳ 0</span>
+ 						</div>
+ 					</div>
+
+ 				
+ 				</div>
+
+ 				<div class="vouture-input">
+ 					
+ 						<input type="text" class="automation-voucher-input" placeholder="Enter Voucher Code" value="" height="100%">
+
+
+
+ 						<button id="automation-voucher-input-button" type="button" class="voucher-input-button">APPLY</button>
+
+
+ 				</div>
+ 				<div class="checkout-total">
+ 					<div class="row">
+ 						<div class="col-lg-8">
+ 							<p style="font-size: 20px;">Total Fee</p>
+ 						</div>
+ 						<div class="checkout-order-total-fee col-lg-4 ">
+ 							<p style="font-size: 20px;">৳ 0</p>
+ 						</div>
+ 						
+ 					</div>
+ 						
+ 				</div>
+ 			</div>
+ 				
+ 		</div>
+
+ 		<div class="container">
+ 			 <button  class="checkout-button" type="button" >Proceed to checkout</button>
+ 		</div>
+ 	</div>
+ 		
+ </div>
+
+ 	
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/progressbar.js' %}"></script>
+
+{% endblock %}
+		
+		
+
+
+
+

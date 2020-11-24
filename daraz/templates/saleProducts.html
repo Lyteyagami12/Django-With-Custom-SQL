@@ -110,7 +110,7 @@
 
 <div style="background-color: #b52741" align="center"><h1>{{ sale }}</h1></div>
 <div style="background-color: #b52741" align="center"><h1>{{ message }}</h1></div>
-<div class="signupbody">
+<div class="container-fluid mt-3">
 
 	<div class="container">
 
@@ -131,10 +131,31 @@
         		                 <input type="text" class="form-control" id="name" name="name" placeholder=" Product name " >
         		               </div>
         					  <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="cat">  Product Category*</label>
-        					    <div class="col-sm-10">
-        					      <input type="text" class="form-control" id="cat" name="cat" placeholder=" ">
-        					    </div>
+                                  <label style="background-color: #28a745" for="cat">Choose a Catagory*:</label>
+
+                                  <div class="col-sm-10">
+                                  <select name="cat" id="cat">
+                                      <option value="SmartPhone">SmartPhone</option>
+                                      <option value="Laptop & Pc">Laptop & Pc</option>
+                                      <option value="Electronics Accessories">Accessories</option>
+                                      <option value="Electronics">Electronics</option>
+                                      <option value="Watch">Watch</option>
+                                      <option value="Men's Fashion">Men's Fashion</option>
+                                      <option value="Women's Fashion">Women's Fashion</option>
+                                      <option value="Groceries">Groceries</option>
+                                      <option value="Cycle">Cycle</option>
+                                      <option value="Baby's & Toys">Baby's & Toys</option>
+                                      <option value="Home & Lifestyle">Home & Lifestyle</option>
+                                      <option value="Health & Beauty">Health & Beauty</option>
+                                      <option value="Sports">Sports</option>
+                                      <option value="Automotive & MotorBike">Automotive & MotorBike</option>
+
+                                    </select>
+                                  </div>
+{#        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="cat">  Product Category*</label>#}
+{#        					    <div class="col-sm-10">#}
+{#        					      <input type="text" class="form-control" id="cat" name="cat" placeholder=" ">#}
+{#        					    </div>#}
         					  </div>
                                  <div class="form-group">
         					    <label style="background-color: #4CAF50" class="control-label col-sm-6" for="quantity">  Quantity*</label>
@@ -168,15 +189,17 @@
         					  </div>
                                 <div class="col-sm-10">
                                     <label style="background-color: #4CAF50" for="img"> Choose a photo</label>
-                                     <input type="file" name="filename">
+
+                                    <input type="file" name="propic" id="propic">
                                 </div>
 
 
-                                <div class="signup_right">
+                                <div class="signup_right midright_mid">
+                        <div class="m-3 p-3">
+                            <button style="background-color: #ff5722" type="submit" class="btn-lg" name="submit">Sale Your Products</button>
+                        </div>
 
-
-                        <button style="background-color: #34ce57" type="submit"  name="submit">Sale Your Products</button>
-        		    </div>
+                        </div>
 
                             </form>
 

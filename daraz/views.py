@@ -3,7 +3,8 @@ import random
 import os
 import hashlib
 import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
+from django.views import View
 # from .models import people
 from django.db import connection
 from django import template
@@ -13,6 +14,39 @@ from django.conf import settings
 # from django.core.cache import cache
 # cache._cache.flush_all()
 from django.contrib import  messages
+
+class Index(View):
+
+    def post(self , request):
+        product = request.POST.get('product')
+        remove = request.POST.get('remove')
+        cart = request.session.get('cart')
+        if cart:
+            quantity = cart.get(product)
+            if quantity:
+                if remove:
+                    if quantity<=1:
+                        cart.pop(product)
+                    else:
+                        cart[product] = quantity-1
+                else:
+                    cart[product] = quantity+1
+
+            else:
+                cart[product] = 1
+        else:
+            cart = {}
+            cart[product] = 1
+
+        request.session['cart'] = cart
+        print('cart', request.session['cart'])
+        return redirect('homepage')
+
+
+
+    def get(self , request):
+        # print()
+        return HttpResponseRedirect(f'/home{request.get_full_path()[1:]}')
 
 
 def user_login(request):
@@ -31,7 +65,7 @@ def user_login(request):
         msg = 'Enjoy Buying!'
         try:
             cur = connection.cursor()
-            sql = "select USERNAME, KEY ,SALT, CUSTOMER_NAME, EMAIL from PEOPLE where USERNAME = %s"
+            sql = "select USERNAME, KEY ,SALT, CUSTOMER_NAME, EMAIL,CUSTOMER_PHOTO from PEOPLE where USERNAME = %s"
             print(sql)
             print(username)
             cur.execute(sql,[username])
@@ -47,7 +81,12 @@ def user_login(request):
             dbsalt = result[2]
             name = result[3]
             email = result[4]
-
+            img = 'uploads/products/10000069-2_28-fresho-capsicum-green.jpg'
+            try:
+                img = request[5]
+            except:
+                print('failed to load image!')
+            request.session['img_url']=img
             # for r in result:
             #     dbuser = r[0]
             #     dbkey = r[1]
@@ -138,6 +177,7 @@ def signup(request):
             100000,  # 100,000 iterations of SHA-256
             # dklen=128  #128 byte key
         )
+
         sql = "INSERT INTO PEOPLE(CUSTOMER_ID, CUSTOMER_NAME, USERNAME,GENDER, BIRTHDATE, KEY, ADRESS, CONTACT, ZONE, EMAIL, PAYMENT_METHOD,SALT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         try:
             cursor = connection.cursor()
@@ -247,7 +287,7 @@ def products(request):
             product_id = r[0]
             product_name = r[1]
             # cat = r[2
-            # product_photo = r[3]
+            product_photo = r[3]
             status = r[4]
             price = r[5]
             ##password
@@ -272,7 +312,7 @@ def products(request):
                 shopName = r1[0]
 
             # print("shop name :" + str(shopName))
-            row = {'id': product_id, 'shop': shopName, 'name': product_name, 'price':price,'brand':brand,
+            row = {'id': product_id, 'shop': shopName,'photo':product_photo,'name': product_name, 'price':price,'brand':brand,
                    'status': status, 'desc': description}
             dic_res.append(row)
 
@@ -465,7 +505,7 @@ def accountsettings(request):
     print(username)
     if request.method == 'POST':
         print("reached!")
-        username = request.POST.get('username')
+        # username = request.POST.get('email')
         #password = request.POST.get('password')
 
         cursor = connection.cursor()
@@ -487,12 +527,14 @@ def accountsettings(request):
         img = request.FILES['pro_pic']
         img_extension = os.path.splitext(img.name)[1]
 
-        user_folder = 'static/images/'
+        user_folder = 'static/uploads/profile/'
         if not os.path.exists(user_folder):
             os.mkdir(user_folder)
 
-        # img_save_path =user_folder+'pro_pic'+str(dbid)+img_extension
-        img_save_path = user_folder + 'pro_pic'+img_extension
+        img_save_path =user_folder+'pro_pic'+str(dbid)+img_extension
+        # img_save_path = user_folder + 'pro_pic'+img_extension
+        img_url = 'uploads/profile/'+'pro_pic'+ str(dbid)+img_extension
+        request.session['img_url'] = img_url
         with open(img_save_path, 'wb') as f:
             for chunk in img.chunks():
                 f.write(chunk)
@@ -500,8 +542,8 @@ def accountsettings(request):
 
 
 
-        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s WHERE CUSTOMER_ID = %s"
-        cursor.execute(sql,[username,email,Address,contact,dbid])
+        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
+        cursor.execute(sql,[username,email,Address,contact,img_url,dbid])
 
         return redirect('/home/profile')
     else:
@@ -515,6 +557,7 @@ def user_logout(request):
             # del request.session['name']
             request.session.delete('username')
             request.session.delete('name')
+            # request.session.clear()
             print("logged out")
             # user = request.session['username']
             return redirect('/home/signup')
@@ -571,11 +614,23 @@ def sale(request):
         # photo = request.POST.get('filename')
         # print(photo)
         # name = str(id) + ".jpg"
-        filename = "static\images" + "\\" + str(id) + ".jpg"
-        # filelocation = "djangoProject6" + filename ;
-        # with open(filename, 'wb+') as destination:
-        #     for chunk in photo.chunks():
-        #         destination.write(chunk)
+        # img = request.FILES['propic',False]
+        # img_extension = os.path.splitext(img.name)[1]
+        # user_folder = 'static/images'
+        # if not os.path.exists(user_folder):
+        #     os.mkdir(user_folder)
+
+        # img_save_path = user_folder + 'propic' + str(id) + img_extension
+        # img_save_path = user_folder + 'pro_pic'+img_extension
+        # img_url = '/static/images/' + 'propic' + str(id) + img_extension
+        # request.session['pro_img_url'] = img_url
+        # with open(img_save_path, 'wb') as f:
+        #     for chunk in img.chunks():
+        #         f.write(chunk)
+
+        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
+        # cursor.execute(sql, [username, email, Address, contact, img_url, dbid])
+
         cur = connection.cursor()
         usrname = request.session['shopusername']
         print("shopusername: "+ usrname)
@@ -603,7 +658,7 @@ def sale(request):
 
             sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID,BRAND, PRODUCT_NAME, PRODUCT_PHOTO, DISCOUNT, CAT_ID,STATUS, PRICE, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             cur.execute(sql, [catid, cat, quantity])
-            cur.execute(sql1, [id,brand, name, filename,discount, catid, 'Available', price, quantity, specs, shopid])
+            cur.execute(sql1, [id,brand, name, 'static/images/cart.png',discount, catid, 'Available', price, quantity, specs, shopid])
             connection.commit()
             cur.close()
         except:
@@ -696,12 +751,47 @@ def sale(request):
 
 
 def cart(request):
-    try:
-     name = request.session['name']
-     return render(request, 'cart.html', {'user': name})
-    except:
-        print('lololo')
-        return redirect('/home/login')
+    # try:
+
+     if request.method == 'POST':
+
+       try:
+           updateCart(request)
+           return redirect('/home/cart/')
+       except:
+           print("failed to update cart!")
+           return redirect('/home/cart/')
+     else:
+         print("i m n try")
+         car = request.session.get('cart')
+         keys = list(car.keys())
+         # keys = cart.keys()
+         # print(keys)
+         print(car)
+
+         print(keys)
+         print(car['2001'])
+         product_dic = []
+         total = 0
+         cur = connection.cursor()
+         for id in keys:
+             cur.execute("select PRODUCT_NAME,PRICE,DESCRIPTION from PRODUCTS where PRODUCT_ID=%s",[int(id)])
+             result = cur.fetchone()
+             name = result[0]
+             price = result[1]
+             desc = result[2]
+             quantity = int(car[str(id)])
+             total+=quantity*price
+             row = {'name':name,'price':price,'specs':desc,'id':id,'quantity':quantity,'price_total':quantity*price }
+             product_dic.append(row)
+         cur.close()
+         # return redirect('homepage')
+         return render(request,'cart1.html',{'products':product_dic,'total':total})
+     # name = request.session['name']
+     # /\return render(request, 'cart1.html',{})
+    # except:
+    #     print('lololo')
+    #     return redirect('/home/login')
 
 # checking out===================
 def check(request):
@@ -751,7 +841,7 @@ def check(request):
             sqlonPayment = "INSERT INTO PAYMENTS(PAYMENT_ID, ORDER_ID, PAYMENT_STATUS, METHOD) VALUES (%s,%s,%s,%s)"
             sqlonCreditcard = "INSERT INTO CREDIT_CARD(CARD_NO, NAME_ON_CARD, EXP_DATE, CVV, OTP, PAYMENT_ID, ZIP_CODE) VALUES (%s,%s,%s,%s,%s,%s,%s)"
             sqlonsHipment = "INSERT INTO SHIPMENTS(SHIPMENT_ID, SHIPMENT_DATE, ORDER_ID, STATUS, DELIVERYAT) VALUES (%s,%s,%s,%s,%s)"
-            paymentid = 102023
+            paymentid = random.randrange(102023)
             paymentstatus = "True"
             method = 'CreditCard'
             shipmentid = random.randrange(orderid)
@@ -833,3 +923,27 @@ def getName(request):
         return name
     except:
         return 'Anonymous'
+
+def updateCart(request):
+
+        product = request.POST.get('product')
+        remove = request.POST.get('remove')
+        cart = request.session.get('cart')
+        if cart:
+            quantity = cart.get(product)
+            if quantity:
+                if remove:
+                    if quantity<=1:
+                        cart.pop(product)
+                    else:
+                        cart[product] = quantity-1
+                else:
+                    cart[product] = quantity+1
+
+            else:
+                cart[product] = 1
+        else:
+            cart = {}
+            cart[product] = 1
+
+        request.session['cart'] = cart
