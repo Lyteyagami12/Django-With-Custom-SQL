@@ -23,6 +23,7 @@ urlpatterns = [
     path('home/sigunp/', loginOrSignup.signup),
     path('home/sell/sellsignup/', sale.sellsignup),
     path('home/sell/sellsignup/saleLogin/', sale.selllogin),
+    path('saleLogout/',sale.saleLogout),
     path('home/sell/saleLogin/', sale.selllogin),
     # path('home/sell/saleLogin/saleLogin/sellsignup/', views.sellsignup),
     # path('home/sell/sellsignup/saleLogin/saleLogin/sellsignup/',views.sellsignup),
@@ -36,7 +37,7 @@ urlpatterns = [
     path('home/profile/',views.profile),
     # path('home/order/',views.order, name = 'order'),
     path('home/cart/',views.cart,name = 'cart'),
-    path('saleLogout/',sale.saleLogout),
+
     path('home/pay/',checkout.check, name= 'checkout'),
     path('home/shipment/',views.shipment),
     path('home/profile/accountsettings/',views.accountsettings),

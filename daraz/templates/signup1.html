@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<div class="signupbody">
+<div class="container-fluid mt-3">
 
 	<div class="container">
         <div class="row">
@@ -16,36 +16,36 @@
            <div class="col-lg-3"style="padding-top:0px ">
 
               
-
-                <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
-
-                <div id="id01" class="modal">
-                  
-                  <form class="modal-content animate" action="" method="post">
-                    <div class="imgcontainer">
-                      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                      <img src="{% static 'images/daraz.png' %}" style=" border-color: #000!important;" alt="Avatar" class="avatar">
-                    </div>
-
-                    <div class="container">
-                      <label for="uname"><b>Username</b></label>
-                      <input type="text" placeholder="Enter Username" name="username" required>
-
-                      <label for="psw"><b>Password</b></label>
-                      <input type="password" placeholder="Enter Password" name="password" required>
-                        
-                      <button type="submit">Login</button>
-                      <label>
-                        <input type="checkbox" checked="checked" name="remember"> Remember me
-                      </label>
-                    </div>
-
-                    <div class="container" style="background-color:#f1f1f1">
-                      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                      <span class="psw">Forgot <a href="#">password?</a></span>
-                    </div>
-                  </form>
-                </div>
+{##}
+{#                <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>#}
+{##}
+{#                <div id="id01" class="modal">#}
+{#                  #}
+{#                  <form class="modal-content animate" action="" method="post">#}
+{#                    <div class="imgcontainer">#}
+{#                      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>#}
+{#                      <img src="{% static 'images/daraz.png' %}" style=" border-color: #000!important;" alt="Avatar" class="avatar">#}
+{#                    </div>#}
+{##}
+{#                    <div class="container">#}
+{#                      <label for="uname"><b>Username</b></label>#}
+{#                      <input type="text" placeholder="Enter Username" name="username" required>#}
+{##}
+{#                      <label for="psw"><b>Password</b></label>#}
+{#                      <input type="password" placeholder="Enter Password" name="password" required>#}
+{#                        #}
+{#                      <button type="submit">Login</button>#}
+{#                      <label>#}
+{#                        <input type="checkbox" checked="checked" name="remember"> Remember me#}
+{#                      </label>#}
+{#                    </div>#}
+{##}
+{#                    <div class="container" style="background-color:#f1f1f1">#}
+{#                      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>#}
+{#                      <span class="psw">Forgot <a href="#">password?</a></span>#}
+{#                    </div>#}
+{#                  </form>#}
+{#                </div>#}
 
 
 
@@ -69,59 +69,59 @@
 {#                                /action_page.php#}
                                 {% csrf_token %}
                                 <div class="form-group">
-        	                    <label style="background-color: #34ce57" for="name">Full name*</label>
+        	                    <label style="color: #34ce57" for="name">Full name*</label>
         		                 <input type="text" class="form-control" id="name" name="name" placeholder=" Enter your First & Last name " >
         		               </div>
         					  <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="mail">Email *</label>
+        					    <label style="color: #34ce57" class="control-label col-sm-6" for="mail">Email *</label>
         					    <div class="col-sm-10">
         					      <input type="email" class="form-control" id="mail" name="mail" placeholder="Please enter your Email Adress">
         					    </div>
         					  </div>
                                 <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="username">Username*</label>
+        					    <label style="color: #34ce57" class="control-label col-sm-6" for="username">Username*</label>
         					    <div class="col-sm-10">
         					      <input type="text" class="form-control" id="username" name="username" placeholder="Please enter a valid Username">
         					    </div>
         					  </div>
                                 <div class="form-group">
-                                 <label style="background-color: #34ce57" class="control-label col-sm-6" for="gender">Gender</label>
+                                 <label style="color: #34ce57" class="control-label col-sm-6" for="gender">Gender</label>
         					    <div class="col-sm-10">
         					      <input type="text" class="form-control" id="gender" name = "gender" placeholder="Male/Female/Other">
         					    </div>
         					  </div>
         					  <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="password">Password*</label>
+        					    <label style="color: #34ce57" class="control-label col-sm-6" for="password">Password*</label>
         					    <div class="col-sm-10">
         					      <input type="Password" class="form-control" id="password" name = "password" placeholder="Minimum 6 characters with a number & a letter" >
         					    </div>
         					  </div>
                                 <div class="form-group">
-                             <label style="background-color: #34ce57" class="control-label col-sm-6" for="birthdate">Date of Birth</label>
+                             <label style="color: #34ce57" class="control-label col-sm-6" for="birthdate">Date of Birth</label>
         					    <div class="col-sm-10">
         					      <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="DD-MONTH-YYYY">
         					    </div>
         					  </div>
                               <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="adress">Adress*</label>
+        					    <label style="color: #34ce57" class="control-label col-sm-6" for="adress">Adress*</label>
         					    <div class="col-sm-10">
         					      <input type="text" class="form-control" id="adress" name = "adress" placeholder="Adress" >
         					    </div>
         					  </div>
                 		  <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="zone">Zone*</label>
+        					    <label style="color: #34ce57" class="control-label col-sm-6" for="zone">Zone*</label>
         					    <div class="col-sm-10">
         					      <input type="text" class="form-control" id="zone" name = "zone" placeholder="Zone" >
         					    </div>
         					  </div>
                 		  <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="contact">Mobile No.</label>
+        					    <label style="color: #34ce57" class="control-label col-sm-6" for="contact">Mobile No.</label>
         					    <div class="col-sm-10">
         					      <input type="text" class="form-control" id="contact" name = "contact" placeholder="Contact" >
         					    </div>
         					  </div>
                 		  <div class="form-group">
-        					    <label style="background-color: #34ce57" class="control-label col-sm-6" for="payment">Preferred Payment Method</label>
+        					    <label style="color: #34ce57" class="control-label col-sm-6" for="payment">Preferred Payment Method</label>
         					    <div class="col-sm-10">
         					      <input type="text" class="form-control" id="payment" name = "payment" placeholder="Bkash/Credit Card/Cash on Delivery" >
         					    </div>
@@ -129,7 +129,7 @@
                                 <div class="signup_right">
 
                  <div class="col-sm-10">
-                        <button type="submit"  name="submit">Submit</button>
+                        <button class="btn1" type="submit"  name="submit">Sign up</button>
         		    </div>
                                 </div>
                             </form>
