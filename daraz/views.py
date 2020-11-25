@@ -10,35 +10,36 @@ from django.db import connection
 from django import template
 
 register = template.Library()
-from django.conf import settings
+# from django.conf import settings
 # from django.core.cache import cache
 # cache._cache.flush_all()
-from django.contrib import  messages
+# from django.contrib import  messages
 
 class Index(View):
 
     def post(self , request):
-        product = request.POST.get('product')
-        remove = request.POST.get('remove')
-        cart = request.session.get('cart')
-        if cart:
-            quantity = cart.get(product)
-            if quantity:
-                if remove:
-                    if quantity<=1:
-                        cart.pop(product)
-                    else:
-                        cart[product] = quantity-1
-                else:
-                    cart[product] = quantity+1
-
-            else:
-                cart[product] = 1
-        else:
-            cart = {}
-            cart[product] = 1
-
-        request.session['cart'] = cart
+        updateCart(request)
+        # product = request.POST.get('product')
+        # remove = request.POST.get('remove')
+        # cart = request.session.get('cart')
+        # if cart:
+        #     quantity = cart.get(product)
+        #     if quantity:
+        #         if remove:
+        #             if quantity<=1:
+        #                 cart.pop(product)
+        #             else:
+        #                 cart[product] = quantity-1
+        #         else:
+        #             cart[product] = quantity+1
+        #
+        #     else:
+        #         cart[product] = 1
+        # else:
+        #     cart = {}
+        #     cart[product] = 1
+        #
+        # request.session['cart'] = cart
         print('cart', request.session['cart'])
         return redirect('homepage')
 
@@ -49,92 +50,92 @@ class Index(View):
         return HttpResponseRedirect(f'/home{request.get_full_path()[1:]}')
 
 
-def user_login(request):
-    print("i m log in")
-    try:
-        usr = request.session['username']
-        return redirect('/home/profile')
-    except:
-        print("not logged in please log in")
-    if request.method == 'POST':
-        # email = request.POST.get('email')
-        # print(email)
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print(password)
-        msg = 'Enjoy Buying!'
-        try:
-            cur = connection.cursor()
-            sql = "select USERNAME, KEY ,SALT, CUSTOMER_NAME, EMAIL,CUSTOMER_PHOTO from PEOPLE where USERNAME = %s"
-            print(sql)
-            print(username)
-            cur.execute(sql,[username])
-            result = cur.fetchone()
-            dic_res = []
-            # dbemail = None
-            dbkey = None
-            dbuser = None
-            dbsalt = None
-            name = None
-            dbuser = result[0]
-            dbkey = result[1]
-            dbsalt = result[2]
-            name = result[3]
-            email = result[4]
-            img = 'uploads/products/10000069-2_28-fresho-capsicum-green.jpg'
-            try:
-                img = request[5]
-            except:
-                print('failed to load image!')
-            request.session['img_url']=img
-            # for r in result:
-            #     dbuser = r[0]
-            #     dbkey = r[1]
-            #     dbsalt = r[2]
-            #     name = r[3]
-
-            print("from database:...")
-            print("dbuser:" + dbuser)
-            if dbuser == username:
-                print("username verified")
-                new_key =hashlib.pbkdf2_hmac(
-                    'sha256',  # The hash digest algorithm for HMAC
-                    password.encode('utf-8'),
-                    dbsalt ,
-                    100000, # 100,000 iterations of SHA-256
-                    # dklen = 128
-                )
-
-                if new_key == dbkey:
-                    print("success")
-                    print("sql:" + sql)
-                    # request.session.__setitem__('username',dbuser)
-                    request.session['username'] = dbuser
-                    request.session['name'] = name
-                    request.session['email'] = email
-                    # request.session.__setitem__('username',username)
-                    print("success2")
-                    print("usernameform session: " + request.session['username'])
-                    return redirect('/home')
-                    # return redirect('/home')
-                else:
-                    print("failed man!")
-                    print("dbkey: ")
-                    print(dbkey)
-                    print("userkey: ")
-                    print(new_key)
-                    return redirect('/home')
-
-            else:
-                print("wrong username!")
-                return redirect('/login')
-        except:
-            messages = "something went wrong! try again"
-            print(messages)
-            return render(request,'login.html',{'msg':messages})
-    else:
-        return render(request, 'login.html', {})
-
+# def user_login(request):
+#     print("i m log in")
+#     try:
+#         usr = request.session['username']
+#         return redirect('/home/profile')
+#     except:
+#         print("not logged in please log in")
+#     if request.method == 'POST':
+#         # email = request.POST.get('email')
+#         # print(email)
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         print(password)
+#         msg = 'Enjoy Buying!'
+#         try:
+#             cur = connection.cursor()
+#             sql = "select USERNAME, KEY ,SALT, CUSTOMER_NAME, EMAIL,CUSTOMER_PHOTO from PEOPLE where USERNAME = %s"
+#             print(sql)
+#             print(username)
+#             cur.execute(sql,[username])
+#             result = cur.fetchone()
+#             dic_res = []
+#             # dbemail = None
+#             dbkey = None
+#             dbuser = None
+#             dbsalt = None
+#             name = None
+#             dbuser = result[0]
+#             dbkey = result[1]
+#             dbsalt = result[2]
+#             name = result[3]
+#             email = result[4]
+#             img = 'uploads/products/10000069-2_28-fresho-capsicum-green.jpg'
+#             try:
+#                 img = request[5]
+#             except:
+#                 print('failed to load image!')
+#             request.session['img_url']=img
+#             # for r in result:
+#             #     dbuser = r[0]
+#             #     dbkey = r[1]
+#             #     dbsalt = r[2]
+#             #     name = r[3]
+#
+#             print("from database:...")
+#             print("dbuser:" + dbuser)
+#             if dbuser == username:
+#                 print("username verified")
+#                 new_key =hashlib.pbkdf2_hmac(
+#                     'sha256',  # The hash digest algorithm for HMAC
+#                     password.encode('utf-8'),
+#                     dbsalt ,
+#                     100000, # 100,000 iterations of SHA-256
+#                     # dklen = 128
+#                 )
+#
+#                 if new_key == dbkey:
+#                     print("success")
+#                     print("sql:" + sql)
+#                     # request.session.__setitem__('username',dbuser)
+#                     request.session['username'] = dbuser
+#                     request.session['name'] = name
+#                     request.session['email'] = email
+#                     # request.session.__setitem__('username',username)
+#                     print("success2")
+#                     print("usernameform session: " + request.session['username'])
+#                     return redirect('/home')
+#                     # return redirect('/home')
+#                 else:
+#                     print("failed man!")
+#                     print("dbkey: ")
+#                     print(dbkey)
+#                     print("userkey: ")
+#                     print(new_key)
+#                     return redirect('/home')
+#
+#             else:
+#                 print("wrong username!")
+#                 return redirect('/login')
+#         except:
+#             messages = "something went wrong! try again"
+#             print(messages)
+#             return render(request,'login.html',{'msg':messages})
+#     else:
+#         return render(request, 'login.html', {})
+#
 
 def test(request):
     return render(request,'hello.html',{})
@@ -143,52 +144,52 @@ def test(request):
 def lol(request):
     return render(request, 'lol.html', {})
 
-
-def signup(request):
-    print("i m in signup")
-    usr=None
-    try:
-        usr = request.session['username']
-        user_logout(request)
-    except:
-        print("sign up please!")
-        print("couldn't make it")
-    if request.method == 'POST':
-        id = random.randrange(start=1700000, step=1)
-        print("id:" + str(id))
-        name = request.POST.get('name')
-        print(name)
-        username = request.POST.get('username')
-        print(username)
-        password = request.POST.get('password')
-        email = request.POST.get('mail')
-        gender = request.POST.get('gender')
-        dob = request.POST.get('birthdate')
-        adress = request.POST.get('adress')
-        contact = request.POST.get('contact')
-        zone = request.POST.get('zone')
-        method = request.POST.get('paymentmethod')
-        salt = os.urandom(32)
-        # password = 'password123'
-        key = hashlib.pbkdf2_hmac(
-            'sha256',
-            password.encode('utf-8'),
-            salt,
-            100000,  # 100,000 iterations of SHA-256
-            # dklen=128  #128 byte key
-        )
-
-        sql = "INSERT INTO PEOPLE(CUSTOMER_ID, CUSTOMER_NAME, USERNAME,GENDER, BIRTHDATE, KEY, ADRESS, CONTACT, ZONE, EMAIL, PAYMENT_METHOD,SALT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        try:
-            cursor = connection.cursor()
-            cursor.execute(sql, [id, name, username, gender, dob, key, adress, contact, zone, email, method,salt])
-            connection.commit()
-            cursor.close()
-            return redirect('/home/login')
-        except:
-            return render(request,'signup1.html',{'message':'Something went wrong!'})
-    else:
-        return render(request, 'signup1.html', {})
+#
+# def signup(request):
+#     print("i m in signup")
+#     usr=None
+#     try:
+#         usr = request.session['username']
+#         user_logout(request)
+#     except:
+#         print("sign up please!")
+#         print("couldn't make it")
+#     if request.method == 'POST':
+#         id = random.randrange(start=1700000, step=1)
+#         print("id:" + str(id))
+#         name = request.POST.get('name')
+#         print(name)
+#         username = request.POST.get('username')
+#         print(username)
+#         password = request.POST.get('password')
+#         email = request.POST.get('mail')
+#         gender = request.POST.get('gender')
+#         dob = request.POST.get('birthdate')
+#         adress = request.POST.get('adress')
+#         contact = request.POST.get('contact')
+#         zone = request.POST.get('zone')
+#         method = request.POST.get('paymentmethod')
+#         salt = os.urandom(32)
+#         # password = 'password123'
+#         key = hashlib.pbkdf2_hmac(
+#             'sha256',
+#             password.encode('utf-8'),
+#             salt,
+#             100000,  # 100,000 iterations of SHA-256
+#             # dklen=128  #128 byte key
+#         )
+#
+#         sql = "INSERT INTO PEOPLE(CUSTOMER_ID, CUSTOMER_NAME, USERNAME,GENDER, BIRTHDATE, KEY, ADRESS, CONTACT, ZONE, EMAIL, PAYMENT_METHOD,SALT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+#         try:
+#             cursor = connection.cursor()
+#             cursor.execute(sql, [id, name, username, gender, dob, key, adress, contact, zone, email, method,salt])
+#             connection.commit()
+#             cursor.close()
+#             return redirect('/home/login')
+#         except:
+#             return render(request,'signup1.html',{'message':'Something went wrong!'})
+#     else:
+#         return render(request, 'signup1.html', {})
 
 
 def products(request):
@@ -411,61 +412,61 @@ def list_jobs(request):
     print("showing...")
     return render(request, 'list_jobs.html', {'people': dict_result})
 
-
-def selllogin(request):
-    try:
-        name = request.session['shopname']
-        return redirect('/saleproduct')
-    except:
-        print()
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        sql = "select SHOP_NAME, SHOP_ID from SHOPS where SHOPPASSWORD = %s"
-        cur = connection.cursor()
-        cur.execute(sql,[password])
-        result = cur.fetchall()
-        shopname =None
-        cur.close()
-        dbid =None
-        for r in result:
-            dbid = r[1]
-            shopname = r[0]
-        print(dbid)
-        if dbid is not None:
-            print("success")
-            request.session['shopusername'] = username
-            request.session['shopname'] = shopname
-            request.session['shopstatus'] = True
-            # return render(request,'saleProducts.html',{})
-            return redirect('/saleproduct')
-        else:
-            print("failed bitch!")
-            return redirect('/saleLogin')
-    else:
-        return render(request,'sellingLogin.html',{})
-
-def sellsignup(request):
-
-    if request.method == 'POST':
-        shopid = random.randrange(start=110, step=1)
-        username = request.POST.get('username')
-        zone = request.POST.get('zone')
-        pwd = request.POST.get('password')
-        shopname = request.POST.get('name')
-        shopcat = request.POST.get('cat')
-        contact = request.POST.get('contact')
-        sql = "INSERT INTO SHOPS(SHOP_ID, SHOP_NAME, ZONE, CONTACT_INFO, SHOPPASSWORD, SHOP_CAT, SHOP_USERNAME) VALUES (%s,%s,%s,%s,%s,%s,%s);"
-        cur = connection.cursor()
-        cur.execute(sql, [shopid, shopname, zone, contact, pwd, shopcat, username])
-        connection.commit()
-        cur.close()
-        return redirect('/home/sell/saleLogin')
-        # return redirect('saleLogin/')
-    else:
-        return render(request, 'sellsignup.html',{})
-
-
+#
+# def selllogin(request):
+#     try:
+#         name = request.session['shopname']
+#         return redirect('/saleproduct')
+#     except:
+#         print()
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         sql = "select SHOP_NAME, SHOP_ID from SHOPS where SHOPPASSWORD = %s"
+#         cur = connection.cursor()
+#         cur.execute(sql,[password])
+#         result = cur.fetchall()
+#         shopname =None
+#         cur.close()
+#         dbid =None
+#         for r in result:
+#             dbid = r[1]
+#             shopname = r[0]
+#         print(dbid)
+#         if dbid is not None:
+#             print("success")
+#             request.session['shopusername'] = username
+#             request.session['shopname'] = shopname
+#             request.session['shopstatus'] = True
+#             # return render(request,'saleProducts.html',{})
+#             return redirect('/saleproduct')
+#         else:
+#             print("failed bitch!")
+#             return redirect('/saleLogin')
+#     else:
+#         return render(request,'sellingLogin.html',{})
+#
+# def sellsignup(request):
+#
+#     if request.method == 'POST':
+#         shopid = random.randrange(start=110, step=1)
+#         username = request.POST.get('username')
+#         zone = request.POST.get('zone')
+#         pwd = request.POST.get('password')
+#         shopname = request.POST.get('name')
+#         shopcat = request.POST.get('cat')
+#         contact = request.POST.get('contact')
+#         sql = "INSERT INTO SHOPS(SHOP_ID, SHOP_NAME, ZONE, CONTACT_INFO, SHOPPASSWORD, SHOP_CAT, SHOP_USERNAME) VALUES (%s,%s,%s,%s,%s,%s,%s);"
+#         cur = connection.cursor()
+#         cur.execute(sql, [shopid, shopname, zone, contact, pwd, shopcat, username])
+#         connection.commit()
+#         cur.close()
+#         return redirect('/home/sell/saleLogin')
+#         # return redirect('saleLogin/')
+#     else:
+#         return render(request, 'sellsignup.html',{})
+#
+#
 def profile(request):
     username = None
     try:
@@ -550,126 +551,126 @@ def accountsettings(request):
         return render(request, 'accountsettings.html', {})
 
 
-
-def user_logout(request):
-    try:
-            # del request.session['username']
-            # del request.session['name']
-            request.session.delete('username')
-            request.session.delete('name')
-            # request.session.clear()
-            print("logged out")
-            # user = request.session['username']
-            return redirect('/home/signup')
-
-            # if user is None:
-            #     print("log out success")
-
-    except:
-        print("something is wrong")
-        return redirect('/home')
-
-
-def saleLogout(request):
-    try:
-            # shopuser = request.session['shopusername']
-        # if shopuser is not None:
-            request.session.delete('shopusername')
-            request.session.delete('shopname')
-            request.session.delete('shopstatus')
-
-            # del request.session['shopusername']
-            print("logged out")
-            # user = request.session['username']
-            return redirect('/home/sell/')
-            # if user is None:
-            #     print("log out success")
-        # else:
-            return redirect('/home/sell')
-    except:
-        print("something is wrong")
-        return redirect('/home/sell')
-
-def sale(request):
-    shopn= None
-    try:
-        shopn = request.session['shopname']
-        status = request.session['shopstatus']
-
-    except:
-        print("shop not found!")
-        return redirect('/home/sell')
-    if request.method == 'POST':
-        print("i m in sales...")
-        id = random.randrange(start=100, step=1)
-        catid = random.randrange(start=200, step=1)
-        name = request.POST.get('name')
-        cat = request.POST.get('cat')
-        price = request.POST.get('price')
-        quantity = request.POST.get('quantity')
-        specs = request.POST.get('specs')
-        brand = request.POST.get('brand')
-        discount = request.POST.get('discount')
-
-        # photo = request.POST.get('filename')
-        # print(photo)
-        # name = str(id) + ".jpg"
-        # img = request.FILES['propic',False]
-        # img_extension = os.path.splitext(img.name)[1]
-        # user_folder = 'static/images'
-        # if not os.path.exists(user_folder):
-        #     os.mkdir(user_folder)
-
-        # img_save_path = user_folder + 'propic' + str(id) + img_extension
-        # img_save_path = user_folder + 'pro_pic'+img_extension
-        # img_url = '/static/images/' + 'propic' + str(id) + img_extension
-        # request.session['pro_img_url'] = img_url
-        # with open(img_save_path, 'wb') as f:
-        #     for chunk in img.chunks():
-        #         f.write(chunk)
-
-        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
-        # cursor.execute(sql, [username, email, Address, contact, img_url, dbid])
-
-        cur = connection.cursor()
-        usrname = request.session['shopusername']
-        print("shopusername: "+ usrname)
-        cur.execute("SELECT SHOP_NAME, SHOP_ID FROM SHOPS where SHOP_USERNAME = %s",[usrname])
-        res = cur.fetchall()
-        shopid = None
-        shop =  None
-        for r in res:
-            shop = r[0]
-            shopid = r[1]
-
-        # shopname = shopname[0]
-
-        sqlforshopid = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
-        try:
-            # cur.execute(sqlforshopid, [shopname])
-
-            # res = cur.fetchall()
-            # shopid= None
-            # for r in res:
-            #     shopid = r[0]
-
-            print("db_shop_id: " + str(shopid))
-            sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
-
-            sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID,BRAND, PRODUCT_NAME, PRODUCT_PHOTO, DISCOUNT, CAT_ID,STATUS, PRICE, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            cur.execute(sql, [catid, cat, quantity])
-            cur.execute(sql1, [id,brand, name, 'static/images/cart.png',discount, catid, 'Available', price, quantity, specs, shopid])
-            connection.commit()
-            cur.close()
-        except:
-
-            return render(request,'saleProducts.html',{'message':'SOMETHING IS WRONG! TRY AGAIN PLEASE!','name':shop})
-        # cur1 = connection.cursor()
-        # return redirect('/sold')
-        return render(request, 'saleProducts.html',{'sale':'SELL MORE!','name':shop})
-    else:
-        return render(request,'saleProducts.html',{'name':shopn})
-
+#
+# def user_logout(request):
+#     try:
+#             # del request.session['username']
+#             # del request.session['name']
+#             request.session.delete('username')
+#             request.session.delete('name')
+#             # request.session.clear()
+#             print("logged out")
+#             # user = request.session['username']
+#             return redirect('/home/signup')
+#
+#             # if user is None:
+#             #     print("log out success")
+#
+#     except:
+#         print("something is wrong")
+#         return redirect('/home')
+#
+#
+# def saleLogout(request):
+#     try:
+#             # shopuser = request.session['shopusername']
+#         # if shopuser is not None:
+#             request.session.delete('shopusername')
+#             request.session.delete('shopname')
+#             request.session.delete('shopstatus')
+#
+#             # del request.session['shopusername']
+#             print("logged out")
+#             # user = request.session['username']
+#             return redirect('/home/sell/')
+#             # if user is None:
+#             #     print("log out success")
+#         # else:
+#             return redirect('/home/sell')
+#     except:
+#         print("something is wrong")
+#         return redirect('/home/sell')
+#
+# def sale(request):
+#     shopn= None
+#     try:
+#         shopn = request.session['shopname']
+#         status = request.session['shopstatus']
+#
+#     except:
+#         print("shop not found!")
+#         return redirect('/home/sell')
+#     if request.method == 'POST':
+#         print("i m in sales...")
+#         id = random.randrange(start=100, step=1)
+#         catid = random.randrange(start=200, step=1)
+#         name = request.POST.get('name')
+#         cat = request.POST.get('cat')
+#         price = request.POST.get('price')
+#         quantity = request.POST.get('quantity')
+#         specs = request.POST.get('specs')
+#         brand = request.POST.get('brand')
+#         discount = request.POST.get('discount')
+#
+#         # photo = request.POST.get('filename')
+#         # print(photo)
+#         # name = str(id) + ".jpg"
+#         # img = request.FILES['propic',False]
+#         # img_extension = os.path.splitext(img.name)[1]
+#         # user_folder = 'static/images'
+#         # if not os.path.exists(user_folder):
+#         #     os.mkdir(user_folder)
+#
+#         # img_save_path = user_folder + 'propic' + str(id) + img_extension
+#         # img_save_path = user_folder + 'pro_pic'+img_extension
+#         # img_url = '/static/images/' + 'propic' + str(id) + img_extension
+#         # request.session['pro_img_url'] = img_url
+#         # with open(img_save_path, 'wb') as f:
+#         #     for chunk in img.chunks():
+#         #         f.write(chunk)
+#
+#         sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
+#         # cursor.execute(sql, [username, email, Address, contact, img_url, dbid])
+#
+#         cur = connection.cursor()
+#         usrname = request.session['shopusername']
+#         print("shopusername: "+ usrname)
+#         cur.execute("SELECT SHOP_NAME, SHOP_ID FROM SHOPS where SHOP_USERNAME = %s",[usrname])
+#         res = cur.fetchall()
+#         shopid = None
+#         shop =  None
+#         for r in res:
+#             shop = r[0]
+#             shopid = r[1]
+#
+#         # shopname = shopname[0]
+#
+#         sqlforshopid = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
+#         try:
+#             # cur.execute(sqlforshopid, [shopname])
+#
+#             # res = cur.fetchall()
+#             # shopid= None
+#             # for r in res:
+#             #     shopid = r[0]
+#
+#             print("db_shop_id: " + str(shopid))
+#             sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
+#
+#             sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID,BRAND, PRODUCT_NAME, PRODUCT_PHOTO, DISCOUNT, CAT_ID,STATUS, PRICE, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+#             cur.execute(sql, [catid, cat, quantity])
+#             cur.execute(sql1, [id,brand, name, 'static/images/cart.png',discount, catid, 'Available', price, quantity, specs, shopid])
+#             connection.commit()
+#             cur.close()
+#         except:
+#
+#             return render(request,'saleProducts.html',{'message':'SOMETHING IS WRONG! TRY AGAIN PLEASE!','name':shop})
+#         # cur1 = connection.cursor()
+#         # return redirect('/sold')
+#         return render(request, 'saleProducts.html',{'sale':'SELL MORE!','name':shop})
+#     else:
+#         return render(request,'saleProducts.html',{'name':shopn})
+#
 
 #
 # def order(request):
@@ -770,7 +771,7 @@ def cart(request):
          print(car)
 
          print(keys)
-         print(car['2001'])
+         # print(car['2001'])
          product_dic = []
          total = 0
          cur = connection.cursor()
@@ -923,6 +924,7 @@ def getName(request):
         return name
     except:
         return 'Anonymous'
+
 
 def updateCart(request):
 
