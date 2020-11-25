@@ -475,7 +475,7 @@ def profile(request):
         return redirect('/home/login')
     print("i m in profile")
     print(username)
-    sql = "select CUSTOMER_NAME, EMAIL, CONTACT, ZONE from PEOPLE where USERNAME = %s"
+    sql = "select CUSTOMER_NAME, EMAIL, CONTACT,ADRESS, ZONE from PEOPLE where USERNAME = %s"
     result = None
     try:
             cur = connection.cursor()
@@ -491,9 +491,10 @@ def profile(request):
         email = r[1]
         contact = r[2]
         adress = r[3]
-        dict_result = {'name':name,'email':email,'contact':contact,'adress':adress}
+        zone = r[4]
+        dict_result = {'name':name,'zone':zone,'email':email,'contact':contact,'adress':adress}
 
-    return render(request,'Profile.html',dict_result)
+    return render(request,'profile1.html',{'details':dict_result})
 
 
 def accountsettings(request):

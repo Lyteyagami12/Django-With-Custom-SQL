@@ -1,172 +1,12 @@
- <!DOCTYPE html>
-<html>
-<head>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+{% load cart %}
+{% load custom_filter %}
 
 
-	<title>Daraz Mobile App - Online Shopping App In Bangladesh - Daraz.com.bd</title>
-
-
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css">
-
-	<link rel="shortcut icon" type="image/x-icon" href="images/daraz.png">
-
-	
-
-
-
-
-
-
-</head>
-<body>
-
-	<section class="top_bar">
-		<div class="mid">
-			<div class="mid_right">
-				<ul>
-			
-				    <li><a href="#" style=" color: #e89f2b;">SAVE MORE ON APP</a></li>
-				    <li><a href="sell.html">SELL ON DARAZ</a></li>
-				    <li><a href="#">CUSTOMER CARE</a>
-				    	<ul>
-				    		<li><a href="#"></a>Help Center</li>
-				    		<li><a href="#"></a>Order</li>
-				    		<li><a href="#"></a>Shipping & Delivery</li>
-				    		<li><a href="#"></a>Payment</li>
-				    		<li><a href="#"></a>Returns & Refunds</li>
-
-				    	</ul>
-				    	
-
-				    </li>
-				    <li><a href="#"> TRACK MY ORDER</a></li>
-				    <li><a href="login.html">LOGIN</a></li>
-				    <li><a href="signup.html">SIGNUP</a></li>
-				    <li><a href="#">ভাষা</a>
-
-				    	<ul>
-				    		<li><a href="#">Bangla</a></li>
-				    		<li><a href="#">English</a></li>
-				    	</ul>
-
-
-
-				    </li>
-			  </ul>
-			</div>
-		</div>
-	</section>
-
-
-
-	<section class="toppbar">
-			<div class="miid">
-				<div class="midright">
-					<div class="midright_mid">
-
-					   <div class="logo">
-
-				
-					   <a href="#"><img src="images/logo.png"></a>
-				       </div>
-			
-
-
-				       <form class="example" action="">
-				         <input type="text" placeholder="Search in daraz" name="search">
-				         <button type="submit"><i class="fa fa-search"></i></button>
-				       </form>
-
-
-			        </div>
-
-			    </div>
-		
-				<div class="midleft">
-
-					<div class="midmid">
-
-					    <div class="cart">
-
-						 <a href="login.html"><img src="images/cart.png"></a>
-
-						
-
-					    </div>
-					    <div class="imag">
-				
-					    <a href="#"><img src="images/img.png"></a>
-
-					    </div>
-
- 				    </div>
-				  
-				</div>
-			</div>
-
- 	</section>
-
-
-
-
-<div class="catagory">
-
-	<div class="mid">
-
-
-
-
-	<div class="dropdown">
-
-        <button class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown">catagories</button>
-
-        <ul class="dropdown-menu">
-
-
-           
-           <li class="dropdown-item"><a href="products.html">Electronics Health & Beauties</a></li>
-           <li class="dropdown-item"><a href="products.html">Babies & Toys </a></li>
-           <li class="dropdown-item"><a href="products.html">Groceries & Pets </a></li>
-           <li class="dropdown-item"><a href="products.html"> Homes & Lifestyle</a></li>
-           <li class="dropdown-item"><a href="products.html"> Women's Fashion</a></li>
-           <li class="dropdown-item"><a href="products.html">TV & Men's Fashion </a></li>
-           <li class="dropdown-item"><a href="products.html"> Watches & Accessories</a></li>
-           <li class="dropdown-item"><a href="products.html"> Sports & Outdoor </a></li>
-           <li class="dropdown-item"><a href="products.html">Auto Motive & Motorbike </a></li>
- 
-
-
-        </ul>
- 
-
-    </div>
-
-    <div class="right_menu">
-
-
-        <li><a href="#"> Digital Sheba</a></li>
-	    <li><a href="#">dMart</a></li>
-	    <li><a href="#"> Global Collection</a></li>
-        <li><a href="#"> DarazMall</a></li>
-        <li><a href="#">Discounts</a></li>
-
-    </div>
-
-    </div>
-	
-
-
-</div>
-
-
-
-
-<div class="profile">
+<div class="container-fluid mt-3">
 
 	<div class="row">
 
@@ -221,9 +61,13 @@
 
 		<div class="row">
 			<div class="personal-profile col-lg-4">
-				<h3>Arafat Hossain</h3><a href="">EDIT</a>
-				<p><a href="">email</a></p>
-				<p><a href="Unsubscribe from our newsletter"></a></p>
+				<h3>{{ details.name}}</h3><a href="">EDIT</a>
+				<p><a href="">{{ details.email }}</a></p>
+                <p><a href="">Address: {{ details.adress }}</a></p>
+                <p><a href="">Zone: {{ details.zone }}</a></p>
+                <p><a href="">Contact: {{ details.contact }}</a></p>
+
+				<p><a href="#"></a></p>
 				
 			</div>
 			<div class="address-book col-lg-4" >
@@ -245,55 +89,57 @@
 		
 		</div>
 
-
-		<h2>Recent Orders</h2>
-
-
-		<table class="table table-striped">
-		  <thead>
-		    <tr>
-		      <th scope="col">Recent Orders</th>
-		      <th scope="col">palaced-on</th>
-		      <th scope="col">Image</th>
-		      <th scope="col">Total</th>
-		      <th scope="col"></th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr>
-		    
-		      <td>356690977</td>
-		      <td>11.02.2020</td>
-		      <td><img src="images/pro1.jpg"></td>
-		      <td>৳ 344</td>
-		      <td><a href="">MANAGE</a></td>
-		    </tr>
-		    <tr>
-		     
-		      <td>356690977</td>
-		      <td>11.02.2020</td>
-		      <td><img src="images/pro2.jpg"></td>
-		      <td> ৳ 344</td>
-		      <td><a href="">MANAGE</a></td>
-		    </tr>
-		    <tr>
-		    
-		      <td>356690977</td>
-		      <td>11.02.2020</td>
-		      <td><img src="images/pro3.jpg"></td>
-		      <td>৳ 344</td>
-		      <td><a href="">MANAGE</a></td>
-		    </tr>
-		    <tr>
-		     
-		      <td>356690977</td>
-		      <td>11.02.2020</td>
-		      <td><img src="images/pro5.jpg"></td>
-		      <td>৳ 344</td>
-		      <td><a href="">MANAGE</a></td>
-		    </tr>
-		  </tbody>
-		</table>		
+{##}
+{#		<h2>Recent Orders</h2>#}
+{##}
+{##}
+{#		<table class="table table-striped">#}
+{#		  <thead>#}
+{#		    <tr>#}
+{#		      <th scope="col">Recent Orders</th>#}
+{#		      <th scope="col">palaced-on</th>#}
+{#		      <th scope="col">Image</th>#}
+{#		      <th scope="col">Total</th>#}
+{#		      <th scope="col"></th>#}
+{#		    </tr>#}
+{#		  </thead>#}
+{#		  <tbody>#}
+{#		    <tr>#}
+{##}
+{#		      <td>356690977</td>#}
+{#		      <td>11.02.2020</td>#}
+{#		      <td><img src="{% static 'images/pro1.jpg' %}"></td>#}
+{#		      <td>৳ 344</td>#}
+{#		      <td><a href="">MANAGE</a></td>#}
+{#		    </tr>#}
+{#		    <tr>#}
+{##}
+{#		      <td>356690977</td>#}
+{#		      <td>11.02.2020</td>#}
+{#                <div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem">#}
+{#		      <td><img class="card-img " src="{% static 'images/pro2.jpg' %}"></td>#}
+{##}
+{#		      <td> ৳ 344</td>#}
+{#		      <td><a href="">MANAGE</a></td>#}
+{#		    </tr>#}
+{#		    <tr>#}
+{##}
+{#		      <td>356690977</td>#}
+{#		      <td>11.02.2020</td>#}
+{#		      <td><img src="{% static 'images/pro3.jpg' %}"></td>#}
+{#		      <td>৳ 344</td>#}
+{#		      <td><a href="">MANAGE</a></td>#}
+{#		    </tr>#}
+{#		    <tr>#}
+{##}
+{#		      <td>356690977</td>#}
+{#		      <td>11.02.2020</td>#}
+{#		      <td><img src="{% static 'images/pro5.jpg' %}"></td>#}
+{#		      <td>৳ 344</td>#}
+{#		      <td><a href="">MANAGE</a></td>#}
+{#		    </tr>#}
+{#		  </tbody>#}
+{#		</table>#}
 		
 	</div>
 
@@ -305,31 +151,11 @@
 
 
 
-<div class="footer">
 
-	<img src="images/footer.png">
-
-
-</div>
-
-
-<div class="lastpart">
-	
-	<img src="images/lastpart.png">
-</div>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/progressbar.js' %}"></script>
 
 
-
-
-
-    <script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/progressbar.js"></script>
-
-
-		
-		
-	
-</body>
-</html>
+{% endblock %}

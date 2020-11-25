@@ -26,7 +26,7 @@ def user_login(request):
         msg = 'Enjoy Buying!'
         try:
             cur = connection.cursor()
-            sql = "select USERNAME, KEY ,SALT, CUSTOMER_NAME, EMAIL,CUSTOMER_PHOTO from PEOPLE where USERNAME = %s"
+            sql = "select USERNAME, KEY ,SALT, CUSTOMER_NAME, EMAIL,CUSTOMER_PHOTO,ADRESS,ZONE,CONTACT from PEOPLE where USERNAME = %s"
             print(sql)
             print(username)
             cur.execute(sql,[username])
@@ -42,6 +42,9 @@ def user_login(request):
             dbsalt = result[2]
             name = result[3]
             email = result[4]
+            address = result[5]
+            zone = result[6]
+            contact = result[7]
             img = 'uploads/products/10000069-2_28-fresho-capsicum-green.jpg'
             try:
                 img = request[5]
@@ -73,6 +76,10 @@ def user_login(request):
                     request.session['username'] = dbuser
                     request.session['name'] = name
                     request.session['email'] = email
+                    request.session['address'] = address
+                    request.session['zone'] = zone
+                    request.session['contact'] = contact
+
                     # request.session.__setitem__('username',username)
                     print("success2")
                     print("usernameform session: " + request.session['username'])
