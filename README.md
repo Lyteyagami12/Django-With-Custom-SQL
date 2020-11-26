@@ -1,6 +1,7 @@
 # Django Project with Custom SQL Queries 
 
-THIS IS A DJANGO PROJECT INSPIRED FROM DARAZ- ONLINE SHOPPING MARKET. Here we used CX_Oracle for Custom SQL queries. 
+This is a django project inspired from DARAZ- ONLINE SHOPPING MARKET- https://www.daraz.com.bd/
+Here we used CX_Oracle for Custom SQL queries. 
 TO RUN THIS PROJECT-----
 
 
