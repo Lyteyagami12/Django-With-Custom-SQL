@@ -1,8 +1,10 @@
 # Django Project with Custom SQL Queries 
 
 This is a django project inspired from DARAZ- ONLINE SHOPPING MARKET- https://www.daraz.com.bd/
+
 Here we used CX_Oracle for Custom SQL queries. 
-TO RUN THIS PROJECT-----
+
+TO RUN THIS PROJECT FOLLOW THE STEPS BELOW:
 
 
 Prequisite: You need to  CONFIGURE PIP ENVIRONMENT on your System/DEVICE  (For more details about pip environment Just google it)
