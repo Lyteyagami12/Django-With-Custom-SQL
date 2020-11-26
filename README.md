@@ -31,7 +31,7 @@ NOTE THAT: 'manage.py', 'Pipfile' and 'Pipfile.lock' these three files should be
 
 STEP-3: 
    
-   IF EVERYTHING IS  SET THEN Go to 
+   IF EVERYTHING IS  SET THEN Go to CMD/WINDOWS POWERSHELL
     
     run this command to activate pip environment:
           
