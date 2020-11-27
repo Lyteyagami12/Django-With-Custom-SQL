@@ -88,7 +88,10 @@
 						{% else %}
 						<form action="/" method="POST" class="btn-block">
 							{% csrf_token %}
-							<input hidden type="number" name='cart' value='{{product.id}}'>
+							<input hidden type="number" name='buyproduct' value='{{product.id}}'>
+                            <input hidden type="text" name='url' value='{{product.photo}}'>
+							<input hidden type="text" name='pro_name' value='{{product.name}}'>
+
 							<button style="background-color:#2abbe8" type="submit" class="float-right btn btn-light  form-control"
                             >Buy Now</button>
                         </form>
@@ -96,6 +99,7 @@
 							{% csrf_token %}
 							<input hidden type="number" name='product' value='{{product.id}}'>
 							<input hidden type="text" name='url' value='{{product.photo}}'>
+							<input hidden type="text" name='pro_name' value='{{product.name}}'>
 
                             <button style="background-color: #ff5722" type="submit" class="float-right btn btn-light  form-control"
                             >Add to Cart</button>

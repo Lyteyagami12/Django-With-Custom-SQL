@@ -611,9 +611,12 @@ def cart(request):
          print("i m n try")
          try:
              car = request.session.get('cart')
-             keys = list(car.keys())
-             pro_url = request.session.get('pro_url')
-             prokeys = list(pro_url.keys())
+             if car:
+                 keys = list(car.keys())
+                 pro_url = request.session.get('pro_url')
+                 prokeys = list(pro_url.keys())
+             else:
+                 return redirect('homepage')
          except:
              return redirect('/home')
          # keys = cart.keys()
@@ -641,6 +644,7 @@ def cart(request):
 
              quantity = int(car[str(id)])
              total+=quantity*price
+             request.session['total'] = total
              row = {'name':name,'price':price,'product_img':photo_url,'specs':desc,'id':id,'quantity':quantity,'price_total':quantity*price }
              product_dic.append(row)
          cur.close()
@@ -792,16 +796,19 @@ def updateCart(request):
         cart = request.session.get('cart')
         pro_url = request.session.get('pro_url')
         img_url = request.POST.get('url')
-
+        product_names = request.session.get('productList')
+        product_name = request.POST.get('pro_name')
         if img_url:
             print('img is not none')
         else:
             img_url = pro_url.get(product)
-        print('imgurl in update:' + str(img_url))
+        # print('imgurl in update:' + str(img_url))
+        # print('product_name: '+product_name)
         if cart:
             quantity = cart.get(product)
             if quantity:
                 pro_url[product] = img_url
+                product_names[product] = product_name
                 if remove:
                     if quantity<=1:
                         cart.pop(product)
@@ -814,17 +821,21 @@ def updateCart(request):
             else:
                 cart[product] = 1
                 pro_url[product] = img_url
+                product_names[product] = product_name
+
 
         else:
             cart = {}
             pro_url={}
-
+            product_names = {}
+            product_names[product] = product_name
             pro_url[product] = img_url
 
             cart[product] = 1
 
         request.session['cart'] = cart
         request.session['pro_url'] = pro_url
+        request.session['productList'] = product_names
 
 
 
