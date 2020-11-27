@@ -24,7 +24,7 @@
                 {% for product in products %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td><img style="height: 80px;" class="rounded-circle" src="{% static 'uploads/products/71aQIPEiPwL._UL1500__mhPaI81.jpg' %}" alt=""></td>
+                    <td><img style="height: 80px;" class="rounded-circle" src="{% static product.product_img %}" alt=""></td>
                     <td>{{product.name}}</td>
                     <td>{{product.price|currency}}</td>
                     <td>

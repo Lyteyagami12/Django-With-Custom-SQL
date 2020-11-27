@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load custom_filter %}
 {% load static %}
 {% block content %}
 
 {% load cart %}
-{% load custom_filter %}
+
 <!-- body -->
 <nav class="one-edge-shadow
 
@@ -55,11 +56,15 @@
 		<div id='products' class="col-lg-9 mx-auto">
 			<div class="row mx-auto">
 				{% for product in products %}
-                    <div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem">
-					<img class="card-img-top" src="{% static 'uploads/products/91ZV6MDwl3L._UL1500_.jpg' %}"  alt="Card image cap">
-					<div class="card-body">
+                    <div class="card mx-auto mb-3" id="{{ product.id }}" style="width: 18rem">
+{#					<img class="card-img-top" src="{% static 'uploads/products/91ZV6MDwl3L._UL1500_.jpg' %}"  alt="Card image cap">#}
+                    <img class="card-img-top" src="{% static product.photo %}"  alt="Card image cap">
+
+                    <div class="card-body">
 						<p class="card-title">{{product.name}}</p>
+                        <p class="card-title">Discount: {{product.discount}}%</p>
 						<p class="card-text"><b>{{product.price|currency}}</b></p>
+{#						<p class="card-text"><b>{{product.desc}}</b></p>#}
 {#						<!-- {{product | is_in_cart:request.session.cart }} -->#}
 					</div>
 
@@ -90,6 +95,7 @@
                         <form action="/" method="POST" class="btn-block">
 							{% csrf_token %}
 							<input hidden type="number" name='product' value='{{product.id}}'>
+							<input hidden type="text" name='url' value='{{product.photo}}'>
 
                             <button style="background-color: #ff5722" type="submit" class="float-right btn btn-light  form-control"
                             >Add to Cart</button>

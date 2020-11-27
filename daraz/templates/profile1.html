@@ -61,9 +61,13 @@
 
 		<div class="row">
 			<div class="personal-profile col-lg-4">
-				<h3>{{ details.name}}</h3><a href="">EDIT</a>
+                <h3>{{ details.name}}</h3>
+                 <div class="col-log"  style="width: 18rem">
+                     <a ><img style="width:18rem "  src = "{% static request.session.img_url %}"></a>
+                </div>
+                <button class="btn" style="background-color: #2abbe8"><a  href="/home/profile/accountsettings"><h4 style="color: #0b2e13">Edit Profile</h4></a></button>
 				<p><a href="">{{ details.email }}</a></p>
-                <p><a href="">Address: {{ details.adress }}</a></p>
+                <p><a href="">Address: {{ details.address }}</a></p>
                 <p><a href="">Zone: {{ details.zone }}</a></p>
                 <p><a href="">Contact: {{ details.contact }}</a></p>
 

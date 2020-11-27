@@ -284,21 +284,21 @@ def products(request):
             print('product fetch failed!')
             return redirect('/home')
         dic_res = []
+
         for r in result:
             product_id = r[0]
             product_name = r[1]
-            # cat = r[2
-            product_photo = r[3]
-            status = r[4]
-            price = r[5]
-            ##password
-            # price = r[6]
-            discount = r[6]
-            quantity = r[7];
-            description = r[8]
-            shopid = r[9]
-            brand = r[10]
-
+            status = r[3]
+            price = r[4]
+            discount = r[5]
+            quantity = r[6];
+            description = r[7]
+            shopid = r[8]
+            brand = r[9]
+            imgurl = r[10]
+            if imgurl is None:
+                # imgurl = 'static/uploads/product.jpg'
+                imgurl = 'uploads/products/product.jpg'
             resultt = None
             try:
                 cur = connection.cursor()
@@ -306,21 +306,13 @@ def products(request):
                 resultt = cur.fetchall()
             except:
                 print("Shop not found!")
-                return render(request,'index.html', {'msg':'something went wrong!'})
-            shopName = None
+                return render(request,'index3.html', {'msg':'something went wrong!'})
+            shopName = 'trumpshop'
 
-            for r1 in resultt:
-                shopName = r1[0]
-
-            # print("shop name :" + str(shopName))
-            row = {'id': product_id, 'shop': shopName,'photo':product_photo,'name': product_name, 'price':price,'brand':brand,
+            row = {'id': product_id, 'shop': shopName,'discount':discount,'photo':imgurl,'name': product_name, 'price':price,'brand':brand,
                    'status': status, 'desc': description}
             dic_res.append(row)
 
-        # print("products: ",end=' ')
-        # print(dic_res)
-        # print("dic len: " ,end=' ')
-        # print(len(dic_res))
         cur.close()
         cur = connection.cursor()
         catdic = []
@@ -346,19 +338,6 @@ def products(request):
         except:
             return render(request, 'index3.html', {'products':dic_res,'catagories':dic_res,'login': message, 'logout': logout})
 
-
-def home(request):
-    message = 'LOG IN'
-    logout = 'SIGN UP'
-    try:
-        name = request.session['name']
-        message = name
-        logout = 'LOG OUT'
-        return render(request, 'index.html', {'login': message, 'logout': logout})
-    except:
-        return render(request, 'index.html', {'login': message, 'logout': logout})
-
-
 def sell(request):
     name = None
     try:
@@ -370,17 +349,6 @@ def sell(request):
 
 
 def list_jobs(request):
-    # cursor = connection.cursor()
-    # sql = "INSERT INTO PEOPLE VALUES(%s,%s,%s,%s)"
-    # cursor.execute(sql,['NEW_JOB_1','Something New 1',5000,9000])
-    # connection.commit()
-    # cursor.close()
-
-    # cursor = connection.cursor()
-    # sql = "SELECT * FROM JOBS"
-    # cursor.execute(sql)
-    # result = cursor.fetchall()
-
     cursor = connection.cursor()
     sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, ZONE, EMAIL FROM PEOPLE"
     cursor.execute(sql)
@@ -472,9 +440,10 @@ def profile(request):
     try:
         username = request.session['username']
     except:
+        print('in profile and not found username')
         return redirect('/home/login')
     print("i m in profile")
-    print(username)
+
     sql = "select CUSTOMER_NAME, EMAIL, CONTACT,ADRESS, ZONE from PEOPLE where USERNAME = %s"
     result = None
     try:
@@ -483,7 +452,7 @@ def profile(request):
             result = cur.fetchall()
             cur.close()
     except:
-        print("Log in please!")
+        print("in profile and couldn't load from db!")
         return redirect('/login')
     dict_result = None
     for r in result:
@@ -492,7 +461,8 @@ def profile(request):
         contact = r[2]
         adress = r[3]
         zone = r[4]
-        dict_result = {'name':name,'zone':zone,'email':email,'contact':contact,'adress':adress}
+        print(adress)
+        dict_result = {'name':name,'zone':zone,'email':email,'contact':contact,'address':adress}
 
     return render(request,'profile1.html',{'details':dict_result})
 
@@ -502,178 +472,51 @@ def accountsettings(request):
     try:
         username = request.session['username']
     except:
+        print('in acc settings failed to get username')
         return redirect('/home/login')
-    print("i m in profile")
+    print("i m accountsettings")
     print(username)
     if request.method == 'POST':
         print("reached!")
-        # username = request.POST.get('email')
-        #password = request.POST.get('password')
-
         cursor = connection.cursor()
-
-        sql = "select CUSTOMER_ID  from PEOPLE where USERNAME = %s"
-        cursor.execute(sql,[username])
-        result = cursor.fetchall()
         email = request.POST.get('email')
         Address = request.POST.get('address')
         contact = request.POST.get('contact')
-        # handle_uploaded_file(request.FILES['pro_pic'])
-        # f = request.FILES['pro_pic']
-        dbid = None
+        name = request.POST.get('name')
+        try:
+            img = request.FILES['pro_pic']
+        except:
+            img = None
+        if img:
+            img_extension = os.path.splitext(img.name)[1]
 
-        for r in result:
-            dbid = r[0]
+            user_folder = 'static/uploads/profile/'
+            if not os.path.exists(user_folder):
+                os.mkdir(user_folder)
+            r = str(random.randrange(start=18792,step=1))
+            img_save_path =user_folder+'pro_pic'+username+r+img_extension
+            # img_save_path = user_folder + 'pro_pic'+img_extension
+            img_url = 'uploads/profile/'+'pro_pic'+ username+r+img_extension
+            request.session['img_url'] = img_url
+            with open(img_save_path, 'wb') as f:
+                for chunk in img.chunks():
+                    f.write(chunk)
 
+        else:
+            img_url = request.session['img_url']
 
-        img = request.FILES['pro_pic']
-        img_extension = os.path.splitext(img.name)[1]
-
-        user_folder = 'static/uploads/profile/'
-        if not os.path.exists(user_folder):
-            os.mkdir(user_folder)
-
-        img_save_path =user_folder+'pro_pic'+str(dbid)+img_extension
-        # img_save_path = user_folder + 'pro_pic'+img_extension
-        img_url = 'uploads/profile/'+'pro_pic'+ str(dbid)+img_extension
-        request.session['img_url'] = img_url
-        with open(img_save_path, 'wb') as f:
-            for chunk in img.chunks():
-                f.write(chunk)
-
-
-
-
-        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
-        cursor.execute(sql,[username,email,Address,contact,img_url,dbid])
-
+        sql = "UPDATE PEOPLE  SET CUSTOMER_NAME=%s, EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE USERNAME = %s"
+        cursor.execute(sql,[name,email,Address,contact,img_url,username])
+        connection.commit()
+        cursor.close()
+        request.session['name'] = name
+        print('''it's done updating your info!''')
         return redirect('/home/profile')
     else:
         return render(request, 'accountsettings.html', {})
 
 
-#
-# def user_logout(request):
-#     try:
-#             # del request.session['username']
-#             # del request.session['name']
-#             request.session.delete('username')
-#             request.session.delete('name')
-#             # request.session.clear()
-#             print("logged out")
-#             # user = request.session['username']
-#             return redirect('/home/signup')
-#
-#             # if user is None:
-#             #     print("log out success")
-#
-#     except:
-#         print("something is wrong")
-#         return redirect('/home')
-#
-#
-# def saleLogout(request):
-#     try:
-#             # shopuser = request.session['shopusername']
-#         # if shopuser is not None:
-#             request.session.delete('shopusername')
-#             request.session.delete('shopname')
-#             request.session.delete('shopstatus')
-#
-#             # del request.session['shopusername']
-#             print("logged out")
-#             # user = request.session['username']
-#             return redirect('/home/sell/')
-#             # if user is None:
-#             #     print("log out success")
-#         # else:
-#             return redirect('/home/sell')
-#     except:
-#         print("something is wrong")
-#         return redirect('/home/sell')
-#
-# def sale(request):
-#     shopn= None
-#     try:
-#         shopn = request.session['shopname']
-#         status = request.session['shopstatus']
-#
-#     except:
-#         print("shop not found!")
-#         return redirect('/home/sell')
-#     if request.method == 'POST':
-#         print("i m in sales...")
-#         id = random.randrange(start=100, step=1)
-#         catid = random.randrange(start=200, step=1)
-#         name = request.POST.get('name')
-#         cat = request.POST.get('cat')
-#         price = request.POST.get('price')
-#         quantity = request.POST.get('quantity')
-#         specs = request.POST.get('specs')
-#         brand = request.POST.get('brand')
-#         discount = request.POST.get('discount')
-#
-#         # photo = request.POST.get('filename')
-#         # print(photo)
-#         # name = str(id) + ".jpg"
-#         # img = request.FILES['propic',False]
-#         # img_extension = os.path.splitext(img.name)[1]
-#         # user_folder = 'static/images'
-#         # if not os.path.exists(user_folder):
-#         #     os.mkdir(user_folder)
-#
-#         # img_save_path = user_folder + 'propic' + str(id) + img_extension
-#         # img_save_path = user_folder + 'pro_pic'+img_extension
-#         # img_url = '/static/images/' + 'propic' + str(id) + img_extension
-#         # request.session['pro_img_url'] = img_url
-#         # with open(img_save_path, 'wb') as f:
-#         #     for chunk in img.chunks():
-#         #         f.write(chunk)
-#
-#         sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
-#         # cursor.execute(sql, [username, email, Address, contact, img_url, dbid])
-#
-#         cur = connection.cursor()
-#         usrname = request.session['shopusername']
-#         print("shopusername: "+ usrname)
-#         cur.execute("SELECT SHOP_NAME, SHOP_ID FROM SHOPS where SHOP_USERNAME = %s",[usrname])
-#         res = cur.fetchall()
-#         shopid = None
-#         shop =  None
-#         for r in res:
-#             shop = r[0]
-#             shopid = r[1]
-#
-#         # shopname = shopname[0]
-#
-#         sqlforshopid = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
-#         try:
-#             # cur.execute(sqlforshopid, [shopname])
-#
-#             # res = cur.fetchall()
-#             # shopid= None
-#             # for r in res:
-#             #     shopid = r[0]
-#
-#             print("db_shop_id: " + str(shopid))
-#             sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
-#
-#             sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID,BRAND, PRODUCT_NAME, PRODUCT_PHOTO, DISCOUNT, CAT_ID,STATUS, PRICE, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-#             cur.execute(sql, [catid, cat, quantity])
-#             cur.execute(sql1, [id,brand, name, 'static/images/cart.png',discount, catid, 'Available', price, quantity, specs, shopid])
-#             connection.commit()
-#             cur.close()
-#         except:
-#
-#             return render(request,'saleProducts.html',{'message':'SOMETHING IS WRONG! TRY AGAIN PLEASE!','name':shop})
-#         # cur1 = connection.cursor()
-#         # return redirect('/sold')
-#         return render(request, 'saleProducts.html',{'sale':'SELL MORE!','name':shop})
-#     else:
-#         return render(request,'saleProducts.html',{'name':shopn})
-#
 
-#
 # def order(request):
 #     print('i m in order!')
 #     customerid = None
@@ -757,21 +600,28 @@ def cart(request):
 
      if request.method == 'POST':
 
-       try:
-           updateCart(request)
-           return redirect('/home/cart/')
-       except:
-           print("failed to update cart!")
-           return redirect('/home/cart/')
+       # try:
+       print('updating cart')
+       updateCart(request)
+       return redirect('/home/cart/')
+       # except:
+       #     print("failed to update cart!")
+       #     return redirect('/home/cart/')
      else:
          print("i m n try")
-         car = request.session.get('cart')
-         keys = list(car.keys())
+         try:
+             car = request.session.get('cart')
+             keys = list(car.keys())
+             pro_url = request.session.get('pro_url')
+             prokeys = list(pro_url.keys())
+         except:
+             return redirect('/home')
          # keys = cart.keys()
          # print(keys)
          print(car)
+         # print('prourl:'+ str(pro_url))
 
-         print(keys)
+         print(pro_url)
          # print(car['2001'])
          product_dic = []
          total = 0
@@ -782,9 +632,16 @@ def cart(request):
              name = result[0]
              price = result[1]
              desc = result[2]
+             try:
+                photo_url = pro_url[str(id)]
+                print('photo:'+photo_url)
+             except:
+                 photo_url = 'uploads/products/product.jpg'
+                 print('photo: '+photo_url)
+
              quantity = int(car[str(id)])
              total+=quantity*price
-             row = {'name':name,'price':price,'specs':desc,'id':id,'quantity':quantity,'price_total':quantity*price }
+             row = {'name':name,'price':price,'product_img':photo_url,'specs':desc,'id':id,'quantity':quantity,'price_total':quantity*price }
              product_dic.append(row)
          cur.close()
          # return redirect('homepage')
@@ -931,13 +788,24 @@ def updateCart(request):
 
         product = request.POST.get('product')
         remove = request.POST.get('remove')
+
         cart = request.session.get('cart')
+        pro_url = request.session.get('pro_url')
+        img_url = request.POST.get('url')
+
+        if img_url:
+            print('img is not none')
+        else:
+            img_url = pro_url.get(product)
+        print('imgurl in update:' + str(img_url))
         if cart:
             quantity = cart.get(product)
             if quantity:
+                pro_url[product] = img_url
                 if remove:
                     if quantity<=1:
                         cart.pop(product)
+                        pro_url.pop(product)
                     else:
                         cart[product] = quantity-1
                 else:
@@ -945,8 +813,18 @@ def updateCart(request):
 
             else:
                 cart[product] = 1
+                pro_url[product] = img_url
+
         else:
             cart = {}
+            pro_url={}
+
+            pro_url[product] = img_url
+
             cart[product] = 1
 
         request.session['cart'] = cart
+        request.session['pro_url'] = pro_url
+
+
+

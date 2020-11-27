@@ -21,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 's4u7-()*7-$t3no6802m6@%g&vs$^^jho_atovz-enbkvh&4q='
-
+# SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 's4u7-()*7-$t3no6802m6@%g&vs$^^jho_atovz-enbkvh&4q=')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 ALLOWED_HOSTS = ['*']
 
 
@@ -57,8 +57,7 @@ ROOT_URLCONF = 'djangoProject6.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,4 +140,4 @@ STATICFILES_DIRS = [
      os.path.join(BASE_DIR, 'static'),
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')

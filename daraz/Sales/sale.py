@@ -63,34 +63,34 @@ def sellsignup(request):
         return render(request, 'sellsignup.html',{})
 
 
-def profile(request):
-    username = None
-    try:
-        username = request.session['username']
-    except:
-        return redirect('/home/login')
-    print("i m in profile")
-    print(username)
-    sql = "select CUSTOMER_NAME, EMAIL, CONTACT, ZONE from PEOPLE where USERNAME = %s"
-    result = None
-    try:
-            cur = connection.cursor()
-            cur.execute(sql,[username])
-            result = cur.fetchall()
-            cur.close()
-    except:
-        print("Log in please!")
-        return redirect('/login')
-    dict_result = None
-    for r in result:
-        name = r[0]
-        email = r[1]
-        contact = r[2]
-        adress = r[3]
-        dict_result = {'name':name,'email':email,'contact':contact,'adress':adress}
-
-    return render(request,'Profile.html',dict_result)
-
+# def profile(request):
+#     username = None
+#     try:
+#         username = request.session['username']
+#     except:
+#         return redirect('/home/login')
+#     print("i m in profile")
+#     print(username)
+#     sql = "select CUSTOMER_NAME, EMAIL, CONTACT, ZONE from PEOPLE where USERNAME = %s"
+#     result = None
+#     try:
+#             cur = connection.cursor()
+#             cur.execute(sql,[username])
+#             result = cur.fetchall()
+#             cur.close()
+#     except:
+#         print("Log in please!")
+#         return redirect('/login')
+#     dict_result = None
+#     for r in result:
+#         name = r[0]
+#         email = r[1]
+#         contact = r[2]
+#         adress = r[3]
+#         dict_result = {'name':name,'email':email,'contact':contact,'adress':adress}
+#
+#     return render(request,'Profile.html',dict_result)
+#
 
 def saleLogout(request):
     try:
@@ -122,73 +122,125 @@ def sale(request):
         print("shop not found!")
         return redirect('/home/sell')
     if request.method == 'POST':
-        print("i m in sales...")
-        id = random.randrange(start=100, step=1)
-        catid = random.randrange(start=200, step=1)
-        name = request.POST.get('name')
-        cat = request.POST.get('cat')
-        price = request.POST.get('price')
-        quantity = request.POST.get('quantity')
-        specs = request.POST.get('specs')
-        brand = request.POST.get('brand')
-        discount = request.POST.get('discount')
+                        print("i m in sales...")
+                        id = random.randrange(start=2317985, step=1)
 
-        # photo = request.POST.get('filename')
-        # print(photo)
-        # name = str(id) + ".jpg"
-        # img = request.FILES['propic',False]
-        # img_extension = os.path.splitext(img.name)[1]
-        # user_folder = 'static/images'
-        # if not os.path.exists(user_folder):
-        #     os.mkdir(user_folder)
 
-        # img_save_path = user_folder + 'propic' + str(id) + img_extension
-        # img_save_path = user_folder + 'pro_pic'+img_extension
-        # img_url = '/static/images/' + 'propic' + str(id) + img_extension
-        # request.session['pro_img_url'] = img_url
-        # with open(img_save_path, 'wb') as f:
-        #     for chunk in img.chunks():
-        #         f.write(chunk)
+                        # name = request.GET['name']
+                        # cat = request.GET['cat']
+                        # price = request.GET('price')
+                        # quantity = request.GET('quantity')
+                        #
+                        # specs = request.GET['specs']
+                        # brand = request.GET['brand']
+                        # discount = request.GET['discount']
+                        name = request.POST.get('name')
+                        cat = request.POST.get('cat')
+                        price = request.POST.get('price')
+                        quantity = request.POST.get('quantity')
+                        specs = request.POST.get('specs')
+                        brand = request.POST.get('brand')
+                        discount = request.POST.get('discount')
+                        # img = None
+                        # if request.method == 'GET':
+                        try:
+                            img = request.FILES['bal']
+                            # img = files['propic']
+                            # print(img.name)
+                            img_extension = os.path.splitext(img.name)[1]
+                            # img_extension = '.jpg'
 
-        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
-        # cursor.execute(sql, [username, email, Address, contact, img_url, dbid])
+                            user_folder = 'static/uploads/products/'
+                            if not os.path.exists(user_folder):
+                                os.mkdir(user_folder)
 
-        cur = connection.cursor()
-        usrname = request.session['shopusername']
-        print("shopusername: "+ usrname)
-        cur.execute("SELECT SHOP_NAME, SHOP_ID FROM SHOPS where SHOP_USERNAME = %s",[usrname])
-        res = cur.fetchall()
-        shopid = None
-        shop =  None
-        for r in res:
-            shop = r[0]
-            shopid = r[1]
+                            img_save_path = user_folder + 'propic' + str(id) + img_extension
+                            # img_save_path = user_folder + 'pro_pic'+img_extension
+                            img_url = 'uploads/products/' + 'propic' + str(id) + img_extension
+                            # request.session['img_url'] = img_url
+                            with open(img_save_path, 'wb') as f:
+                                for chunk in img.chunks():
+                                    f.write(chunk)
+                        except:
+                            img_url = 'uploads/products/product.jpg'
+                            print('img is not uploaded!')
+                                # ====for cat_id
+                        try:
+                            cur = connection.cursor()
+                            cur.execute("SELECT CAT_ID from CATAGORIES where CAT_NAME=%s", [cat])
+                            catresult = cur.fetchone()
+                            cur.close()
+                            catid = catresult[0]
+                        except:
+                            print('no cat in db like this!')
+                            catid = None
 
-        # shopname = shopname[0]
+                        if catid is None:
+                            print(cat)
+                            print('i m in cat found')
+                            catid = random.randrange(start=id, step=1)
+                            sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
+                            cur = connection.cursor()
+                            cur.execute(sql,[catid,cat,quantity])
+                            connection.commit()
+                            cur.close()
+                        else:
+                            # cat = str(cat).lower()
+                            print('i m in cat not found!')
+                            print(cat)
+                            cur = connection.cursor()
+                            cur.execute("select QUANTITY from CATAGORIES where CAT_NAME = %s",[cat])
+                            res = cur.fetchone()
+                            count = int(res[0])
+                            quantity = int(quantity)
+                            quantity +=count
+                            cur.execute("UPDATE CATAGORIES SET QUANTITY=%s where CAT_NAME = %s",[quantity,cat])
+                            connection.commit()
+                            cur.close()
 
-        sqlforshopid = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
-        try:
-            # cur.execute(sqlforshopid, [shopname])
+                        sql = "UPDATE PEOPLE SET USERNAME = %s , EMAIL = %s, ADRESS = %s , CONTACT= %s,CUSTOMER_PHOTO= %s WHERE CUSTOMER_ID = %s"
+                        # cursor.execute(sql, [username, email, Address, contact, img_url, dbid])
 
-            # res = cur.fetchall()
-            # shopid= None
-            # for r in res:
-            #     shopid = r[0]
+                        cur = connection.cursor()
+                        usrname = request.session['shopusername']
+                        print("shopusername: "+ usrname)
+                        cur.execute("SELECT SHOP_NAME, SHOP_ID FROM SHOPS where SHOP_USERNAME = %s",[usrname])
+                        res = cur.fetchall()
+                        cur.close()
+                        shopid = None
+                        shop =  None
+                        for r in res:
+                            shop = r[0]
+                            shopid = r[1]
 
-            print("db_shop_id: " + str(shopid))
-            sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
+                        # shopname = shopname[0]
 
-            sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID,BRAND, PRODUCT_NAME, PRODUCT_PHOTO, DISCOUNT, CAT_ID,STATUS, PRICE, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            cur.execute(sql, [catid, cat, quantity])
-            cur.execute(sql1, [id,brand, name, 'static/images/cart.png',discount, catid, 'Available', price, quantity, specs, shopid])
-            connection.commit()
-            cur.close()
-        except:
+                        sqlforshopid = "SELECT SHOP_ID FROM SHOPS WHERE SHOP_NAME = %s"
+                        # try:
+                            # cur.execute(sqlforshopid, [shopname])
 
-            return render(request,'saleProducts.html',{'message':'SOMETHING IS WRONG! TRY AGAIN PLEASE!','name':shop})
-        # cur1 = connection.cursor()
-        # return redirect('/sold')
-        return render(request, 'saleProducts.html',{'sale':'SELL MORE!','name':shop})
+                            # res = cur.fetchall()
+                            # shopid= None
+                            # for r in res:
+                            #     shopid = r[0]
+
+                        print("db_shop_id: " + str(shopid))
+                        # sql = "INSERT INTO CATAGORIES(CAT_ID, CAT_NAME, QUANTITY) VALUES (%s,%s,%s)"
+
+                        sql1 = "INSERT INTO PRODUCTS(PRODUCT_ID,BRAND, PRODUCT_NAME, PRODUCT_PHOTO, DISCOUNT, CAT_ID,STATUS, PRICE, QUANTITY, DESCRIPTION, SHOP_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                        cur = connection.cursor()
+                        # cur.execute(sql, [catid, cat, quantity])
+                        cur.execute(sql1,
+                                    [id, brand, name, img_url, discount, catid, 'Available', price, quantity, specs,
+                                     shopid])
+                        connection.commit()
+                        cur.close()
+                        # except:
+                        #
+                        #     return render(request,'saleProducts.html',{'message':'SOMETHING IS WRONG! TRY AGAIN PLEASE!','name':shop})
+                        # cur1 = connection.cursor()
+                        # return redirect('/sold')
+                        return render(request, 'saleProducts.html',{'sale':'YOUR PRODUCT IS SOLD! SELL MORE, SIR!','name':shop})
     else:
         return render(request,'saleProducts.html',{'name':shopn})
 
