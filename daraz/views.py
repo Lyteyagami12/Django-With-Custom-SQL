@@ -19,177 +19,12 @@ class Index(View):
 
     def post(self , request):
         updateCart(request)
-        # product = request.POST.get('product')
-        # remove = request.POST.get('remove')
-        # cart = request.session.get('cart')
-        # if cart:
-        #     quantity = cart.get(product)
-        #     if quantity:
-        #         if remove:
-        #             if quantity<=1:
-        #                 cart.pop(product)
-        #             else:
-        #                 cart[product] = quantity-1
-        #         else:
-        #             cart[product] = quantity+1
-        #
-        #     else:
-        #         cart[product] = 1
-        # else:
-        #     cart = {}
-        #     cart[product] = 1
-        #
-        # request.session['cart'] = cart
         print('cart', request.session['cart'])
         return redirect('homepage')
-
-
 
     def get(self , request):
         # print()
         return HttpResponseRedirect(f'/home{request.get_full_path()[1:]}')
-
-
-# def user_login(request):
-#     print("i m log in")
-#     try:
-#         usr = request.session['username']
-#         return redirect('/home/profile')
-#     except:
-#         print("not logged in please log in")
-#     if request.method == 'POST':
-#         # email = request.POST.get('email')
-#         # print(email)
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         print(password)
-#         msg = 'Enjoy Buying!'
-#         try:
-#             cur = connection.cursor()
-#             sql = "select USERNAME, KEY ,SALT, CUSTOMER_NAME, EMAIL,CUSTOMER_PHOTO from PEOPLE where USERNAME = %s"
-#             print(sql)
-#             print(username)
-#             cur.execute(sql,[username])
-#             result = cur.fetchone()
-#             dic_res = []
-#             # dbemail = None
-#             dbkey = None
-#             dbuser = None
-#             dbsalt = None
-#             name = None
-#             dbuser = result[0]
-#             dbkey = result[1]
-#             dbsalt = result[2]
-#             name = result[3]
-#             email = result[4]
-#             img = 'uploads/products/10000069-2_28-fresho-capsicum-green.jpg'
-#             try:
-#                 img = request[5]
-#             except:
-#                 print('failed to load image!')
-#             request.session['img_url']=img
-#             # for r in result:
-#             #     dbuser = r[0]
-#             #     dbkey = r[1]
-#             #     dbsalt = r[2]
-#             #     name = r[3]
-#
-#             print("from database:...")
-#             print("dbuser:" + dbuser)
-#             if dbuser == username:
-#                 print("username verified")
-#                 new_key =hashlib.pbkdf2_hmac(
-#                     'sha256',  # The hash digest algorithm for HMAC
-#                     password.encode('utf-8'),
-#                     dbsalt ,
-#                     100000, # 100,000 iterations of SHA-256
-#                     # dklen = 128
-#                 )
-#
-#                 if new_key == dbkey:
-#                     print("success")
-#                     print("sql:" + sql)
-#                     # request.session.__setitem__('username',dbuser)
-#                     request.session['username'] = dbuser
-#                     request.session['name'] = name
-#                     request.session['email'] = email
-#                     # request.session.__setitem__('username',username)
-#                     print("success2")
-#                     print("usernameform session: " + request.session['username'])
-#                     return redirect('/home')
-#                     # return redirect('/home')
-#                 else:
-#                     print("failed man!")
-#                     print("dbkey: ")
-#                     print(dbkey)
-#                     print("userkey: ")
-#                     print(new_key)
-#                     return redirect('/home')
-#
-#             else:
-#                 print("wrong username!")
-#                 return redirect('/login')
-#         except:
-#             messages = "something went wrong! try again"
-#             print(messages)
-#             return render(request,'login.html',{'msg':messages})
-#     else:
-#         return render(request, 'login.html', {})
-#
-
-def test(request):
-    return render(request,'hello.html',{})
-
-
-def lol(request):
-    return render(request, 'lol.html', {})
-
-#
-# def signup(request):
-#     print("i m in signup")
-#     usr=None
-#     try:
-#         usr = request.session['username']
-#         user_logout(request)
-#     except:
-#         print("sign up please!")
-#         print("couldn't make it")
-#     if request.method == 'POST':
-#         id = random.randrange(start=1700000, step=1)
-#         print("id:" + str(id))
-#         name = request.POST.get('name')
-#         print(name)
-#         username = request.POST.get('username')
-#         print(username)
-#         password = request.POST.get('password')
-#         email = request.POST.get('mail')
-#         gender = request.POST.get('gender')
-#         dob = request.POST.get('birthdate')
-#         adress = request.POST.get('adress')
-#         contact = request.POST.get('contact')
-#         zone = request.POST.get('zone')
-#         method = request.POST.get('paymentmethod')
-#         salt = os.urandom(32)
-#         # password = 'password123'
-#         key = hashlib.pbkdf2_hmac(
-#             'sha256',
-#             password.encode('utf-8'),
-#             salt,
-#             100000,  # 100,000 iterations of SHA-256
-#             # dklen=128  #128 byte key
-#         )
-#
-#         sql = "INSERT INTO PEOPLE(CUSTOMER_ID, CUSTOMER_NAME, USERNAME,GENDER, BIRTHDATE, KEY, ADRESS, CONTACT, ZONE, EMAIL, PAYMENT_METHOD,SALT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-#         try:
-#             cursor = connection.cursor()
-#             cursor.execute(sql, [id, name, username, gender, dob, key, adress, contact, zone, email, method,salt])
-#             connection.commit()
-#             cursor.close()
-#             return redirect('/home/login')
-#         except:
-#             return render(request,'signup1.html',{'message':'Something went wrong!'})
-#     else:
-#         return render(request, 'signup1.html', {})
 
 
 def products(request):
@@ -283,37 +118,39 @@ def products(request):
         except:
             print('product fetch failed!')
             return redirect('/home')
-        dic_res = []
+        dic_res = show_products(request,result)
+        # dic_res = []
+        #
+        # for r in result:
+        #     product_id = r[0]
+        #     product_name = r[1]
+        #     status = r[3]
+        #     price = r[4]
+        #     discount = r[5]
+        #     quantity = r[6];
+        #     description = r[7]
+        #     shopid = r[8]
+        #     brand = r[9]
+        #     imgurl = r[10]
+        #     if imgurl is None:
+        #         # imgurl = 'static/uploads/product.jpg'
+        #         imgurl = 'uploads/products/product.jpg'
+        #     resultt = None
+        #     try:
+        #         cur = connection.cursor()
+        #         cur.execute("select SHOP_NAME from SHOPS where SHOP_ID = %s",[shopid])
+        #         resultt = cur.fetchall()
+        #         cur.close()
+        #     except:
+        #         print("Shop not found!")
+        #         return render(request,'index3.html', {'msg':'something went wrong!'})
+        #     shopName = 'trumpshop'
+        #
+        #     row = {'id': product_id, 'shop': shopName,'discount':discount,'photo':imgurl,'name': product_name, 'price':price,'brand':brand,
+        #            'status': status, 'desc': description}
+        #     dic_res.append(row)
 
-        for r in result:
-            product_id = r[0]
-            product_name = r[1]
-            status = r[3]
-            price = r[4]
-            discount = r[5]
-            quantity = r[6];
-            description = r[7]
-            shopid = r[8]
-            brand = r[9]
-            imgurl = r[10]
-            if imgurl is None:
-                # imgurl = 'static/uploads/product.jpg'
-                imgurl = 'uploads/products/product.jpg'
-            resultt = None
-            try:
-                cur = connection.cursor()
-                cur.execute("select SHOP_NAME from SHOPS where SHOP_ID = %s",[shopid])
-                resultt = cur.fetchall()
-            except:
-                print("Shop not found!")
-                return render(request,'index3.html', {'msg':'something went wrong!'})
-            shopName = 'trumpshop'
 
-            row = {'id': product_id, 'shop': shopName,'discount':discount,'photo':imgurl,'name': product_name, 'price':price,'brand':brand,
-                   'status': status, 'desc': description}
-            dic_res.append(row)
-
-        cur.close()
         cur = connection.cursor()
         catdic = []
         cur.execute("SELECT CAT_ID, CAT_NAME FROM CATAGORIES")
@@ -346,6 +183,25 @@ def sell(request):
     except:
         print('sell now!')
     return render(request, 'sell.html',{})
+
+
+def showCat_wise(request, catid):
+    print(catid)
+    # try:
+    #     email = request.session['email']
+    # except:
+    #     return redirect('login')
+    # print(email)
+    try:
+        catid = int(catid)
+        cur = connection.cursor()
+        cur.execute("SELECT * FROM PRODUCTS WHERE CAT_ID = %s",[catid])
+        result = cur.fetchall()
+        cur.close()
+    except:
+        return redirect('homepage')
+    dic_res = show_products(request,result)
+    return render(request,'cat_product.html',{'products':dic_res})
 
 
 def list_jobs(request):
@@ -596,7 +452,11 @@ def accountsettings(request):
 
 
 def cart(request):
-    # try:
+     try:
+         email = request.session['email']
+     except:
+         print('you r not logged in!')
+         return redirect('login')
 
      if request.method == 'POST':
 
@@ -610,6 +470,7 @@ def cart(request):
      else:
          print("i m n try")
          try:
+             keys = None
              car = request.session.get('cart')
              if car:
                  keys = list(car.keys())
@@ -630,23 +491,26 @@ def cart(request):
          total = 0
          cur = connection.cursor()
          for id in keys:
-             cur.execute("select PRODUCT_NAME,PRICE,DESCRIPTION from PRODUCTS where PRODUCT_ID=%s",[int(id)])
-             result = cur.fetchone()
-             name = result[0]
-             price = result[1]
-             desc = result[2]
-             try:
-                photo_url = pro_url[str(id)]
-                print('photo:'+photo_url)
-             except:
-                 photo_url = 'uploads/products/product.jpg'
-                 print('photo: '+photo_url)
+             if id != 'null':
+                 id = int(id)
+                 print(id)
+                 cur.execute("select PRODUCT_NAME,PRICE,DESCRIPTION from PRODUCTS where PRODUCT_ID=%s",[id])
+                 result = cur.fetchone()
+                 name = result[0]
+                 price = result[1]
+                 desc = result[2]
+                 try:
+                    photo_url = pro_url[str(id)]
+                    print('photo:'+photo_url)
+                 except:
+                     photo_url = 'uploads/products/product.jpg'
+                     print('photo: '+photo_url)
 
-             quantity = int(car[str(id)])
-             total+=quantity*price
-             request.session['total'] = total
-             row = {'name':name,'price':price,'product_img':photo_url,'specs':desc,'id':id,'quantity':quantity,'price_total':quantity*price }
-             product_dic.append(row)
+                 quantity = int(car[str(id)])
+                 total+=quantity*price
+                 request.session['total'] = total
+                 row = {'name':name,'price':price,'product_img':photo_url,'specs':desc,'id':id,'quantity':quantity,'price_total':quantity*price }
+                 product_dic.append(row)
          cur.close()
          # return redirect('homepage')
          return render(request,'cart1.html',{'products':product_dic,'total':total})
@@ -741,34 +605,34 @@ def check(request):
 
             return render(request,'check.html',{})
 
-def shipment(request):
-    cur = connection.cursor()
-    sql = "SELECT * FROM SHIPMENTS"
-    cur.execute(sql)
-    result = cur.fetchall()
-    d = []
-    for r in result:
-        shipid = r[0]
-        shipdate = r[1]
-        orderid = r[2]
-        status = r[3]
-        deliveryat = r[4]
-        print(shipid)
-        cur.execute("select CUSTOMER_ID from ORDERS where ORDER_ID =%s", [orderid])
-        res = cur.fetchall()
-        custid = None
-        customername = None
-        for r1 in res:
-            custid = r1[0]
-        print(custid)
-        cur.execute("select CUSTOMER_NAME from PEOPLE where CUSTOMER_ID=%s",[custid])
-        result2 = cur.fetchall()
-        for r2 in result2:
-            customername = r2[0]
-        row = {'id':custid,'name':customername,'address':deliveryat,'orderid':orderid,'shipdate':shipdate}
-        d.append(row)
-    cur.close()
-    return render(request,'shipment.html',{'ship':d})
+# def shipment(request):
+#     cur = connection.cursor()
+#     sql = "SELECT * FROM SHIPMENTS"
+#     cur.execute(sql)
+#     result = cur.fetchall()
+#     d = []
+#     for r in result:
+#         shipid = r[0]
+#         shipdate = r[1]
+#         orderid = r[2]
+#         status = r[3]
+#         deliveryat = r[4]
+#         print(shipid)
+#         cur.execute("select CUSTOMER_ID from ORDERS where ORDER_ID =%s", [orderid])
+#         res = cur.fetchall()
+#         custid = None
+#         customername = None
+#         for r1 in res:
+#             custid = r1[0]
+#         print(custid)
+#         cur.execute("select CUSTOMER_NAME from PEOPLE where CUSTOMER_ID=%s",[custid])
+#         result2 = cur.fetchall()
+#         for r2 in result2:
+#             customername = r2[0]
+#         row = {'id':custid,'name':customername,'address':deliveryat,'orderid':orderid,'shipdate':shipdate}
+#         d.append(row)
+#     cur.close()
+#     return render(request,'shipment.html',{'ship':d})
 
 
 @register.filter(name="islogin")
@@ -838,4 +702,37 @@ def updateCart(request):
         request.session['productList'] = product_names
 
 
+def show_products(request,result):
 
+    dic_res = []
+
+    for r in result:
+        product_id = r[0]
+        product_name = r[1]
+        status = r[3]
+        price = r[4]
+        discount = r[5]
+        quantity = r[6];
+        description = r[7]
+        shopid = r[8]
+        brand = r[9]
+        imgurl = r[10]
+        if imgurl is None:
+            # imgurl = 'static/uploads/product.jpg'
+            imgurl = 'uploads/products/product.jpg'
+        resultt = None
+        try:
+            cur = connection.cursor()
+            cur.execute("select SHOP_NAME from SHOPS where SHOP_ID = %s", [shopid])
+            resultt = cur.fetchall()
+            cur.close()
+        except:
+            print("Shop not found!")
+            return render(request, 'index3.html', {'msg': 'something went wrong!'})
+        shopName = 'trumpshop'
+
+        row = {'id': product_id, 'shop': shopName, 'discount': discount, 'photo': imgurl, 'name': product_name,
+               'price': price, 'brand': brand,
+               'status': status, 'desc': description}
+        dic_res.append(row)
+    return dic_res

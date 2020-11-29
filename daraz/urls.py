@@ -39,8 +39,9 @@ urlpatterns = [
     path('home/cart/',views.cart,name = 'cart'),
 
     path('home/pay/',checkout.check, name= 'checkout'),
-    path('home/shipment/',views.shipment),
+    path('home/shipment/',checkout.shipment),
     path('home/profile/accountsettings/',views.accountsettings),
+    path('home/<int:catid>/',views.showCat_wise),
 
 
 

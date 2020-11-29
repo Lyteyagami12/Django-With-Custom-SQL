@@ -147,11 +147,11 @@ def check(request):
         request.session['cart'] = {}
         request.session['productList'] = {}
 
-        # return redirect('/home/shipment')
+        return redirect('/home/shipment')
 
         # except:
         # print("failed to push may b unique key violated!")
-        return redirect('/home/pay')
+        # return redirect('/home/pay')
     else:
         try:
             username = request.session['name']
@@ -161,6 +161,37 @@ def check(request):
         except:
 
             return render(request,'check.html',{})
+
+
+def shipment(request):
+    cur = connection.cursor()
+    sql = "SELECT * FROM SHIPMENTS"
+    cur.execute(sql)
+    result = cur.fetchall()
+    d = []
+    for r in result:
+        shipid = r[0]
+        shipdate = r[1]
+        orderid = r[2]
+        status = r[3]
+        deliveryat = r[4]
+        print(shipid)
+        cur.execute("select CUSTOMER_ID from ORDERS where ORDER_ID =%s", [orderid])
+        res = cur.fetchall()
+        custid = None
+        customername = None
+        for r1 in res:
+            custid = r1[0]
+        print(custid)
+        cur.execute("select CUSTOMER_NAME from PEOPLE where CUSTOMER_ID=%s",[custid])
+        result2 = cur.fetchall()
+        for r2 in result2:
+            customername = r2[0]
+        row = {'id':custid,'name':customername,'address':deliveryat,'orderid':orderid,'shipdate':shipdate}
+        d.append(row)
+    cur.close()
+    print(d)
+    return render(request,'shipment.html',{'ship':d})
 
 
 def Initiate_Cursor():
