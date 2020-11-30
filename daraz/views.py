@@ -178,8 +178,10 @@ def products(request):
         print("closing....")
         message = 'LOG IN'
         logout = 'SIGN UP'
+
         try:
             username = request.session['name']
+
             message = username
             logout = 'LOG OUT'
             request.session['key'] = None
@@ -506,7 +508,7 @@ def updateCart(request):
 
         product = request.POST.get('product')
         remove = request.POST.get('remove')
-
+        # addlist = request.session.get('added')
         cart = request.session.get('cart')
         pro_url = request.session.get('pro_url')
         img_url = request.POST.get('url')
@@ -523,16 +525,19 @@ def updateCart(request):
             if quantity:
                 pro_url[product] = img_url
                 product_names[product] = product_name
+
                 if remove:
                     if quantity<=1:
                         cart.pop(product)
                         pro_url.pop(product)
+                        # addlist[product]=False
                     else:
                         cart[product] = quantity-1
                 else:
                     cart[product] = quantity+1
 
             else:
+                # addlist[product] = True
                 cart[product] = 1
                 pro_url[product] = img_url
                 product_names[product] = product_name
@@ -541,20 +546,25 @@ def updateCart(request):
         else:
             cart = {}
             pro_url={}
+            addlist = {}
             product_names = {}
             product_names[product] = product_name
             pro_url[product] = img_url
-
             cart[product] = 1
+            addlist[product] = True
 
         request.session['cart'] = cart
         request.session['pro_url'] = pro_url
         request.session['productList'] = product_names
+        # request.session['aaed'] = addlist
 
 
 def show_products(request,result):
 
     dic_res = []
+
+    cart = request.session.get('cart')
+
 
     for r in result:
         product_id = r[0]
@@ -580,10 +590,25 @@ def show_products(request,result):
             print("Shop not found!")
             return render(request, 'index3.html', {'msg': 'something went wrong!'})
         shopName = 'trumpshop'
+        id =str(product_id)
+
+        '''This part is so lame though -_-'''
+        is_incart = False
+        try:
+            q = cart[id]
+            if q>0:
+                is_incart = True
+            else:
+                is_incart = False
+
+        except:
+            is_incart = False
+
+
 
         row = {'id': product_id, 'shop': shopName, 'discount': discount, 'photo': imgurl, 'name': product_name,
                'price': price, 'brand': brand,
-               'status': status, 'desc': description}
+               'status': status, 'desc': description, 'incart':is_incart}
         dic_res.append(row)
     return dic_res
 
@@ -591,3 +616,9 @@ def show_products(request,result):
 '''complete this view method'''
 def trackYourorder(request):
     return  render(request,'trackOrder.html',{})
+
+def paymentChoice(request):
+    return render(request,'selection.html',{})
+
+def test(request):
+    return  render(request,'placeorder.html',{})

@@ -9,7 +9,7 @@ from django.views import View
 from django.db import connection
 
 
-def check(request):
+def credit_check(request):
     email = None
     try:
         email = request.session['email']

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load cart %}
+{% load custom_filter %}
+{% load static %}
+{% block content %}
+
+{% load cart %}
+
+<nav class="one-edge-shadow
+
+  navbar-expand-lg
+   navbar-light bg-white">
+<div class="container-fluid mt-3">
+<section  class="toppbar ">
+			<div class="miid">
+				<div class="midright">
+					<div class="midright_mid">
+
+				       <form class="example" action="" method="POST">
+                           {% csrf_token %}
+				         <input type="text" placeholder="Search in daraz" name="search">
+				         <button type="submit"><i class="fa fa-search"></i></button>
+				       </form>
+
+
+			        </div>
+
+			    </div>
+
+
+			</div>
+
+ 	</section>
+</div>
+</nav>
+<br>
+<br>
+<div class="lzd-playground mt-3">
+
+
+
+		<!-- filter -->
+
+
+
+		<div class="col-lg-2 mx-auto pull-left">
+			<div class="list-group">
+
+                <button style="background-color: #2abbe8" class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown"><h4 style="color: #0b2e13">Catagories</h4></button>
+
+				{% for cat in request.session.cats %}
+				<a style="background-color: #d4edda" href="/home/{{cat.id}}"
+                   class="list-group-item list-group-item-action"><h6 style="color: #0b2e13">{{cat.name}}</h6></a>
+				{% endfor %}
+			</div>
+		</div>
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+        lol
+    </div>
+
+
+
+    </div>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+    <nav class="one-edge-shadow">
+    <div class="lzd-logo-bar" data-spm-anchor-id="a2a0e.home.header.i0.73524591JR33Hb">
+            <div class="logo-bar-content header-content">
+
+                <div class="lzd-logo-content"><a href="//www.daraz.com.bd/" data-spm="dhome"><img src="//laz-img-cdn.alicdn.com/images/ims-web/TB1HOIkg3ZC2uNjSZFnXXaxZpXa.png" alt=""></a></div>
+
+              <div class="lzd-nav-search" data-spm="search"><form action="//www.daraz.com.bd/catalog/" method="GET" autocomplete="off"><div class="search-box--2I2a"><div class="search-box__bar--29h6"><input type="search" id="q" name="q" placeholder="Search in Daraz" class="search-box__input--O34g" tabindex="1" value="" data-spm-anchor-id="a2a0e.home.search.i0.73524591JR33Hb"><input type="hidden" name="_keyori" value="ss"><input type="hidden" name="from" value="input"><input type="hidden" name="spm" value="a2a0e.home.search.go.73524591JR33Hb"></div><div class="search-box__search--2fC5"><button class="search-box__button--1oH7" tabindex="2" data-spm-click="gostr=/lzdpub.header.search;locaid=d_go">SEARCH</button></div><div class="search-box__popup--3Pf1"></div></div></form></div>
+              <div class="lzd-nav-cart">
+                <a href="//cart.daraz.com.bd/cart?scm=1003.4.icms-zebra-100022782-2872099.OTHER_5410630461_2521613" data-spm="dcart">
+                  <span class="cart-icon">
+                    <svg width="25px" height="22px" viewBox="0 0 25 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                      <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+                      <title>cart</title>
+                      <desc>Created with Sketch.</desc>
+                      <defs>
+                          <polyline id="path-1" points="0 0.00306976744 24.7219388 0.00306976744 24.7219388 22 0 22"></polyline>
+                          <polyline id="path-3" points="0 0.00306976744 24.7219388 0.00306976744 24.7219388 22 0 22"></polyline>
+                      </defs>
+                      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g id="cart">
+                              <g id="icon-cart">
+                                  <path d="M0,0.00312093023 L0,2.04963256 L3.26734694,2.04963256 L7.77397959,15.2665163 L23.1602041,15.2665163 L24.7214286,4.61749302 L5.75561224,3.02070233 L4.72602041,0.00312093023 L0,0.00312093023 Z M6.47653061,5.13526047 L22.3872449,6.47470233 L21.397449,13.2200047 L9.23265306,13.2200047 L6.47653061,5.13526047 Z" id="Fill-1" fill="#212121" fill-rule="nonzero"></path>
+                                  <g id="Group-8">
+                                      <g id="Group-4">
+                                          <g id="Fill-2-Clipped">
+                                              <mask id="mask-2" fill="white">
+                                                  <use xlink:href="#path-1"></use>
+                                              </mask>
+                                              <g id="path-1"></g>
+                                              <path d="M10.9269388,19.8042465 C10.9269388,21.0168047 9.94683673,22.0001535 8.73714286,22.0001535 C7.52795918,22.0001535 6.54785714,21.0168047 6.54785714,19.8042465 C6.54785714,18.5916884 7.52795918,17.6083395 8.73714286,17.6083395 C9.94683673,17.6083395 10.9269388,18.5916884 10.9269388,19.8042465" id="Fill-2" fill="#212121" fill-rule="nonzero" mask="url(#mask-2)"></path>
+                                          </g>
+                                      </g>
+                                      <g id="Group-7">
+                                          <g id="Fill-5-Clipped">
+                                              <mask id="mask-4" fill="white">
+                                                  <use xlink:href="#path-3"></use>
+                                              </mask>
+                                              <g id="path-3"></g>
+                                              <path d="M24.3623469,19.8042465 C24.3623469,21.0168047 23.3822449,22.0001535 22.172551,22.0001535 C20.9633673,22.0001535 19.9832653,21.0168047 19.9832653,19.8042465 C19.9832653,18.5916884 20.9633673,17.6083395 22.172551,17.6083395 C23.3822449,17.6083395 24.3623469,18.5916884 24.3623469,19.8042465" id="Fill-5" fill="#212121" fill-rule="nonzero" mask="url(#mask-4)"></path>
+                                          </g>
+                                      </g>
+                                  </g>
+                              </g>
+                          </g>
+                      </g>
+                    </svg>
+                  </span>
+                  <span class="cart-num" id="topActionCartNumber">3</span>
+                </a>
+              </div>
+
+
+
+
+                <div class="lzd-header-banner" id="topActionLiveUpBanner">
+
+                  <a id="topActionEWallet" class="lzd-header-banner-ewallet" href="//www.daraz.com.bd/mobile-apps/" target="_blank" data-spm="dewallet" style="display: inline;"><img src="//laz-img-cdn.alicdn.com/images/ims-web/TB1NaLBtO_1gK0jSZFqXXcpaXXa.png" alt="Voucher"></a>
+
+                </div>
+
+            </div>
+          </div>
+    </nav>
+    <br>
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load cart %}
 {% load custom_filter %}
 {% load static %}
 {% block content %}
@@ -10,10 +11,6 @@
 
   navbar-expand-lg
    navbar-light bg-white">
-{#    <nav class="one-edge-shadow#}
-{#  sticky-top navbar#}
-{#  navbar-expand-lg#}
-{#   navbar-light bg-white">#}
 <div class="container-fluid mt-3">
 <section  class="toppbar ">
 			<div class="miid">
@@ -79,20 +76,20 @@
 					<div class="card-footer p-0 no-gutters">
 
 						{% if product|is_in_cart:request.session.cart %}
-						<div class="row no-gutters">
-							<form action="/" class="col-2 " method="POST">
-								{% csrf_token %}
-								<input hidden type="text" name='product' value='{{product.id}}'>
-								<input hidden type="text" name='remove' value='True'>
-								<input type="submit" value=" - " class="btn btn-block btn-light border-right">
-							</form>
-							<div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
-							<form action="/#{{product.id}}" class="col-2 " method="POST">
-								{% csrf_token %}
-								<input hidden type="text" name='product' value='{{product.id}}'>
-								<input type="submit" value=" + " class="btn btn-block btn-light border-left">
-							</form>
-						</div>
+{#						<div class="row no-gutters">#}
+{#							<form action="/" class="col-2 " method="POST">#}
+{#								{% csrf_token %}#}
+{#								<input hidden type="text" name='product' value='{{product.id}}'>#}
+{#								<input hidden type="text" name='remove' value='True'>#}
+{#								<input type="submit" value=" - " class="btn btn-block btn-light border-right">#}
+{#							</form>#}
+{#							<div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>#}
+{#							<form action="/#{{product.id}}" class="col-2 " method="POST">#}
+{#								{% csrf_token %}#}
+{#								<input hidden type="text" name='product' value='{{product.id}}'>#}
+{#								<input type="submit" value=" + " class="btn btn-block btn-light border-left">#}
+{#							</form>#}
+{#						</div>#}
 						{% else %}
 						<form action="/" method="POST" class="btn-block">
 							{% csrf_token %}
@@ -103,6 +100,10 @@
 							<button style="background-color:#2abbe8" type="submit" class="float-right btn btn-light  form-control"
                             >Buy Now</button>
                         </form>
+                        {% if product.incart %}
+                            <button style="background-color: #ffc107" class="float-right btn btn-light  form-control"
+                            >Added to Cart</button>
+                        {% else %}
                         <form action="/" method="POST" class="btn-block">
 							{% csrf_token %}
 							<input hidden type="number" name='product' value='{{product.id}}'>
@@ -113,6 +114,7 @@
                             >Add to Cart</button>
 
 						</form>
+                        {% endif %}
 						{% endif %}
 
 					</div>
@@ -122,9 +124,9 @@
             {% else %}
                 <div class="midright_mid" style="font-size: larger">
 
-                        <h1 style="font-family: 'Arial Black' ">Sorry! No product Found Based on your Search -__-</h1>
+                        <h1 style="font-family: 'Arial Black' ">No product Found Based on your Search -__-</h1>
 
-                    <p style="color: #ff5722"><h2 style="font-size: x-large" >We will add the product very soon, sir</h2></p>
+                    <p style="color: #ff5722"><h2 style="font-size: x-large" >We will Try to Add the Product!</h2></p>
                 </div>
             {% endif %}
 			</div>

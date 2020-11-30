@@ -37,11 +37,13 @@ urlpatterns = [
     # path('home/order/',views.order, name = 'order'),
     path('home/cart/',views.cart,name = 'cart'),
 
-    path('home/pay/',checkout.check, name= 'checkout'),
+    path('home/creditpay/',checkout.credit_check, name= 'checkout'),
+    # path('home/place_your_order',views.products),
     path('home/shipment/',checkout.shipment),
     path('home/profile/accountsettings/',views.accountsettings),
     path('home/<int:catid>/',views.showCat_wise),
     path('home/track/',views.trackYourorder,name='track'),
-
+    path('home/payment/',views.paymentChoice, name='payment_choice'),
+    path('test/',views.test),
 
 ]

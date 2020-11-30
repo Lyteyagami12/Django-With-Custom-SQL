@@ -1,9 +1,11 @@
 from django import template
-
+from django.shortcuts import render
 register = template.Library()
 
 @register.filter(name='is_in_cart')
-def is_in_cart(product, cart):
+def is_in_cart(cart,product):
+
+    # cart = request.session.get('cart')
     keys = cart.keys()
     try:
         for id in keys:
@@ -16,7 +18,8 @@ def is_in_cart(product, cart):
 
 
 @register.filter(name='cart_quantity')
-def cart_quantity(product, cart):
+def cart_quantity(request,product):
+    cart = request.session.get('cart')
     keys = cart.keys()
     for id in keys:
         if int(id) == product.id:
@@ -25,7 +28,8 @@ def cart_quantity(product, cart):
 
 
 @register.filter(name='price_total')
-def price_total(product, cart):
+def price_total(request,product):
+    cart = request.session.get('cart')
     return product.price * cart_quantity(product, cart)
 
 

@@ -992,7 +992,7 @@
 
 	height: 600px;
 	width: 100%;
-	background: gray;
+	background: white;
 	&:after{
 		content:'';
 		display: block;
@@ -1004,7 +1004,7 @@
 	.row {
 		
 		  .card1 {
-		    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0);
 		    padding: 16px 30px;
 		    margin: 40px;
 		    text-align: center;

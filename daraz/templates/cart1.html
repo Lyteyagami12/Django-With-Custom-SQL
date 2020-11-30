@@ -4,7 +4,43 @@
 {% block content %}
 {% load cart %}
 {% load custom_filter %}
+
+
+<br>
+    <section  class="toppbar ">
+			<div class="miid">
+				<div class="midright">
+					<div class="midright_mid">
+
+				       <form class="example" action="" method="POST">
+                           {% csrf_token %}
+				         <input type="text" placeholder="Search in daraz" name="search">
+				         <button type="submit"><i class="fa fa-search"></i></button>
+				       </form>
+
+
+			        </div>
+
+			    </div>
+
+
+			</div>
+    </section>
+    <br>
+		<div class="col-lg-2 mx-auto pull-left">
+			<div class="list-group">
+
+                <button style="background-color: #2abbe8" class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown"><h4 style="color: #0b2e13">Catagories</h4></button>
+
+				{% for cat in request.session.cats %}
+				<a style="background-color: #d4edda" href="/home/{{cat.id}}"
+                   class="list-group-item list-group-item-action"><h6 style="color: #0b2e13">{{cat.name}}</h6></a>
+				{% endfor %}
+			</div>
+		</div>
+
 <div class="container">
+
    <div class="border rounded p-4 m-4">
         <p class="display-4 pl-4 ml-4">Your Cart</p>
         <hr>
@@ -26,23 +62,23 @@
                     <td>{{forloop.counter}}</td>
                     <td><img style="height: 80px;" class="rounded-circle" src="{% static product.product_img %}" alt=""></td>
                     <td>{{product.name}}</td>
-                    <td>{{product.price|currency}}</td>
-                    <td>
+                    <td style="font-family: 'Arial Black'">{{product.price|currency}}</td>
+                    <td style="font-family: 'Arial Black'">
                         <form class="col-6 " method="POST">
 								{% csrf_token %}
 								<input hidden type="text" name='product' value='{{product.id}}'>
 								<input hidden type="text" name='remove' value='True'>
-								<input style="background-color: #ff5722" type="submit" value=" - " class="btn btn-block btn-light border-right">
+                            <button style="background-color: #ff5722" type="submit"  class="btn"><h1>---</h1></button>
                         </form>
                         {{product.quantity}}
                         <form class="col-6 " method="POST">
 								{% csrf_token %}
 								<input hidden type="text" name='product' value='{{product.id}}'>
 
-								<input style="background-color: #2abbe8" type="submit" value=" + " class="btn btn-block btn-light border-right">
+								<input style="background-color: #2abbe8" type="submit" value=" + " class="btn">
                         </form>
                     </td>
-                    <td>{{product.price_total|currency}}</td>
+                    <td style="font-family: 'Arial Black'">{{product.price_total|currency}}</td>
 {#                 <td>{{product.name}}</td>#}
 {#                    <td>{{product.price|currency}}</td>#}
 {#                    <td>{{product|cart_quantity:request.session.cart}}</td>#}
@@ -57,14 +93,14 @@
                 <tr>
                     <th colspan="4"></th>
                     <th class="" colspan="">Total</th>
-                    <th>{{total|currency}}</th>
+                    <th style="font-family: 'Arial Black'">{{total|currency}}</th>
 {#                    <th>{{products|total_cart_price:request.session.cart|currency}}</th>#}
                 </tr>
             </tfoot>
         </table>
 
         <div class="m-3 p-3">
-            <button class="btn1" style="background-color: #2abbe8"  ><a href="/home/pay/"><h4 style="color: #0b2e13">Proceed to Check out</h4></a></button>
+            <button class="btn1" style="background-color: #2abbe8"  ><a href="/home/payment/"><h4 style="color: #0b2e13">Proceed to Check out</h4></a></button>
         </div>
    </div>
 </div>
@@ -87,7 +123,7 @@
         </div>
         <div class="modal-body">
           <div class="m-2 p-3">
-            <form action="/check-out" method="POST">
+            <form action="" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="">Address</label>

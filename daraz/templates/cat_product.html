@@ -71,20 +71,20 @@
 					<div class="card-footer p-0 no-gutters">
 
 						{% if product|is_in_cart:request.session.cart %}
-						<div class="row no-gutters">
-							<form action="/" class="col-2 " method="POST">
-								{% csrf_token %}
-								<input hidden type="text" name='product' value='{{product.id}}'>
-								<input hidden type="text" name='remove' value='True'>
-								<input type="submit" value=" - " class="btn btn-block btn-light border-right">
-							</form>
-							<div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
-							<form action="/#{{product.id}}" class="col-2 " method="POST">
-								{% csrf_token %}
-								<input hidden type="text" name='product' value='{{product.id}}'>
-								<input type="submit" value=" + " class="btn btn-block btn-light border-left">
-							</form>
-						</div>
+{#						<div class="row no-gutters">#}
+{#							<form action="/" class="col-2 " method="POST">#}
+{#								{% csrf_token %}#}
+{#								<input hidden type="text" name='product' value='{{product.id}}'>#}
+{#								<input hidden type="text" name='remove' value='True'>#}
+{#								<input type="submit" value=" - " class="btn btn-block btn-light border-right">#}
+{#							</form>#}
+{#							<div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>#}
+{#							<form action="/#{{product.id}}" class="col-2 " method="POST">#}
+{#								{% csrf_token %}#}
+{#								<input hidden type="text" name='product' value='{{product.id}}'>#}
+{#								<input type="submit" value=" + " class="btn btn-block btn-light border-left">#}
+{#							</form>#}
+{#						</div>#}
 						{% else %}
 						<form action="/" method="POST" class="btn-block">
 							{% csrf_token %}
@@ -95,6 +95,10 @@
 							<button style="background-color:#2abbe8" type="submit" class="float-right btn btn-light  form-control"
                             >Buy Now</button>
                         </form>
+                         {% if product.incart %}
+                            <button style="background-color: #ffc107" class="float-right btn btn-light  form-control"
+                            >Added to Cart</button>
+                        {% else %}
                         <form action="/" method="POST" class="btn-block">
 							{% csrf_token %}
 							<input hidden type="number" name='product' value='{{product.id}}'>
@@ -105,6 +109,7 @@
                             >Add to Cart</button>
 
 						</form>
+                        {% endif %}
 						{% endif %}
 
 					</div>
