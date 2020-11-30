@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 import random
 import os
 import hashlib
-import datetime
+from datetime import datetime
 from django.http import HttpResponse,HttpResponseRedirect
 from django.views import View
 # from .models import people
@@ -15,22 +15,24 @@ register = template.Library()
 # cache._cache.flush_all()
 # from django.contrib import  messages
 
-class Index(View):
 
+class Index(View):
     def post(self , request):
         updateCart(request)
         print('cart', request.session['cart'])
         return redirect('homepage')
 
-    def get(self , request):
+    def get(self,request):
         # print()
         return HttpResponseRedirect(f'/home{request.get_full_path()[1:]}')
 
 
 def products(request):
     customerid = None
-
+    searchkey = None
     name = None
+    time = datetime.now().strftime("%d:%m:%y %H:%M:%S")
+    print(time)
     if request.method == "POST":
         print('i m in POST')
 
@@ -40,12 +42,15 @@ def products(request):
         # print(choice,end=' ')
         # print("!")
         productid = request.POST.get('product')
+        searchkey  = request.POST.get('search')
+        request.session['key'] = searchkey
+        print(searchkey)
         print("product:" + str(productid))
         try:
             name = request.session['name']
             email = request.session['email']
         except:
-            print('log in first bitch!')
+            print('log in first!')
             return redirect('/home/login')
         try:
 
@@ -84,72 +89,78 @@ def products(request):
             status = 'Not Done'
             List = 'shari, panjubi'
             print("customerid: " + str(customerid))
-            date = datetime.date.today()  # .strftime("%d/%m/%Y")
+            date = datetime.now().strftime("%D:%H:%M:%S")  # .strftime("%d/%m/%Y")
             print("date:" + str(date))
-            try:
+            if productid is not None:
+                try:
 
-                cur.execute(
-                    "INSERT INTO ORDERS(order_id, customer_id, order_date, amount, quantity, payment_status, items) VALUES (%s,%s,%s,%s,%s,%s,%s)",
-                    [orderid, customerid, date, price, quantity, status, List])
-                connection.commit()
-                cur.execute("INSERT INTO PRODUCT_ORDERS(ORDER_ID, PRODUCT_ID) VALUES (%s,%s)", [orderid, productid])
-                connection.commit()
-                cur.close()
-                print('order success!')
-            except:
-                print('could not make the order!')
+                    cur.execute(
+                        "INSERT INTO ORDERS(order_id, customer_id, order_date, amount, quantity, payment_status, items) VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                        [orderid, customerid, date, price, quantity, status, List])
+                    connection.commit()
+                    cur.execute("INSERT INTO PRODUCT_ORDERS(ORDER_ID, PRODUCT_ID) VALUES (%s,%s)", [orderid, productid])
+                    connection.commit()
+                    cur.close()
+                    print('order success!')
+                except:
+                    print('could not make the order!')
+                    return redirect('/home')
+                # return render(request, 'cart.html', {'user': name})
+                # print("ki hsse vai!")
                 return redirect('/home')
-            # return render(request, 'cart.html', {'user': name})
-            # print("ki hsse vai!")
-            return redirect('/home')
+            else:
+                return redirect('homepage')
         except:
-            print('log in plz!')
-            return redirect('/home/login')
+                print('log in plz!')
+                return redirect('/home/login')
     else:
         result = None
         try:
-            cur = connection.cursor()
-            cur.execute("SELECT * FROM PRODUCTS ")
-                        # "where CAT_ID = ("select CAT_ID from CATAGORIES where CAT_NAME = 'Gadgets'"))
-            result = cur.fetchall()
-            cur.close()
+            result = None
+            try:
+                searchkey = request.session['key']
+            except:
+                searchkey = None
+            if searchkey:
+                print('searchkey is caught!')
+                print(searchkey)
+                searchkey = searchkey.lower()
+                cur = connection.cursor()
+                searchkey1 = '%' + searchkey + '%'
+                # searchkey1.lower()
+
+                searchkey2 = searchkey+'%'
+
+                searchkey3 = '%' + searchkey
+
+                print(searchkey1)
+                cur.execute("SELECT * FROM PRODUCTS where lower(PRODUCT_NAME) like %s",[searchkey1])
+                            # "where CAT_ID = ("select CAT_ID from CATAGORIES where CAT_NAME = 'Gadgets'"))
+                result = cur.fetchall()
+                # cur.execute("SELECT CAT_ID FROM CATAGORIES where lower(CAT_NAME) like %s",[searchkey1])
+                # catres = cur.fetchone()
+                # catid = int(catres[0])
+                # print('caid:' + str(catid))
+                # cur.execute("SELECT * FROM PRODUCTS where CAT_ID = %s",[catid])
+                # result = result+ cur.fetchall()
+
+                print(result)
+                cur.close()
+                request.session['key'] = None
+            else:
+                print('no searchkey is inserted!')
+                cur = connection.cursor()
+                cur.execute("SELECT * FROM PRODUCTS ")
+                # "where CAT_ID = ("select CAT_ID from CATAGORIES where CAT_NAME = 'Gadgets'"))
+                result = cur.fetchall()
+                cur.close()
             # print("results:", end=' ')
             # print(len(result))
         except:
+            request.session['key'] = None
             print('product fetch failed!')
             return redirect('/home')
         dic_res = show_products(request,result)
-        # dic_res = []
-        #
-        # for r in result:
-        #     product_id = r[0]
-        #     product_name = r[1]
-        #     status = r[3]
-        #     price = r[4]
-        #     discount = r[5]
-        #     quantity = r[6];
-        #     description = r[7]
-        #     shopid = r[8]
-        #     brand = r[9]
-        #     imgurl = r[10]
-        #     if imgurl is None:
-        #         # imgurl = 'static/uploads/product.jpg'
-        #         imgurl = 'uploads/products/product.jpg'
-        #     resultt = None
-        #     try:
-        #         cur = connection.cursor()
-        #         cur.execute("select SHOP_NAME from SHOPS where SHOP_ID = %s",[shopid])
-        #         resultt = cur.fetchall()
-        #         cur.close()
-        #     except:
-        #         print("Shop not found!")
-        #         return render(request,'index3.html', {'msg':'something went wrong!'})
-        #     shopName = 'trumpshop'
-        #
-        #     row = {'id': product_id, 'shop': shopName,'discount':discount,'photo':imgurl,'name': product_name, 'price':price,'brand':brand,
-        #            'status': status, 'desc': description}
-        #     dic_res.append(row)
-
 
         cur = connection.cursor()
         catdic = []
@@ -171,9 +182,11 @@ def products(request):
             username = request.session['name']
             message = username
             logout = 'LOG OUT'
-            return render(request, 'index3.html', {'products':dic_res,'catagories':dic_res,'login': message, 'logout': logout})
+            request.session['key'] = None
+            return render(request, 'index3.html', {'products':dic_res,'catagories':catdic,'login': message, 'logout': logout})
         except:
-            return render(request, 'index3.html', {'products':dic_res,'catagories':dic_res,'login': message, 'logout': logout})
+            return render(request, 'index3.html', {'products':dic_res,'catagories':catdic,'login': message, 'logout': logout})
+
 
 def sell(request):
     name = None
@@ -187,20 +200,17 @@ def sell(request):
 
 def showCat_wise(request, catid):
     print(catid)
-    # try:
-    #     email = request.session['email']
-    # except:
-    #     return redirect('login')
-    # print(email)
     try:
-        catid = int(catid)
+        # catid = int(catid)
         cur = connection.cursor()
         cur.execute("SELECT * FROM PRODUCTS WHERE CAT_ID = %s",[catid])
         result = cur.fetchall()
         cur.close()
     except:
         return redirect('homepage')
+
     dic_res = show_products(request,result)
+
     return render(request,'cat_product.html',{'products':dic_res})
 
 
@@ -236,61 +246,7 @@ def list_jobs(request):
     print("showing...")
     return render(request, 'list_jobs.html', {'people': dict_result})
 
-#
-# def selllogin(request):
-#     try:
-#         name = request.session['shopname']
-#         return redirect('/saleproduct')
-#     except:
-#         print()
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         sql = "select SHOP_NAME, SHOP_ID from SHOPS where SHOPPASSWORD = %s"
-#         cur = connection.cursor()
-#         cur.execute(sql,[password])
-#         result = cur.fetchall()
-#         shopname =None
-#         cur.close()
-#         dbid =None
-#         for r in result:
-#             dbid = r[1]
-#             shopname = r[0]
-#         print(dbid)
-#         if dbid is not None:
-#             print("success")
-#             request.session['shopusername'] = username
-#             request.session['shopname'] = shopname
-#             request.session['shopstatus'] = True
-#             # return render(request,'saleProducts.html',{})
-#             return redirect('/saleproduct')
-#         else:
-#             print("failed bitch!")
-#             return redirect('/saleLogin')
-#     else:
-#         return render(request,'sellingLogin.html',{})
-#
-# def sellsignup(request):
-#
-#     if request.method == 'POST':
-#         shopid = random.randrange(start=110, step=1)
-#         username = request.POST.get('username')
-#         zone = request.POST.get('zone')
-#         pwd = request.POST.get('password')
-#         shopname = request.POST.get('name')
-#         shopcat = request.POST.get('cat')
-#         contact = request.POST.get('contact')
-#         sql = "INSERT INTO SHOPS(SHOP_ID, SHOP_NAME, ZONE, CONTACT_INFO, SHOPPASSWORD, SHOP_CAT, SHOP_USERNAME) VALUES (%s,%s,%s,%s,%s,%s,%s);"
-#         cur = connection.cursor()
-#         cur.execute(sql, [shopid, shopname, zone, contact, pwd, shopcat, username])
-#         connection.commit()
-#         cur.close()
-#         return redirect('/home/sell/saleLogin')
-#         # return redirect('saleLogin/')
-#     else:
-#         return render(request, 'sellsignup.html',{})
-#
-#
+
 def profile(request):
     username = None
     try:
@@ -372,83 +328,6 @@ def accountsettings(request):
         return render(request, 'accountsettings.html', {})
 
 
-
-# def order(request):
-#     print('i m in order!')
-#     customerid = None
-#
-#     name = None
-#     if request.method == "POST":
-#         print('i m in POST')
-#
-#         orderid = random.randrange(start=100000,step=1)
-#         # choice = request.POST.get('choose')
-#         # print(choice,end=' ')
-#         # print("!")
-#         productid = request.POST.get('product')
-#         print("product:"+str(productid))
-#         try:
-#             name = request.session['name']
-#             email = request.session['email']
-#         except:
-#             print('log in first bitch!')
-#             return redirect('/home/login')
-#         try:
-#
-#             # try:
-#             #     productid = request.POST.get('id')
-#             # except:
-#             #     print('failed to get from page')
-#             #     return redirect('/home')
-#
-#             cur = connection.cursor()
-#             result = None
-#             try:
-#                 cur.execute("select CUSTOMER_ID from PEOPLE where EMAIL=%s",[email])
-#                 result = cur.fetchall()
-#             except:
-#                 print('no id match with this mail!')
-#                 return redirect('/home')
-#
-#             print(email)
-#             for r in result:
-#                 customerid = r[0]
-#             quantity =1
-#             List = []
-#             price = None
-#             try:
-#                 cur.execute("SELECT PRODUCT_NAME, PRICE FROM PRODUCTS WHERE PRODUCT_ID = %s",[productid])
-#                 result = cur.fetchall()
-#                 for r in result:
-#                     price = r[1]
-#                     product_name = r[0]
-#                     List.append((product_name,price))
-#                     print('list created!')
-#             except:
-#                 print('product not found!')
-#                 return redirect('/home')
-#             status = 'Not Done'
-#             List =[]
-#             print("customerid: " + str(customerid))
-#             try:
-#                 cur.execute("INSERT INTO ORDERS(order_id, customer_id, order_date, amount, quantity, payment_status, items) VALUES (%s,%s,%s,%s,%s,%s,%s)",[orderid,customerid,datetime.date.today().strftime("%d/%m/%Y"),price,quantity,status,List])
-#                 connection.commit()
-#                 cur.execute("INSERT INTO PRODUCT_ORDERS(ORDER_ID, PRODUCT_ID) VALUES (%s,%s)",[orderid,productid])
-#                 connection.commit()
-#                 cur.close()
-#                 print('order success!')
-#             except:
-#                 print('could not make the order!')
-#                 return redirect('/home')
-#             # return render(request, 'cart.html', {'user': name})
-#             print("ki hsse vai!")
-#             return redirect('/home')
-#         except:
-#             print('log in plz!')
-#             return redirect('/home/login')
-#     else:
-#         print('ufffffffffffo!')
-#         return render(request,'index.html',{})
 
 
 def cart(request):
@@ -581,7 +460,7 @@ def check(request):
             connection.commit()
             cur.execute(sqlonCreditcard,[cardno,nameoncard,expdate,cvv,otp,paymentid,zipcode])
             connection.commit()
-            date = datetime.date.today()
+            date = datetime.now().strftime("%D:%H:%M:%S")
             cur.execute(sqlonsHipment,[shipmentid,date,orderid,'False',deliveryat])
             connection.commit()
             cur.close()
@@ -604,35 +483,6 @@ def check(request):
         except:
 
             return render(request,'check.html',{})
-
-# def shipment(request):
-#     cur = connection.cursor()
-#     sql = "SELECT * FROM SHIPMENTS"
-#     cur.execute(sql)
-#     result = cur.fetchall()
-#     d = []
-#     for r in result:
-#         shipid = r[0]
-#         shipdate = r[1]
-#         orderid = r[2]
-#         status = r[3]
-#         deliveryat = r[4]
-#         print(shipid)
-#         cur.execute("select CUSTOMER_ID from ORDERS where ORDER_ID =%s", [orderid])
-#         res = cur.fetchall()
-#         custid = None
-#         customername = None
-#         for r1 in res:
-#             custid = r1[0]
-#         print(custid)
-#         cur.execute("select CUSTOMER_NAME from PEOPLE where CUSTOMER_ID=%s",[custid])
-#         result2 = cur.fetchall()
-#         for r2 in result2:
-#             customername = r2[0]
-#         row = {'id':custid,'name':customername,'address':deliveryat,'orderid':orderid,'shipdate':shipdate}
-#         d.append(row)
-#     cur.close()
-#     return render(request,'shipment.html',{'ship':d})
 
 
 @register.filter(name="islogin")
@@ -736,3 +586,8 @@ def show_products(request,result):
                'status': status, 'desc': description}
         dic_res.append(row)
     return dic_res
+
+
+'''complete this view method'''
+def trackYourorder(request):
+    return  render(request,'trackOrder.html',{})

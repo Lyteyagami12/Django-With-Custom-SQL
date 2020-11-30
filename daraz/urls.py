@@ -10,17 +10,16 @@ from .Sales import sale
 urlpatterns = [
     path('',views.Index.as_view(), name = 'homepage'),
     path('sell/',views.sell),
-    path('sell/sellsignup/', sale.sellsignup),
-    path('sell/saleLogin/', sale.selllogin),
+    path('sell/sellsignup/', sale.sellsignup, name='sale_signup'),
+    path('sell/saleLogin/', sale.selllogin, name='sale_login'),
     path('info/',views.list_jobs, name='test'),
     path('home/signup/', loginOrSignup.signup, name='signup'),
     path('login/', loginOrSignup.user_login, name='login'),
-    path('home/', views.products, name = 'home'),
+    path('home/', views.products, name='home'),
     # path('sell/',views.sell),
     path('home/logout/', loginOrSignup.user_logout, name='logout'),
     path('home/sell/', views.sell, name='sell'),
     path('home/login/', loginOrSignup.user_login),
-    # path('home/sigunp/', loginOrSignup.signup),
     path('home/sell/sellsignup/', sale.sellsignup),
     path('home/sell/sellsignup/saleLogin/', sale.selllogin),
     path('saleLogout/',sale.saleLogout),
@@ -42,7 +41,7 @@ urlpatterns = [
     path('home/shipment/',checkout.shipment),
     path('home/profile/accountsettings/',views.accountsettings),
     path('home/<int:catid>/',views.showCat_wise),
-
+    path('home/track/',views.trackYourorder,name='track'),
 
 
 ]

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 import random
 import os
 import hashlib
-import datetime
+from datetime import datetime
 from django.http import HttpResponse,HttpResponseRedirect
 from django.views import View
 # from .models import people
@@ -68,7 +68,7 @@ def check(request):
         print("people id : " + str(peopleid))
         # print(peopleid)
         print(email)
-        orderdate = datetime.date.today()
+        orderdate =  datetime.now().strftime("%d-%m-%y %H:%M:%S")
         print(orderdate)
 
         try:
@@ -134,7 +134,7 @@ def check(request):
         connection.commit()
         cur.close()
         print('i m here 3')
-        date = datetime.date.today()
+        date = datetime.now().strftime("%d-%m-%y %H:%M:%S")
         print(date)
         # cur.execute(sqlonsHipment,[shipmentid,date,orderid,'False',deliveryat])
         # connection.commit()

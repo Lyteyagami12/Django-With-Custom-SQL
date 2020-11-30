@@ -17,6 +17,8 @@
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
 	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
 	<link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index1.css' %}">
 
 
 	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/daraz.png'%}">
@@ -143,7 +145,7 @@
   navbar-expand-lg
    navbar-light bg-white">
 {#    <div class="card mx-auto mb-3" id="daraz" style="width: 10rem">#}
-    <a href="/home"><img src="{% static 'images/logo.png'%}"></a>
+    <a  href="/home"><img style="border-image-width: revert" src="{% static 'images/logo.png'%}"></a>
 {#    </div>#}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +155,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a style="color: #007bff" class="nav-link" href="/home/sell"><h4>Sell On Daraz</h4></a>
+            <a style="color: #007bff" class="nav-link" href="/home/sell"><h4 style="font-size:x-large">Sell On Daraz</h4></a>
 {#            <span class="sr-only">(current)</span></a>#}
         </li>
 
@@ -172,7 +174,7 @@
 {#              <span class="sr-only">(current)</span></a>#}
         </li>
         <li class="nav-item ">
-            <a style="color: #0b2e13" class="nav-link" href="/home/orders">Track My Orders</a>
+            <a style="color: #0b2e13" class="nav-link" href="/home/track">Track My Orders</a>
 {#              <span class="sr-only">(current)</span></a>#}
         </li>
         <li class="nav-item ">

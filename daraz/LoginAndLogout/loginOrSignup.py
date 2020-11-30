@@ -107,14 +107,6 @@ def user_login(request):
         return render(request, 'login.html', {})
 
 
-def test(request):
-    return render(request,'hello.html',{})
-
-
-def lol(request):
-    return render(request, 'lol.html', {})
-
-
 def signup(request):
     print("i m in signup")
     usr=None

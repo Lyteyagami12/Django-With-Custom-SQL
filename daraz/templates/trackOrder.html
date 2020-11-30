@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+
+    <div class="lzd-playground">
+        <div class="lzd-playground-main">
+            <div class="lzd-playground-nav">
+                <div class="member-info">
+                    <p>Hello, {{ request.session.name }}</p>
+
+                </div>
+            </div>
+            <ul class="nav-container">
+                <li class="item" id="Manage-My-Account"><a href="/home/profile">Manage My Account</a> </li>
+                <li class="item" id="My-Orders"><a href="/home/orders" >My orders</a>
+                    <ul class="item-container">
+                        <li class="sub">
+                            Returns
+                        </li>
+                        <li class="sub">
+                            Cancellations
+                        </li>
+                    </ul>
+                </li>
+                <li class="item" id="My reviews">
+                    <a href="#">My reviews</a>
+                    <ul class="item-container">
+
+                    </ul>
+                </li>
+                <li class="item">
+                    <a href="/home/sell" style="color: #2abbe8">Sell On Daraz</a>
+                    <ul class="item-container">
+
+
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    <div class="lzd-playground-right">
+        <div class="breadcrumb">
+            <a>Order Details</a>
+        </div>
+        <div id="container" class="container">
+            <div>
+                <div id="root_60000003320329" class="page-root">
+                    <div class="detail-info">
+                        <div class="pull-left detail-info-left">
+                            <div>
+                                <p class="order-number">
+                                    Put a Order Number.
+                                </p>
+                                <p>Put the order Date</p>
+                            </div>
+                        </div>
+                        <div class="detail-right-info pull-right">
+                            <span class="detail-info-total-title">Total:</span>
+                            <span class="detail-info-total-value">৳ 164
+                        </span>
+                        </div>
+                        ::after
+
+
+                    </div>
+                    <div class="package">
+                        <div class="dummy-wrapper">
+                            <div class="package-header">
+                                <div class="package-header-left">
+                                    <div class="package-info" >
+                                        <span class="lazada lazada-ic-package header-icon lazada-icon text header">
+                                            ::before
+                                        </span>
+                                        <span class="text package-info-text">Package 1</span>
+                                    </div>
+                                    <div class="seller-info">
+                                        <a href="#"><span class="text">Sold by:---</span><span class="text link">My kitchen</span>&nbsp;</a>
+                                        <div class="im-chat">
+                                            <span class="lazada lazada-ic-IM lazada-icon im-chat-icon">
+
+                                            </span>
+                                            <span>Chat Now</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="package-header-right">
+
+                                </div>
+
+                                    <div class="order-item">
+                                        <div class="item-pic" data-spm="list_image">
+                                            <a href="#">
+                                                <img src="https://static-01.daraz.com.bd/original/03bac93edd664297e65ed2ddb5e012b9.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="item-main ">
+                                        <div>
+                                            <div class="text title item-title" data-spm="details_title">
+                                                <a href="#">Seat Back Support for Office Chair - Black
+                                                </a>
+                                            </div>
+                                            <p class="text info desc">N/A No Warranty</p>
+                                            <p class="text desc"></p>
+                                            <p class="text desc bold"></p>
+                                            <div class="more-details">
+                                                <span class="text desc details-desc">Cancelled----</span><a><span class="text link bold">MORE DETAILS</span></a></div></div></div><div class="item-status"><div class="item-price text bold">৳ 119</div></div><div class="item-quantity"><span><span class="text desc info multiply">Qty:</span><span class="text">&nbsp;1</span></span></div><div class="item-info"></div><div class="clear"></div>
+                                    </div>
+
+                                </div>
+
+                            <div class="package-body">
+                                <div class="order-item"><div class="item-pic" data-spm="list_image"><a href="#"><img src="https://static-01.daraz.com.bd/original/03bac93edd664297e65ed2ddb5e012b9.jpg"></a></div><div class="item-main "><div><div class="text title item-title" data-spm="details_title"><a href="#">Seat Back Support for Office Chair - Black</a></div><p class="text info desc">N/A No Warranty</p><p class="text desc"></p><p class="text desc bold"></p><div class="more-details"><span class="text desc details-desc">Cancelled&nbsp;-&nbsp;</span><a><span class="text link bold">MORE DETAILS</span></a></div></div></div><div class="item-status"><div class="item-price text bold">৳ 119</div></div><div class="item-quantity"><span><span class="text desc info multiply">Qty:</span><span class="text">&nbsp;1</span></span></div><div class="item-info"></div><div class="clear"></div></div>
+
+                            </div>
+                        </div>
+                        </div>
+                    <div id="bottomContainer_602122114579231" class="container" style="display: flex; width: 988px;"><div id="leftContainer_602122114579231" class="container" style="width: 496px; float: left;"><div class="delivery-summary"><div class="delivery-wrapper"><h3 class="title">Shipping Address</h3><span class="username"></span><span class="address"><span class="in-line"> Dhaka, Dhaka - South, Azimpur, Polashi,buet campus,Azimpur,Dhaka</span></span><span></span></div></div><div class="delivery-summary"><div class="delivery-wrapper"><h3 class="title">Billing Address</h3><span class="username"></span><span class="address"><span class="in-line"> Dhaka, Dhaka - South, Azimpur, Polashi,buet campus,Azimpur,Dhaka</span></span><span></span></div></div></div><div id="rightContainer_602122114579231" class="container" style="width: 496px; float: right;"><div class="total-summary"><div><div class="text header">Total Summary</div><div><div class="row"><span class="text pull-left">Subtotal</span><span class="text price pull-right">৳ 119</span></div><div class="row"><span class="text pull-left">Shipping Fee</span><span class="text price pull-right">৳ 45</span></div></div><hr><div class="row second-header"><span class="text bold pull-left">Total</span><span class="text bold total-price pull-right">৳ 164</span></div><div class="row second-header"><span class="text bold pull-left"></span><span class="text bold total-price pull-right"></span></div><div><div class="row"><span class="text">Paid by&nbsp;</span><span class="text bold">Cash on Delivery</span></div></div></div></div></div>
+
+                    </div>
+                    <div class="clear"></div>
+                    <div class="recommend">
+                        <div class="recommend order_detail simple" data-spm-max-idx="10">
+                            <div class="recommend-content">
+                                <h6>Just for You</h6>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
