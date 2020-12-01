@@ -2,12 +2,12 @@
 
 This is a django project inspired from DARAZ- ONLINE SHOPPING MARKET- https://www.daraz.com.bd/
 
-Here we used CX_Oracle for Custom SQL queries. 
+Here we used CX_Oracle for Custom SQL queries and supporting RDBMS is Oracle Database 11g. 
 
 TO RUN THIS PROJECT FOLLOW THE STEPS BELOW:
 
 
-Prequisite: You need to  CONFIGURE PIP ENVIRONMENT on your System/DEVICE  (For more details about pip environment Just google it)
+Prequisite: You need to  CONFIGURE PIP ENVIRONMENT on your System/DEVICE  (For more details about pip environment Just google it) and Oracle Database 11g as well
 
 STEP-1:
     
